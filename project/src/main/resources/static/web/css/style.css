@@ -324,9 +324,13 @@ ol {
 /*---------------------
   Header
 -----------------------*/
+a {
+	text-decoration: none;
+}
 
 .header__top {
 	background: #f5f5f5;
+
 }
 
 .header__humberger {
