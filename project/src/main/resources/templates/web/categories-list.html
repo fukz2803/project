@@ -18,7 +18,7 @@
                                 <div class="breadcrumb__text">
                                     <h2>Categories: <span>Recipes</span></h2>
                                     <div class="breadcrumb__option">
-                                        <a href="#">Home</a>
+                                        <a th:href="@{/}">Home</a>
                                         <span>Recipes</span>
                                     </div>
                                 </div>
@@ -26,7 +26,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="categories__post__item__pic set-bg"
-                                                 data-setbg="img/categories/categories-list/cl-1.jpg">
+                                                 th:styleappend="|background-image: url(@{web/img/categories/categories-list/cl-1.jpg})|">
                                                 <div class="post__meta">
                                                     <h4>08</h4>
                                                     <span>Aug</span>
@@ -53,7 +53,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="categories__post__item__pic set-bg"
-                                                 data-setbg="img/categories/categories-list/cl-2.jpg">
+                                                 th:styleappend="|background-image: url(@{web/img/categories/categories-list/cl-2.jpg})|">
                                                 <div class="post__meta">
                                                     <h4>08</h4>
                                                     <span>Aug</span>
@@ -84,7 +84,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="categories__post__item__pic set-bg"
-                                                 data-setbg="img/categories/categories-list/cl-3.jpg">
+                                                 th:styleappend="|background-image: url(@{web/img/categories/categories-list/cl-3.jpg})|">
                                                 <div class="post__meta">
                                                     <h4>08</h4>
                                                     <span>Aug</span>
@@ -112,7 +112,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="categories__post__item__pic set-bg"
-                                                 data-setbg="img/categories/categories-list/cl-4.jpg">
+                                                 th:styleappend="|background-image: url(@{web/img/categories/categories-list/cl-5.jpg})|">
                                                 <div class="post__meta">
                                                     <h4>08</h4>
                                                     <span>Aug</span>
@@ -140,7 +140,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="categories__post__item__pic set-bg"
-                                                 data-setbg="img/categories/categories-list/cl-5.jpg">
+                                                 th:styleappend="|background-image: url(@{web/img/categories/categories-list/cl-5.jpg})|">
                                                 <div class="post__meta">
                                                     <h4>08</h4>
                                                     <span>Aug</span>
@@ -168,7 +168,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="categories__post__item__pic set-bg"
-                                                 data-setbg="img/categories/categories-list/cl-6.jpg">
+                                                 th:styleappend="|background-image: url(@{web/img/categories/categories-list/cl-6.jpg})|">
                                                 <div class="post__meta">
                                                     <h4>08</h4>
                                                     <span>Aug</span>
@@ -196,7 +196,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="categories__post__item__pic set-bg"
-                                                 data-setbg="img/categories/categories-list/cl-7.jpg">
+                                                 th:styleappend="|background-image: url(@{web/img/categories/categories-list/cl-7.jpg})|">
                                                 <div class="post__meta">
                                                     <h4>08</h4>
                                                     <span>Aug</span>
@@ -227,7 +227,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="categories__post__item__pic set-bg"
-                                                 data-setbg="img/categories/categories-list/cl-7.jpg">
+                                                 th:styleappend="|background-image: url(@{web/img/categories/categories-list/cl-7.jpg})|">
                                                 <div class="post__meta">
                                                     <h4>08</h4>
                                                     <span>Aug</span>
@@ -271,11 +271,11 @@
                                         <div class="sidebar__item__title">
                                             <h6>About me</h6>
                                         </div>
-                                        <img src="img/sidebar/sidebar-about.jpg" alt="">
+                                        <img th:src="@{web/img/sidebar/sidebar-about.jpg}" alt="">
                                         <h6>Hi every one! I,m <span>Lena Mollein.</span></h6>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                             incididunt ut labore et dolore magna aliqua.</p>
-                                        <a href="#" class="primary-btn">Read more</a>
+                                        <a th:href="@{/about}" class="primary-btn">Read more</a>
                                     </div>
                                     <div class="sidebar__follow__item">
                                         <div class="sidebar__item__title">
@@ -294,7 +294,7 @@
                                             <h6>Feature Posts</h6>
                                         </div>
                                         <div class="sidebar__feature__item__large set-bg"
-                                             data-setbg="img/sidebar/feature-post.jpg">
+                                             th:styleappend="|background-image: url(@{web/img/sidebar/feature-post.jpg})|">
                                             <div class="sidebar__feature__item__large--text">
                                                 <span>Dinner</span>
                                                 <h5><a href="#">This Japanese Way of Making Iced Coffee Is a Game...</a>
@@ -346,7 +346,7 @@
                                         </div>
                                     </div>
                                     <div class="sidebar__item__banner">
-                                        <img src="img/sidebar/banner.jpg" alt="">
+                                        <img th:src="@{web/img/sidebar/banner.jpg}" alt="">
                                     </div>
                                     <div class="sidebar__item__categories">
                                         <div class="sidebar__item__title">
