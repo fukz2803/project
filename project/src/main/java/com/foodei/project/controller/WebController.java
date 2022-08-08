@@ -1,13 +1,45 @@
 package com.foodei.project.controller;
 
+import com.foodei.project.dto.BlogInfo;
+import com.foodei.project.entity.Blog;
+import com.foodei.project.service.BlogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class WebController {
+
+
+    @Autowired
+    private BlogService blogService;
+
     @GetMapping("/")
-    public String getHomePage(){
+    public String getHomePage(Model model,
+                              @RequestParam(required = false, defaultValue = "") String keyword,
+                              @RequestParam(required = false,defaultValue = "1") Integer page){
+//        Page<BlogInfo> blogPage = blogService.getAllBlogIndex(page -1, 7);
+
+//        int totalPages = blogPage.getTotalPages();
+//        model.addAttribute("totalPages", totalPages);
+
+//        List<BlogInfo> blogList = blogPage.getContent();
+//        model.addAttribute("blogList",blogList);
+
+//        List<BlogInfo> blogInfos = blogService.getAllBlogInfo();
+//        model.addAttribute("blogList", blogInfos);
+        List<Blog> blogList = blogService.findAllBlogs();
+        model.addAttribute("blogList", blogList);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("keyword", keyword);
+
 
         return "web/index";
     }

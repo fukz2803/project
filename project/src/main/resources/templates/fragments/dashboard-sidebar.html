@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
 <body>
@@ -42,12 +38,10 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-table"></i>
-<!--            <i class="fa-solid fa-list"></i>-->
             <span>Quản lý bài viết</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-
                 <a class="collapse-item" th:href="@{/dashboard/blogs}"><span><i class="bi bi-list-task"></i></span>&nbsp;&nbsp;Tất cả bài viết</a>
                 <a class="collapse-item" th:href="@{/dashboard/my-blogs}"><span><i class="bi bi-book-fill"></i></span>&nbsp;&nbsp;Bài viết của tôi</a>
                 <a class="collapse-item" th:href="@{/dashboard/create-blog}"><span><i class="bi bi-plus-square-fill"></i></span>&nbsp;&nbsp;Tạo bài viết</a>
@@ -93,5 +87,22 @@
 
 </ul>
 <!-- End of Sidebar -->
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/dashboard/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{/dashboard/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{/dashboard/js/sb-admin-2.min.js}"></script>
+
+<!-- Page level plugins -->
+<script th:src="@{/dashboard/vendor/chart.js/Chart.min.js}"></script>
+
+<!-- Page level custom scripts -->
+<script th:src="@{/dashboard/js/demo/chart-area-demo.js}"></script>
+<script th:src="@{/dashboard/js/demo/chart-pie-demo.js}"></script>
 </body>
 </html>
