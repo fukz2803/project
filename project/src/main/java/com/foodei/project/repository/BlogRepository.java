@@ -15,14 +15,13 @@ import java.util.List;
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, String> {
 
-//    @Query(name = "getAllBlogInfo", nativeQuery = true)
-//    Page<BlogInfo> getAllBlogInfo(Pageable pageable);
+    @Query("select b from Blog b where b.status = 1 order by b.publishedAt DESC")
+    List<Blog> findByStatusEqualsOrderByPublishedAtDesc();
 
-//    @Query(name = "getAllBlogInfo", nativeQuery = true)
-//    List<BlogInfo> getAllBlogInfo();
+    @Query("""
+            select b from Blog b inner join b.categories categories
+            where upper(categories.name) like upper(concat('%', ?1, '%'))""")
+    List<Blog> getByCategories_NameContainsIgnoreCaseAllIgnoreCase(String name);
 
 
-    @Query("select b from Blog b where b.status = 1")
-    @Override
-    List<Blog> findAll();
 }

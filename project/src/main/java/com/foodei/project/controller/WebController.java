@@ -2,7 +2,9 @@ package com.foodei.project.controller;
 
 import com.foodei.project.dto.BlogInfo;
 import com.foodei.project.entity.Blog;
+import com.foodei.project.entity.Category;
 import com.foodei.project.service.BlogService;
+import com.foodei.project.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class WebController {
 
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private CategoryService categoryService;
+
 
     @GetMapping("/")
     public String getHomePage(Model model,
@@ -29,14 +34,16 @@ public class WebController {
 //        int totalPages = blogPage.getTotalPages();
 //        model.addAttribute("totalPages", totalPages);
 
-//        List<BlogInfo> blogList = blogPage.getContent();
-//        model.addAttribute("blogList",blogList);
-
-//        List<BlogInfo> blogInfos = blogService.getAllBlogInfo();
-//        model.addAttribute("blogList", blogInfos);
-        List<Blog> blogList = blogService.findAllBlogs();
+        List<Blog> blogList = blogService.findAllBlogsIndex();
         model.addAttribute("blogList", blogList);
 
+        List<Category> categoryList = categoryService.findAllCategoryIndex();
+        model.addAttribute("categoryList",categoryList);
+
+        Blog blogHighestComment = blogService.getBlogHighestComment();
+        model.addAttribute("blogHighestComment",blogHighestComment);
+
+        model.addAttribute("blogService", blogService);
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
 

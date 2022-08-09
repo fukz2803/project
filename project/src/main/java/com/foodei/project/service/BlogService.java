@@ -10,6 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,19 +23,28 @@ public class BlogService {
     @Autowired
     private BlogRepository blogRepository;
 
-//    public Page<BlogInfo> getAllBlogIndex(int page, int pageSize){
-//        Pageable pageable = PageRequest.of(page, pageSize);
-//
-//        return blogRepository.getAllBlogInfo(pageable);
-//    }
-
-//    public List<BlogInfo> getAllBlogInfo(){
-//        return blogRepository.getAllBlogInfo();
-//    }
-
-    public List<Blog> findAllBlogs(){
-        return blogRepository.findAll();
+    public List<Blog> findAllBlogsIndex(){
+        return blogRepository.findByStatusEqualsOrderByPublishedAtDesc();
     }
 
+    public List<Blog> getBlogsByCategoryName(String name){
+        return blogRepository.getByCategories_NameContainsIgnoreCaseAllIgnoreCase(name);
+    }
+
+    public List<Blog> getBlogsByHighComment(){
+        List<Blog> blogs = findAllBlogsIndex();
+        Collections.sort(blogs, new Comparator<Blog>() {
+            @Override
+            public int compare(Blog o1, Blog o2) {
+                return Integer.compare(o2.getComments().size(), o1.getComments().size());
+            }
+        });
+        return blogs;
+    }
+
+    public Blog getBlogHighestComment(){
+        List<Blog> blogs = getBlogsByHighComment();
+        return blogs.get(0);
+    }
 
 }

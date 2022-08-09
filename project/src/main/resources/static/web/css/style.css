@@ -806,7 +806,7 @@ a {
 	margin-bottom: 5px;
 }
 
-.hero__inside__item--wide .hero__inside__item--text .label li {
+.hero__inside__item--wide .hero__inside__item--text .label li a{
 	list-style: none;
 	display: inline-block;
 	margin-right: 18px;
@@ -833,7 +833,7 @@ a {
 	opacity: 0.3;
 }
 
-.hero__inside__item--wide .hero__inside__item--text h4 {
+.hero__inside__item--wide .hero__inside__item--text h4 a{
 	font-size: 26px;
 	color: #ffffff;
 	line-height: 34px;
@@ -1003,7 +1003,7 @@ a {
 	transition: all, 0.3s;
 }
 
-.categories__item .categories__hover__text h5 {
+.categories__item .categories__hover__text h5 a{
 	font-size: 20px;
 	color: #111111;
 	text-transform: uppercase;
@@ -1013,7 +1013,9 @@ a {
 	color: #888888;
 	font-weight: 600;
 	margin-bottom: 0;
+	text-align: center;
 }
+
 
 .categories__post {
 	padding-top: 40px;
@@ -1119,7 +1121,7 @@ a {
 	text-align: center;
 }
 
-.categories__post__item__text .post__label--large li {
+.categories__post__item__text .post__label--large li a{
 	list-style: none;
 	display: inline-block;
 	margin-right: 18px;
