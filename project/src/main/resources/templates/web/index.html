@@ -10,12 +10,170 @@
     <th:block id="main">
 
         <!-- Hero Section Begin -->
+        <section class="hero">
+            <div class="hero__slider owl-carousel">
+                <div class="hero__item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6 p-0" >
+                                <div class="hero__inside__item hero__inside__item--wide"
+                                     th:styleappend="|background-image: url(${listBlogIndex.get(0).thumbnail})|">
+                                    <div class="hero__inside__item__text">
+                                        <div class="hero__inside__item--meta">
+                                            <span th:text="${listBlogIndex.get(0).publishedAt.getDayOfMonth()}">08</span>
+                                            <p th:text="${#strings.substring(listBlogIndex.get(0).publishedAt.getMonth(),0,3)}">Aug</p>
+                                        </div>
+                                        <div class="hero__inside__item--text">
+                                            <ul class="label" >
+                                                <li th:each="categoryBlog : ${listBlogIndex.get(0).categories}" th:text="${categoryBlog.name}">Vegan</li>
+                                            </ul>
+                                            <h4><a th:href="@{/detail/{id} (id=${listBlogIndex.get(0).id})}" th:text="${listBlogIndex.get(0).title}"></a></h4>
+                                            <ul class="widget">
+                                                <li>by <span th:text="${listBlogIndex.get(0).user.name}">Admin</span></li>
+                                                <li>3 min read</li>
+                                                <li><span th:text="${listBlogIndex.get(0).comments.size()}"></span> Comment</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6  p-0">
+                                <div class="hero__inside__item hero__inside__item--small set-bg"
+                                     th:styleappend="|background-image: url(${listBlogIndex.get(1).thumbnail})|">
+                                    <div class="hero__inside__item__text">
+                                        <div class="hero__inside__item--meta">
+                                            <span th:text="${listBlogIndex.get(1).publishedAt.getDayOfMonth()}">08</span>
+                                            <p th:text="${#strings.substring(listBlogIndex.get(1).publishedAt.getMonth(),0,3)}">Aug</p>
+                                        </div>
+                                        <div class="hero__inside__item--text">
+                                            <ul class="label" >
+                                                <li th:each="categoryBlog : ${listBlogIndex.get(1).categories}" th:text="${categoryBlog.name}">Vegan</li>
+                                            </ul>
+                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(1).id})}" th:text="${listBlogIndex.get(1).title}"></a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hero__inside__item hero__inside__item--small set-bg"
+                                     th:styleappend="|background-image: url(${listBlogIndex.get(2).thumbnail})|">
+                                    <div class="hero__inside__item__text">
+                                        <div class="hero__inside__item--meta">
+                                            <span th:text="${listBlogIndex.get(2).publishedAt.getDayOfMonth()}">08</span>
+                                            <p th:text="${#strings.substring(listBlogIndex.get(2).publishedAt.getMonth(),0,3)}">Aug</p>
+                                        </div>
+                                        <div class="hero__inside__item--text">
+                                            <ul class="label" >
+                                                <li th:each="categoryBlog : ${listBlogIndex.get(2).categories}" th:text="${categoryBlog.name}">Vegan</li>
+                                            </ul>
+                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(2).id})}" th:text="${listBlogIndex.get(2).title}"></a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6  p-0">
+                                <div class="hero__inside__item set-bg" th:styleappend="|background-image: url(${listBlogIndex.get(3).thumbnail})|">
+                                    <div class="hero__inside__item__text">
+                                        <div class="hero__inside__item--meta">
+                                            <span th:text="${listBlogIndex.get(3).publishedAt.getDayOfMonth()}">08</span>
+                                            <p th:text="${#strings.substring(listBlogIndex.get(3).publishedAt.getMonth(),0,3)}">Aug</p>
+                                        </div>
+                                        <div class="hero__inside__item--text">
+                                            <ul class="label" >
+                                                <li th:each="categoryBlog : ${listBlogIndex.get(3).categories}" th:text="${categoryBlog.name}">Vegan</li>
+                                            </ul>
+                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(3).id})}" th:text="${listBlogIndex.get(3).title}"></a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__item">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6 p-0" >
+                                <div class="hero__inside__item hero__inside__item--wide"
+                                     th:styleappend="|background-image: url(${listBlogIndex.get(4).thumbnail})|">
+                                    <div class="hero__inside__item__text">
+                                        <div class="hero__inside__item--meta">
+                                            <span th:text="${listBlogIndex.get(4).publishedAt.getDayOfMonth()}">08</span>
+                                            <p th:text="${#strings.substring(listBlogIndex.get(4).publishedAt.getMonth(),0,3)}">Aug</p>
+                                        </div>
+                                        <div class="hero__inside__item--text">
+                                            <ul class="label" >
+                                                <li th:each="categoryBlog : ${listBlogIndex.get(4).categories}" th:text="${categoryBlog.name}">Vegan</li>
+                                            </ul>
+                                            <h4><a th:href="@{/detail/{id} (id=${listBlogIndex.get(4).id})}" th:text="${listBlogIndex.get(4).title}"></a></h4>
+                                            <ul class="widget">
+                                                <li>by <span th:text="${listBlogIndex.get(4).user.name}">Admin</span></li>
+                                                <li>3 min read</li>
+                                                <li><span th:text="${listBlogIndex.get(4).comments.size()}"></span> Comment</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6  p-0">
+                                <div class="hero__inside__item hero__inside__item--small set-bg"
+                                     th:styleappend="|background-image: url(${listBlogIndex.get(5).thumbnail})|">
+                                    <div class="hero__inside__item__text">
+                                        <div class="hero__inside__item--meta">
+                                            <span th:text="${listBlogIndex.get(5).publishedAt.getDayOfMonth()}">08</span>
+                                            <p th:text="${#strings.substring(listBlogIndex.get(5).publishedAt.getMonth(),0,3)}">Aug</p>
+                                        </div>
+                                        <div class="hero__inside__item--text">
+                                            <ul class="label" >
+                                                <li th:each="categoryBlog : ${listBlogIndex.get(5).categories}" th:text="${categoryBlog.name}">Vegan</li>
+                                            </ul>
+                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(5).id})}" th:text="${listBlogIndex.get(1).title}"></a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hero__inside__item hero__inside__item--small set-bg"
+                                     th:styleappend="|background-image: url(${listBlogIndex.get(6).thumbnail})|">
+                                    <div class="hero__inside__item__text">
+                                        <div class="hero__inside__item--meta">
+                                            <span th:text="${listBlogIndex.get(6).publishedAt.getDayOfMonth()}">08</span>
+                                            <p th:text="${#strings.substring(listBlogIndex.get(6).publishedAt.getMonth(),0,3)}">Aug</p>
+                                        </div>
+                                        <div class="hero__inside__item--text">
+                                            <ul class="label" >
+                                                <li th:each="categoryBlog : ${listBlogIndex.get(6).categories}" th:text="${categoryBlog.name}">Vegan</li>
+                                            </ul>
+                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(6).id})}" th:text="${listBlogIndex.get(6).title}"></a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6  p-0">
+                                <div class="hero__inside__item set-bg" th:styleappend="|background-image: url(${listBlogIndex.get(7).thumbnail})|">
+                                    <div class="hero__inside__item__text">
+                                        <div class="hero__inside__item--meta">
+                                            <span th:text="${listBlogIndex.get(7).publishedAt.getDayOfMonth()}">08</span>
+                                            <p th:text="${#strings.substring(listBlogIndex.get(7).publishedAt.getMonth(),0,3)}">Aug</p>
+                                        </div>
+                                        <div class="hero__inside__item--text">
+                                            <ul class="label" >
+                                                <li th:each="categoryBlog : ${listBlogIndex.get(7).categories}" th:text="${categoryBlog.name}">Vegan</li>
+                                            </ul>
+                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(7).id})}" th:text="${listBlogIndex.get(7).title}"></a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!--     Hero   v2-->
 <!--        <section class="hero">-->
 <!--            <div class="hero__slider owl-carousel">-->
-<!--                <div class="hero__item" th:each="blog : ${blogList}">-->
+<!--                <div class="hero__item" th:each="blog : ${blogListPage}">-->
 <!--                    <div class="container-fluid">-->
 <!--                        <div class="row">-->
-<!--                            <div class="col-lg-6 p-0" >-->
+<!--                            <div class="col-lg-12 p-0" >-->
 <!--                                <div class="hero__inside__item hero__inside__item&#45;&#45;wide"-->
 <!--                                     th:styleappend="|background-image: url(${blog.thumbnail})|">-->
 <!--                                    <div class="hero__inside__item__text">-->
@@ -24,11 +182,10 @@
 <!--                                            <p th:text="${#strings.substring(blog.publishedAt.getMonth(),0,3)}">Aug</p>-->
 <!--                                        </div>-->
 <!--                                        <div class="hero__inside__item&#45;&#45;text">-->
-<!--                                            <ul class="label" th:each="categoryBlog : ${blog.categories}">-->
-<!--                                                <li th:text="${categoryBlog.name}">Vegan</li>-->
+<!--                                            <ul class="label" >-->
+<!--                                                <li th:each="categoryBlog : ${blog.categories}"><a th:href="@{/category/{name} (name=${categoryBlog.name.toLowerCase()})}" th:text="${categoryBlog.name}"></a></li>-->
 <!--                                            </ul>-->
-<!--                                            <h4 th:text="${blog.title}">Vegan White Peach Mug Cobbler With CardamomVegan<br /> White Peach Mug-->
-<!--                                                Cobbler With Cardamom</h4>-->
+<!--                                            <h4><a th:href="@{/detail/{id} (id=${blog.id})}" th:text="${blog.title}"></a></h4>-->
 <!--                                            <ul class="widget">-->
 <!--                                                <li>by <span th:text="${blog.user.name}">Admin</span></li>-->
 <!--                                                <li>3 min read</li>-->
@@ -38,92 +195,12 @@
 <!--                                    </div>-->
 <!--                                </div>-->
 <!--                            </div>-->
-<!--                            <div class="col-lg-3 col-md-6  p-0">-->
-<!--                                <div class="hero__inside__item hero__inside__item&#45;&#45;small set-bg"-->
-<!--                                     th:styleappend="|background-image: url(${blog.thumbnail})|">-->
-<!--                                    <div class="hero__inside__item__text">-->
-<!--                                        <div class="hero__inside__item&#45;&#45;meta">-->
-<!--                                            <span th:text="${blog.publishedAt.getDayOfMonth()}">08</span>-->
-<!--                                            <p th:text="${#strings.substring(blog.publishedAt.getMonth(),0,3)}">Aug</p>-->
-<!--                                        </div>-->
-<!--                                        <div class="hero__inside__item&#45;&#45;text">-->
-<!--                                            <ul class="label" th:each="categoryBlog : ${blog.categories}">-->
-<!--                                                <li th:text="${categoryBlog.name}">Vegan</li>-->
-<!--                                            </ul>-->
-<!--                                            <h5 th:text="${blog.title}">How to Make a Milkshake With Any <br />Ice Cream, Any Toppings...</h5>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="hero__inside__item hero__inside__item&#45;&#45;small set-bg"-->
-<!--                                     th:styleappend="|background-image: url(${blog.thumbnail})|">-->
-<!--                                    <div class="hero__inside__item__text">-->
-<!--                                        <div class="hero__inside__item&#45;&#45;meta">-->
-<!--                                            <span th:text="${blog.publishedAt.getDayOfMonth()}">08</span>-->
-<!--                                            <p th:text="${#strings.substring(blog.publishedAt.getMonth(),0,3)}">Aug</p>-->
-<!--                                        </div>-->
-<!--                                        <div class="hero__inside__item&#45;&#45;text">-->
-<!--                                            <ul class="label" th:each="categoryBlog : ${blog.categories}">-->
-<!--                                                <li th:text="${categoryBlog.name}">Vegan</li>-->
-<!--                                            </ul>-->
-<!--                                            <h5 th:text="${blog.title}">How to Make a Milkshake With Any <br />Ice Cream, Any Toppings...</h5>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-lg-3 col-md-6  p-0">-->
-<!--                                <div class="hero__inside__item set-bg" th:styleappend="|background-image: url(${blog.thumbnail})|">-->
-<!--                                    <div class="hero__inside__item__text">-->
-<!--                                        <div class="hero__inside__item&#45;&#45;meta">-->
-<!--                                            <span th:text="${blog.publishedAt.getDayOfMonth()}">08</span>-->
-<!--                                            <p th:text="${#strings.substring(blog.publishedAt.getMonth(),0,3)}">Aug</p>-->
-<!--                                        </div>-->
-<!--                                        <div class="hero__inside__item&#45;&#45;text">-->
-<!--                                            <ul class="label" th:each="categoryBlog : ${blog.categories}">-->
-<!--                                                <li th:text="${categoryBlog.name}">Vegan</li>-->
-<!--                                            </ul>-->
-<!--                                            <h5 th:text="${blog.title}">Marinated Lentil Salad with Zucch <br />ini and Tomatoes</h5>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+
 <!--                        </div>-->
 <!--                    </div>-->
 <!--                </div>-->
 <!--            </div>-->
 <!--        </section>-->
-        <section class="hero">
-            <div class="hero__slider owl-carousel">
-                <div class="hero__item" th:each="blog : ${blogListPage}">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-12 p-0" >
-                                <div class="hero__inside__item hero__inside__item--wide"
-                                     th:styleappend="|background-image: url(${blog.thumbnail})|">
-                                    <div class="hero__inside__item__text">
-                                        <div class="hero__inside__item--meta">
-                                            <span th:text="${blog.publishedAt.getDayOfMonth()}">08</span>
-                                            <p th:text="${#strings.substring(blog.publishedAt.getMonth(),0,3)}">Aug</p>
-                                        </div>
-                                        <div class="hero__inside__item--text">
-                                            <ul class="label" >
-                                                <li th:each="categoryBlog : ${blog.categories}"><a th:href="@{/category/{name} (name=${categoryBlog.name.toLowerCase()})}" th:text="${categoryBlog.name}"></a></li>
-                                            </ul>
-                                            <h4><a th:href="@{/detail/{id} (id=${blog.id})}" th:text="${blog.title}"></a></h4>
-                                            <ul class="widget">
-                                                <li>by <span th:text="${blog.user.name}">Admin</span></li>
-                                                <li>3 min read</li>
-                                                <li><span th:text="${blog.comments.size()}"></span> Comment</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
         <!-- Hero Section End -->
 
         <!-- Categories Section Begin -->

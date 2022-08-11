@@ -30,6 +30,9 @@ public class WebController {
                               @RequestParam(required = false, defaultValue = "") String keyword){
         Page<Blog> blogPage = blogService.findAllBlogsPageContainTitle(0, 4, keyword);
 
+        List<Blog> listBlogIndex = blogService.findAllBlogsIndex();
+        model.addAttribute("listBlogIndex", listBlogIndex);
+
         List<Blog> blogListPage = blogPage.getContent();
         model.addAttribute("blogListPage",blogListPage);
 

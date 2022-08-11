@@ -944,7 +944,7 @@ a {
 	opacity: 0.3;
 }
 
-.hero__inside__item--text h5 {
+.hero__inside__item--text h5 a {
 	font-size: 20px;
 	color: #ffffff;
 	line-height: 26px;
