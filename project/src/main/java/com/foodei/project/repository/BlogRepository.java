@@ -15,17 +15,10 @@ import java.util.List;
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, String> {
 
-
     //Index
     @Query("select b from Blog b where b.status = 1 order by b.publishedAt DESC")
     List<Blog> findBlogsByStatusEqualsOrderByPublishedAtDesc();
 
-    @Query(value = "select * \n" +
-            "from blog b \n" +
-            "WHERE b.status = 1\n" +
-            "order by b.published_at DESC \n" +
-            "limit 4", nativeQuery = true)
-    List<Blog> findByStatusEqualsOrderByPublishedAtDescLimit();
 
     @Query("""
             select b from Blog b inner join b.categories categories
@@ -37,6 +30,14 @@ public interface BlogRepository extends JpaRepository<Blog, String> {
             where upper(b.title) like upper(concat('%', ?1, '%')) and b.status = 1
             order by b.publishedAt DESC""")
     Page<Blog> getByTitleContainsIgnoreCaseAndStatusEqualsOrderByPublishedAtDesc(String title, Pageable pageable);
+
+    @Query("""
+            select b from Blog b inner join b.categories categories
+            where upper(b.title) like upper(concat('%', ?1, '%')) and b.status = 1 and categories.name = ?2
+            order by b.publishedAt DESC""")
+    Page<Blog> getByTitleContainsIgnoreCaseAndStatusEqualsAndCategories_NameOrderByPublishedAtDesc(String title, String name, Pageable pageable);
+
+
 
 
 

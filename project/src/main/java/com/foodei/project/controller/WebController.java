@@ -1,12 +1,12 @@
 package com.foodei.project.controller;
 
-import com.foodei.project.dto.BlogInfo;
 import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.Category;
 import com.foodei.project.service.BlogService;
 import com.foodei.project.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,21 +27,14 @@ public class WebController {
 
     @GetMapping("/")
     public String getHomePage(Model model,
-                              @RequestParam(required = false, defaultValue = "") String keyword,
-                              @RequestParam(required = false,defaultValue = "1") Integer page){
-        Page<Blog> blogPage = blogService.findAllBlogsPageContainTitle(page -1, 8, keyword);
+                              @RequestParam(required = false, defaultValue = "") String keyword){
+        Page<Blog> blogPage = blogService.findAllBlogsPageContainTitle(0, 4, keyword);
 
         List<Blog> blogListPage = blogPage.getContent();
         model.addAttribute("blogListPage",blogListPage);
 
-        int totalPages = blogPage.getTotalPages();
-        model.addAttribute("totalPages", totalPages);
-
-        List<Blog> blogList = blogService.findAllBlogsIndex();
-        model.addAttribute("blogList", blogList);
-
-        List<Blog> blogListLimit = blogService.findAllBlogsIndexLimit();
-        model.addAttribute("blogListLimit", blogListLimit);
+        List<Blog> blogListHighestComment = blogService.getBlogsByHighComment();
+        model.addAttribute("blogListHighestComment", blogListHighestComment);
 
         List<Category> categoryList = categoryService.findAllCategoryIndex();
         model.addAttribute("categoryList",categoryList);
@@ -49,32 +42,84 @@ public class WebController {
         Blog blogHighestComment = blogService.getBlogHighestComment();
         model.addAttribute("blogHighestComment",blogHighestComment);
 
-        model.addAttribute("blogService", blogService);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("keyword", keyword);
+        List<Blog> blogsHeader = blogService.getBlogsHeader();
+        model.addAttribute("blogsHeader",blogsHeader);
 
+        model.addAttribute("blogService", blogService);
+        model.addAttribute("keyword", keyword);
 
         return "web/index";
     }
 
-    @GetMapping("/blogs")
-    public String getBlogsPage(){
 
+    @GetMapping("/blogs")
+    public String getBlogsPage(Model model,
+                               @RequestParam(required = false, defaultValue = "") String keyword,
+                               @RequestParam(required = false,defaultValue = "1") Integer page){
+        Page<Blog> blogPage = blogService.findAllBlogsPageContainTitle(page - 1, 7, keyword);
+
+        List<Blog> blogListPage = blogPage.getContent();
+        model.addAttribute("blogListPage",blogListPage);
+
+        List<Blog> blogListHighestComment = blogService.getBlogsByHighComment();
+        model.addAttribute("blogListHighestComment", blogListHighestComment);
+
+        List<Category> categoryList = categoryService.findAllCategoryIndex();
+        model.addAttribute("categoryList",categoryList);
+
+        Blog blogHighestComment = blogService.getBlogHighestComment();
+        model.addAttribute("blogHighestComment",blogHighestComment);
+
+        List<Blog> blogsHeader = blogService.getBlogsHeader();
+        model.addAttribute("blogsHeader",blogsHeader);
+
+
+        int totalPages = blogPage.getTotalPages();
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("blogService", blogService);
         return "web/blogs";
     }
 
-//    @GetMapping("/category/{name}")
-//    public String getCategoryPage2(@PathVariable("name") String categoryName){
-//        return "web/categories-list";
-//    }
+    @GetMapping("/category/{name}")
+    public String getCategoryPage2(Model model,
+                                   @RequestParam(required = false, defaultValue = "") String keyword,
+                                   @RequestParam(required = false,defaultValue = "1") Integer page,
+                                   @PathVariable("name") String name){
+        Page<Blog> blogPage = blogService.getAllBlogsByCategoryAndTitle(page - 1, 7 , keyword, name);
 
-    @GetMapping("/category")
-    public String getCategoryPage(){
+        List<Blog> blogListPage = blogPage.getContent();
+        model.addAttribute("blogListPage",blogListPage);
+
+        List<Blog> blogListHighestComment = blogService.getBlogsByHighComment();
+        model.addAttribute("blogListHighestComment", blogListHighestComment);
+
+        List<Category> categoryList = categoryService.findAllCategoryIndex();
+        model.addAttribute("categoryList",categoryList);
+
+        Blog blogHighestComment = blogService.getBlogHighestComment();
+        model.addAttribute("blogHighestComment",blogHighestComment);
+
+        List<Blog> blogsHeader = blogService.getBlogsHeader();
+        model.addAttribute("blogsHeader",blogsHeader);
+
+
+        int totalPages = blogPage.getTotalPages();
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("blogService", blogService);
+        model.addAttribute("currentCategory", name);
+
         return "web/categories-list";
     }
 
+
     @GetMapping("/about")
-    public String getAboutPage(){
+    public String getAboutPage(Model model){
+        List<Blog> blogsHeader = blogService.getBlogsHeader();
+        model.addAttribute("blogsHeader",blogsHeader);
         return "web/about";
     }
 
@@ -84,8 +129,11 @@ public class WebController {
     }
 
     @GetMapping("/contact")
-    public String getContactPage(){
+    public String getContactPage(Model model){
+        List<Blog> blogsHeader = blogService.getBlogsHeader();
+        model.addAttribute("blogsHeader",blogsHeader);
         return "web/contact";
     }
+
 
 }

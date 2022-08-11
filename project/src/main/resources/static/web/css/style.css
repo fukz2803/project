@@ -1132,16 +1132,9 @@ a {
 	font-weight: 700;
 }
 
-/*.categories__post__item__text .post__label--large li a{*/
-/*	list-style: none;*/
-/*	display: inline-block;*/
-/*	margin-right: 18px;*/
-/*	color: #f4952f;*/
-/*	font-size: 12px;*/
-/*	text-transform: uppercase;*/
-/*	position: relative;*/
-/*	font-weight: 700;*/
-/*}*/
+.categories__post__item__text .post__label--large li a{
+	color: #f4952f;
+}
 
 .categories__post__item__text .post__label--large li:last-child {
 	margin-right: 0;
@@ -1661,6 +1654,7 @@ a {
 .sidebar__item__categories ul li a span {
 	float: right;
 	font-weight: 400;
+
 }
 
 

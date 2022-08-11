@@ -10,10 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,15 +21,9 @@ public class BlogService {
     private BlogRepository blogRepository;
 
     //Index Page
-
     public List<Blog> findAllBlogsIndex(){
         return blogRepository.findBlogsByStatusEqualsOrderByPublishedAtDesc();
     }
-
-    public List<Blog> findAllBlogsIndexLimit(){
-        return blogRepository.findByStatusEqualsOrderByPublishedAtDescLimit();
-    }
-
 
     public Page<Blog> findAllBlogsPageContainTitle(int page, int pageSize, String title){
         Pageable pageable = PageRequest.of(page, pageSize);
@@ -43,7 +34,7 @@ public class BlogService {
         return blogRepository.getByCategories_NameContainsIgnoreCaseAllIgnoreCase(name);
     }
 
-    public List<Blog> getBlogsByHighComment(){
+    public List<Blog> sortCommentBlog(){
         List<Blog> blogs = findAllBlogsIndex();
         Collections.sort(blogs, new Comparator<Blog>() {
             @Override
@@ -54,9 +45,34 @@ public class BlogService {
         return blogs;
     }
 
+    public List<Blog> getBlogsByHighComment(){
+        List<Blog> blogs = sortCommentBlog();
+        List<Blog> newblogs = new ArrayList<>();
+        for (int i = 1; i < 5; i++) {
+            newblogs.add(i - 1,blogs.get(i));
+        }
+        return newblogs;
+    }
+
     public Blog getBlogHighestComment(){
-        List<Blog> blogs = getBlogsByHighComment();
+        List<Blog> blogs = sortCommentBlog();
         return blogs.get(0);
     }
+
+    public List<Blog> getBlogsHeader(){
+        List<Blog> blogs = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            blogs.add(i,findAllBlogsIndex().get(i));
+        }
+        return blogs;
+    }
+
+
+    //Category Page
+    public Page<Blog> getAllBlogsByCategoryAndTitle(int page, int pageSize, String title, String name){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return blogRepository.getByTitleContainsIgnoreCaseAndStatusEqualsAndCategories_NameOrderByPublishedAtDesc(title,name,pageable);
+    }
+
 
 }
