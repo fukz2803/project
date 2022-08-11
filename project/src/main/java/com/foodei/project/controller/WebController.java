@@ -29,13 +29,19 @@ public class WebController {
     public String getHomePage(Model model,
                               @RequestParam(required = false, defaultValue = "") String keyword,
                               @RequestParam(required = false,defaultValue = "1") Integer page){
-//        Page<BlogInfo> blogPage = blogService.getAllBlogIndex(page -1, 7);
+        Page<Blog> blogPage = blogService.findAllBlogsPageContainTitle(page -1, 8, keyword);
 
-//        int totalPages = blogPage.getTotalPages();
-//        model.addAttribute("totalPages", totalPages);
+        List<Blog> blogListPage = blogPage.getContent();
+        model.addAttribute("blogListPage",blogListPage);
+
+        int totalPages = blogPage.getTotalPages();
+        model.addAttribute("totalPages", totalPages);
 
         List<Blog> blogList = blogService.findAllBlogsIndex();
         model.addAttribute("blogList", blogList);
+
+        List<Blog> blogListLimit = blogService.findAllBlogsIndexLimit();
+        model.addAttribute("blogListLimit", blogListLimit);
 
         List<Category> categoryList = categoryService.findAllCategoryIndex();
         model.addAttribute("categoryList",categoryList);
@@ -51,13 +57,19 @@ public class WebController {
         return "web/index";
     }
 
+    @GetMapping("/blogs")
+    public String getBlogsPage(){
+
+        return "web/blogs";
+    }
+
 //    @GetMapping("/category/{name}")
 //    public String getCategoryPage2(@PathVariable("name") String categoryName){
 //        return "web/categories-list";
 //    }
 
     @GetMapping("/category")
-    public String getCa(){
+    public String getCategoryPage(){
         return "web/categories-list";
     }
 

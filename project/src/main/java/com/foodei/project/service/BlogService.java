@@ -23,8 +23,20 @@ public class BlogService {
     @Autowired
     private BlogRepository blogRepository;
 
+    //Index Page
+
     public List<Blog> findAllBlogsIndex(){
-        return blogRepository.findByStatusEqualsOrderByPublishedAtDesc();
+        return blogRepository.findBlogsByStatusEqualsOrderByPublishedAtDesc();
+    }
+
+    public List<Blog> findAllBlogsIndexLimit(){
+        return blogRepository.findByStatusEqualsOrderByPublishedAtDescLimit();
+    }
+
+
+    public Page<Blog> findAllBlogsPageContainTitle(int page, int pageSize, String title){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return blogRepository.getByTitleContainsIgnoreCaseAndStatusEqualsOrderByPublishedAtDesc(title, pageable);
     }
 
     public List<Blog> getBlogsByCategoryName(String name){
