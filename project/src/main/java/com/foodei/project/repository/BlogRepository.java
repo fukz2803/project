@@ -37,6 +37,7 @@ public interface BlogRepository extends JpaRepository<Blog, String> {
             order by b.publishedAt DESC""")
     Page<Blog> getByTitleContainsIgnoreCaseAndStatusEqualsAndCategories_NameOrderByPublishedAtDesc(String title, String name, Pageable pageable);
 
+    Blog getBlogById(String id);
 
 
 

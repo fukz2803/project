@@ -40,4 +40,10 @@ public class Comment {
         createAt = LocalDateTime.now().minusMonths(1);
     }
 
+
+    @PreUpdate
+    public void preUpdate() {
+        updated_at = LocalDateTime.now();
+
+    }
 }

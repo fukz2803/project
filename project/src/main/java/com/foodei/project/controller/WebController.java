@@ -123,8 +123,11 @@ public class WebController {
         return "web/about";
     }
 
-    @GetMapping("/detail")
-    public String getDetailPage(){
+    @GetMapping("/detail/{id}")
+    public String getDetailPage(Model model,
+                                @PathVariable("id") String id){
+        Blog blog = blogService.getBlogById(id);
+        model.addAttribute("blog", blog);
         return "web/single-post";
     }
 

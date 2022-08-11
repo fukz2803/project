@@ -67,12 +67,14 @@ public class BlogService {
         return blogs;
     }
 
-
     //Category Page
     public Page<Blog> getAllBlogsByCategoryAndTitle(int page, int pageSize, String title, String name){
         Pageable pageable = PageRequest.of(page, pageSize);
         return blogRepository.getByTitleContainsIgnoreCaseAndStatusEqualsAndCategories_NameOrderByPublishedAtDesc(title,name,pageable);
     }
 
-
+    //Detail Page
+    public Blog getBlogById(String id){
+        return blogRepository.getBlogById(id);
+    }
 }

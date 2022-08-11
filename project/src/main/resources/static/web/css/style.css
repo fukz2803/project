@@ -2097,8 +2097,13 @@ a {
 	margin-bottom: 50px;
 }
 
-.single-post__tags a {
+.single-post__tags li {
+	list-style: none;
 	display: inline-block;
+}
+
+.single-post__tags a {
+
 	font-size: 13px;
 	color: #444444;
 	background: #f2f2f2;
