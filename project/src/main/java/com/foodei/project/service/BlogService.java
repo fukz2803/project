@@ -2,6 +2,7 @@ package com.foodei.project.service;
 
 import com.foodei.project.dto.BlogInfo;
 import com.foodei.project.entity.Blog;
+import com.foodei.project.entity.Category;
 import com.foodei.project.entity.Comment;
 import com.foodei.project.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +77,21 @@ public class BlogService {
     //Detail Page
     public Blog getBlogById(String id){
         return blogRepository.getBlogById(id);
+    }
+
+    //Dashboard - blogs
+    public String showCategoryBlog(Blog blog){
+        return String.join(", ", blog.getCategories().stream().map(Category::getName).toList());
+    }
+
+    public Page<Blog> findAllBlogsPageByTitle(int page, int pageSize, String title){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return blogRepository.findByTitleContainsIgnoreCaseOrderByCreateAtDesc(title, pageable);
+    }
+
+    //Dashboard - own blogs
+    public Page<Blog> findAllBlogByUserId(int page, int pageSize, String title, Integer id){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return blogRepository.findByTitleContainsIgnoreCaseAndUser_IdEqualsOrderByCreateAtDesc(title, id, pageable);
     }
 }

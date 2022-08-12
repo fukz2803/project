@@ -21,6 +21,7 @@
 
     <!-- Custom styles for this template-->
     <link th:href="@{/dashboard/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/dashboard/css/style.css}">
 </head>
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -98,12 +99,6 @@
     <!-- Custom scripts for all pages-->
     <script th:src="@{/dashboard/js/sb-admin-2.min.js}"></script>
 
-    <!-- Page level plugins -->
-    <script th:src="@{/dashboard/vendor/chart.js/Chart.min.js}"></script>
-
-    <!-- Page level custom scripts -->
-    <script th:src="@{/dashboard/js/demo/chart-area-demo.js}"></script>
-    <script th:src="@{/dashboard/js/demo/chart-pie-demo.js}"></script>
     <!--    Js-->
     <th:block th:replace="~{js} ?: ~{}"></th:block>
 </body>

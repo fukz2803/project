@@ -1,0 +1,8 @@
+#dataTable a{
+    color: #858796;
+    text-decoration: none;
+}
+
+#dataTable a:hover{
+    color: #4e73df;
+}
