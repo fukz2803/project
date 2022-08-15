@@ -27,7 +27,7 @@
                                             <ul class="label" >
                                                 <li th:each="categoryBlog : ${listBlogIndex.get(0).categories}" th:text="${categoryBlog.name}">Vegan</li>
                                             </ul>
-                                            <h4><a th:href="@{/detail/{id} (id=${listBlogIndex.get(0).id})}" th:text="${listBlogIndex.get(0).title}"></a></h4>
+                                            <h4><a th:href="@{/detail/{id}/{slug} (id=${listBlogIndex.get(0).id}, slug = ${listBlogIndex.get(0).slug})}" th:text="${listBlogIndex.get(0).title}"></a></h4>
                                             <ul class="widget">
                                                 <li>by <span th:text="${listBlogIndex.get(0).user.name}">Admin</span></li>
                                                 <li>3 min read</li>
@@ -49,7 +49,7 @@
                                             <ul class="label" >
                                                 <li th:each="categoryBlog : ${listBlogIndex.get(1).categories}" th:text="${categoryBlog.name}">Vegan</li>
                                             </ul>
-                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(1).id})}" th:text="${listBlogIndex.get(1).title}"></a></h5>
+                                            <h5 ><a th:href="@{/detail/{id}/{slug} (id=${listBlogIndex.get(1).id}, slug = ${listBlogIndex.get(1).slug})}" th:text="${listBlogIndex.get(1).title}"></a></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                             <ul class="label" >
                                                 <li th:each="categoryBlog : ${listBlogIndex.get(2).categories}" th:text="${categoryBlog.name}">Vegan</li>
                                             </ul>
-                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(2).id})}" th:text="${listBlogIndex.get(2).title}"></a></h5>
+                                            <h5 ><a th:href="@{/detail/{id}/{slug} (id=${listBlogIndex.get(2).id}, slug = ${listBlogIndex.get(2).slug})}" th:text="${listBlogIndex.get(2).title}"></a></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                                             <ul class="label" >
                                                 <li th:each="categoryBlog : ${listBlogIndex.get(3).categories}" th:text="${categoryBlog.name}">Vegan</li>
                                             </ul>
-                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(3).id})}" th:text="${listBlogIndex.get(3).title}"></a></h5>
+                                            <h5 ><a th:href="@{/detail/{id}/{slug} (id=${listBlogIndex.get(3).id}, slug = ${listBlogIndex.get(3).slug})}" th:text="${listBlogIndex.get(3).title}"></a></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                                             <ul class="label" >
                                                 <li th:each="categoryBlog : ${listBlogIndex.get(4).categories}" th:text="${categoryBlog.name}">Vegan</li>
                                             </ul>
-                                            <h4><a th:href="@{/detail/{id} (id=${listBlogIndex.get(4).id})}" th:text="${listBlogIndex.get(4).title}"></a></h4>
+                                            <h4><a th:href="@{/detail/{id}/{slug} (id=${listBlogIndex.get(4).id}, slug = ${listBlogIndex.get(4).slug})}" th:text="${listBlogIndex.get(4).title}"></a></h4>
                                             <ul class="widget">
                                                 <li>by <span th:text="${listBlogIndex.get(4).user.name}">Admin</span></li>
                                                 <li>3 min read</li>
@@ -125,7 +125,7 @@
                                             <ul class="label" >
                                                 <li th:each="categoryBlog : ${listBlogIndex.get(5).categories}" th:text="${categoryBlog.name}">Vegan</li>
                                             </ul>
-                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(5).id})}" th:text="${listBlogIndex.get(1).title}"></a></h5>
+                                            <h5 ><a th:href="@{/detail/{id}/{slug} (id=${listBlogIndex.get(5).id}, slug = ${listBlogIndex.get(5).slug})}" th:text="${listBlogIndex.get(1).title}"></a></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@
                                             <ul class="label" >
                                                 <li th:each="categoryBlog : ${listBlogIndex.get(6).categories}" th:text="${categoryBlog.name}">Vegan</li>
                                             </ul>
-                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(6).id})}" th:text="${listBlogIndex.get(6).title}"></a></h5>
+                                            <h5 ><a th:href="@{/detail/{id}/{slug} (id=${listBlogIndex.get(6).id}, slug = ${listBlogIndex.get(6).slug})}" th:text="${listBlogIndex.get(6).title}"></a></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@
                                             <ul class="label" >
                                                 <li th:each="categoryBlog : ${listBlogIndex.get(7).categories}" th:text="${categoryBlog.name}">Vegan</li>
                                             </ul>
-                                            <h5 ><a th:href="@{/detail/{id} (id=${listBlogIndex.get(7).id})}" th:text="${listBlogIndex.get(7).title}"></a></h5>
+                                            <h5 ><a th:href="@{/detail/{id}/{slug} (id=${listBlogIndex.get(7).id}, slug = ${listBlogIndex.get(7).slug})}" th:text="${listBlogIndex.get(7).title}"></a></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@
 <!--                                            <ul class="label" >-->
 <!--                                                <li th:each="categoryBlog : ${blog.categories}"><a th:href="@{/category/{name} (name=${categoryBlog.name.toLowerCase()})}" th:text="${categoryBlog.name}"></a></li>-->
 <!--                                            </ul>-->
-<!--                                            <h4><a th:href="@{/detail/{id} (id=${blog.id})}" th:text="${blog.title}"></a></h4>-->
+<!--                                            <h4><a th:href="@{/detail/{id}/{slug} (id=${blog.id}, slug = ${blog.slug})}" th:text="${blog.title}"></a></h4>-->
 <!--                                            <ul class="widget">-->
 <!--                                                <li>by <span th:text="${blog.user.name}">Admin</span></li>-->
 <!--                                                <li>3 min read</li>-->
@@ -233,7 +233,7 @@
                                     <ul class="post__label--large" >
                                         <li th:each="categoryblogHighestComment : ${blogHighestComment.categories}"><a th:href="@{/category/{name} (name=${categoryblogHighestComment.name.toLowerCase()})}" th:text="${categoryblogHighestComment.name}"></a> </li>
                                     </ul>
-                                    <h3><a th:href="@{/detail/{id} (id=${blogHighestComment.id})}" th:text="${blogHighestComment.title}">The Absolute Best Way to Cook Steak Perfectly, According to Wayyy Too
+                                    <h3><a th:href="@{/detail/{id}/{slug} (id=${blogHighestComment.id}, slug = ${blogHighestComment.slug})}" th:text="${blogHighestComment.title}">The Absolute Best Way to Cook Steak Perfectly, According to Wayyy Too
                                         Many Tests</a></h3>
                                     <ul class="post__widget">
                                         <li>by <span th:text="${blogHighestComment.user.name}" >Admin</span></li>
@@ -241,7 +241,7 @@
                                         <li><span th:text="${blogHighestComment.comments.size()}"></span> Comment</li>
                                     </ul>
                                     <p th:text="${blogHighestComment.description}"></p>
-                                    <a th:href="@{/detail/{id} (id=${blogHighestComment.id})}" class="primary-btn">Read more</a>
+                                    <a th:href="@{/detail/{id}/{slug} (id=${blogHighestComment.id}, slug = ${blogHighestComment.slug})}" class="primary-btn">Read more</a>
                                     <div class="post__social">
                                         <span>Share</span>
                                         <a href="#"><i class="fa fa-facebook"></i> <span>82</span></a>
@@ -268,7 +268,7 @@
                                                     <li th:each="categoryBlogPage : ${blogPage.categories}" >
                                                         <a th:href="@{/category/{name} (name=${categoryBlogPage.name})}" th:text="${categoryBlogPage.name}"></a></li>
                                                 </ul>
-                                                <h3><a th:href="@{/detail/{id} (id=${blogPage.id})}" th:text="${blogPage.title}">The Best Weeknight Baked Potatoes, 3 Creative Ways</a></h3>
+                                                <h3><a th:href="@{/detail/{id}/{slug} (id=${blogPage.id}, slug = ${blogPage.slug})}" th:text="${blogPage.title}">The Best Weeknight Baked Potatoes, 3 Creative Ways</a></h3>
                                                 <ul class="post__widget">
                                                     <li>by <span th:text="${blogPage.user.name}">Admin</span></li>
                                                     <li>3 min read</li>
@@ -320,7 +320,7 @@
                                          th:styleappend="|background-image:url(${blogHighestComment.thumbnail})|">
                                         <div class="sidebar__feature__item__large--text">
                                             <span th:text="${blogHighestComment.categories.get(0).name}">Dinner</span>
-                                            <h5><a th:href="@{'/detail/' + ${blogHighestComment.id} }" th:text="${blogHighestComment.title}">This Japanese Way of Making Iced Coffee Is a Game...</a></h5>
+                                            <h5><a th:href="@{'/detail/' + ${blogHighestComment.id} + '/' + ${blogHighestComment.slug} }" th:text="${blogHighestComment.title}">This Japanese Way of Making Iced Coffee Is a Game...</a></h5>
                                         </div>
                                     </div>
                                     <div class="sidebar__feature__item__list">
@@ -331,7 +331,7 @@
                                             </div>
                                             <div class="post__text">
                                                 <span th:text="${blogComment.categories.get(0).name}">Dinner</span>
-                                                <h5><a th:href="@{/detail/{id} (id=${blogComment.id})}" th:text="${blogComment.title}">Grilled Potato and Green Bean Salad</a></h5>
+                                                <h5><a th:href="@{/detail/{id}/{slug} (id=${blogComment.id} , slug = ${blogComment.slug})}" th:text="${blogComment.title}">Grilled Potato and Green Bean Salad</a></h5>
                                             </div>
                                         </div>
                                     </div>

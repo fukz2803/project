@@ -19,53 +19,11 @@ public class DashboardController {
     private BlogService blogService;
 
     @GetMapping("/dashboard")
-    public String getDashboardPage(){
+    public String getDashboardPage(Model model, @RequestParam(required = false, defaultValue = "") String keyword){
+        model.addAttribute("keyword", keyword);
         return "dashboard/index";
     }
 
-    @GetMapping("/dashboard/blogs")
-    public String getBlogListPage(Model model,
-                                  @RequestParam(required = false, defaultValue = "") String keyword,
-                                  @RequestParam(required = false,defaultValue = "1") Integer page){
-
-        Page<Blog> blogPage = blogService.findAllBlogsPageByTitle(page - 1, 10, keyword);
-
-        List<Blog> blogListPage = blogPage.getContent();
-        model.addAttribute("blogListPage",blogListPage);
-
-        model.addAttribute("blogService", blogService);
-
-        int totalPages = blogPage.getTotalPages();
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("keyword", keyword);
-        return "dashboard/blogs";
-    }
-
-    @GetMapping("/dashboard/my-blogs/{id}")
-    public String getMyBlogsPage(Model model,
-                                @PathVariable("id") Integer id,
-                                @RequestParam(required = false, defaultValue = "") String keyword,
-                                @RequestParam(required = false,defaultValue = "1") Integer page){
-
-        Page<Blog> blogPage = blogService.findAllBlogByUserId(page - 1, 10, keyword, id);
-
-        List<Blog> blogListPage = blogPage.getContent();
-        model.addAttribute("blogListPage",blogListPage);
-
-        model.addAttribute("blogService", blogService);
-
-        int totalPages = blogPage.getTotalPages();
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("keyword", keyword);
-        return "dashboard/my-blogs";
-    }
-
-    @GetMapping("/dashboard/create-blog")
-    public String getCreateBlogPage(){
-        return "dashboard/create-blog";
-    }
 
     @GetMapping("/dashboard/users")
     public String getUserListPage(){

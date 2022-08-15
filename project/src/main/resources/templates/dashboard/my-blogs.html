@@ -24,7 +24,7 @@
             </div>
             <div class="card-body">
                 <div th:if="${#lists.isEmpty(blogListPage)}">
-                    <p>Không tìm thấy kết quả nào</p>
+                    <p>Search not found.</p>
                 </div>
                 <div class="table-responsive">
                     <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -35,7 +35,7 @@
                                     <div id="dataTable_filter" class="dataTables_filter">
                                         <label>Search:
                                             <input type="search" class="form-control form-control-sm" name="keyword"
-                                                   th:placeholder="${keyword.isEmpty()} ? 'Search for...' : ${keyword}"
+                                                   th:placeholder="${keyword.isBlank()} ? 'Search for...' : ${keyword}"
                                                    aria-controls="dataTable">
                                         </label>
                                     </div>
@@ -49,8 +49,8 @@
                                 <th>Author</th>
                                 <th>Category</th>
                                 <th>Status</th>
-                                <th>Created at</th>
                                 <th>Published at</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -59,20 +59,22 @@
                                 <th>Author</th>
                                 <th>Category</th>
                                 <th>Status</th>
-                                <th>Created at</th>
                                 <th>Published at</th>
+                                <th>Action</th>
                             </tr>
                             </tfoot>
                             <tbody>
                             <tr th:each="blogPage : ${blogListPage}">
                                 <td>
-                                    <a th:href="@{/dashboard/blog-detail/{id} (id = ${blogPage.id})}" th:text="${blogPage.title}"></a>
+                                    <a th:href="@{/dashboard/blogs/detail/{id}/{slug} (id = ${blogPage.id}, slug = ${blogPage.slug})}" th:text="${blogPage.title}"></a>
                                 </td>
                                 <td th:text="${blogPage.user.name}"></td>
                                 <td th:text="${blogService.showCategoryBlog(blogPage)}"></td>
                                 <td th:text="${blogPage.status == 1} ? 'Public' : 'Hide'"></td>
-                                <td th:text="${#temporals.format(blogPage.createAt,'dd/MM/yyyy')}"></td>
                                 <td th:text="${#temporals.format(blogPage.publishedAt,'dd/MM/yyyy')}"></td>
+                                <td><a class="btn btn-danger btn-circle" th:href="@{/dashboard/blogs/delete/{id} (id = ${blogPage.id})}">
+                                    <i class="fas fa-trash"></i>
+                                </a></td>
                             </tr>
                             </tbody>
                         </table>

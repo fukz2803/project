@@ -94,4 +94,9 @@ public class BlogService {
         Pageable pageable = PageRequest.of(page, pageSize);
         return blogRepository.findByTitleContainsIgnoreCaseAndUser_IdEqualsOrderByCreateAtDesc(title, id, pageable);
     }
+
+    //Dashboard - delete blog
+    public void deleteBlog(Blog blog){
+        blogRepository.delete(blog);
+    }
 }

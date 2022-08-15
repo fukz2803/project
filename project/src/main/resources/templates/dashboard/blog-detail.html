@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{}, ~{:: #main}, ~{:: #js})}">
+
+<head>
+    <title>FoodieBlog Admin | Blog Detail</title>
+<!--    <th:block id="css">-->
+<!--        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />-->
+<!--        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>-->
+<!--    </th:block>-->
+</head>
+
+<body id="page-top">
+
+        <!-- Begin Page Content -->
+        <!-- /.container-fluid -->
+
+
+            <section class="content" id="main">
+                <div class="container-fluid">
+                    <div class="row py-2">
+                        <div class="col-6">
+                            <a th:href="@{/dashboard/blogs}" class="btn btn-default">
+                                <i class="fas fa-chevron-left"></i> Back
+                            </a>
+                            <button type="submit" class="btn btn-info px-4" id="btn-save">
+                                Save
+                            </button>
+                        </div>
+
+                        <div class="col-6 d-flex justify-content-end">
+                            <a th:href="@{/dashboard/blogs/delete/{id} (id = ${blog.id})}" type="button" class="btn btn-danger px-4" id="btn-delete">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label for="blog-title">Title</label>
+                                                <input type="text" class="form-control" id="blog-title" th:value="${blog.title}"/>
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="blog-content">Content</label>
+                                                <textarea id="blog-content" th:text="${blog.content}"></textarea>
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="blog-description">Description</label>
+                                                <textarea id="blog-description" class="form-control" rows="3" th:text="${blog.description}"></textarea>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="blog-status">Status </label>
+                                                <select id="blog-status" class="form-control">
+                                                    <option value="0" th:selected="${blog.status} == 0">
+                                                        Hide
+                                                    </option>
+                                                    <option value="1" th:selected="${blog.status} == 1">
+                                                        Public
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="blog-category">Category</label>
+                                                <div class="select2-purple">
+                                                    <select class="select2 form-control" multiple="multiple" id="blog-category">
+                                                        <option th:each="category : ${categories}"
+                                                                th:value="${category.id}"
+                                                                th:text="${category.name}">
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="thumbnail-preview-container mb-3">
+                                                    <img th:src="${blog.thumbnail}" alt="" id="thumbnail" />
+                                                </div>
+                                                <label for="blog-logo-input" class="btn btn-warning">Choose image</label>
+                                                <input type="file" id="blog-logo-input" class="d-none">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+    <th:block id="js">
+
+        <script th:inline="javascript">
+            // $(".select2").select2();
+
+            // $(document).ready(function (){
+            //     $('.select2').select2();
+            // });
+
+            const category =$("#blog-category");
+            category.select2();
+
+            console.log("heeloo");
+
+
+        </script>
+    </th:block>
+
+</body>
+
+</html>

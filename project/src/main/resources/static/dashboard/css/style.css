@@ -6,3 +6,10 @@
 #dataTable a:hover{
     color: #4e73df;
 }
+
+#dataTable .btn-danger {
+    color: #ffffff;
+}
+.thumbnail-preview-container img {
+    max-width: 100%;
+}

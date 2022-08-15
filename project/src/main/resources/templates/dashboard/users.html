@@ -3,125 +3,138 @@
       th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{:: #js})}">
 
 <head>
-    <title>FoodieBlog | Users</title>
+    <title>FoodieBlog Admin | Blogs</title>
     <th:block id="css">
         <!-- Custom styles for this page -->
-        <link th:href="@{dashboard/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+        <link th:href="@{/dashboard/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
     </th:block>
 </head>
 
 <body id="page-top">
-        <th:block id="main">
-            <div class="container-fluid">
+<th:block id="main">
+    <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Danh sách user</h1>
-                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                    For more information about DataTables, please visit the <a target="_blank"
-                                                                               href="https://datatables.net">official DataTables documentation</a>.</p>
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Tables</h1>
 
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                        <td>63</td>
-                                        <td>2011/07/25</td>
-                                        <td>$170,750</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ashton Cox</td>
-                                        <td>Junior Technical Author</td>
-                                        <td>San Francisco</td>
-                                        <td>66</td>
-                                        <td>2009/01/12</td>
-                                        <td>$86,000</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                    <ul class="pagination">
-                                        <li class="paginate_button page-item previous disabled" id="dataTable_previous">
-                                            <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                                        </li>
-                                        <li class="paginate_button page-item active">
-                                            <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                                        </li>
-                                        <li class="paginate_button page-item ">
-                                            <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                                        </li>
-                                        <li class="paginate_button page-item ">
-                                            <a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                                        </li>
-                                        <li class="paginate_button page-item ">
-                                            <a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a>
-                                        </li>
-                                        <li class="paginate_button page-item ">
-                                            <a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a>
-                                        </li>
-                                        <li class="paginate_button page-item ">
-                                            <a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a>
-                                        </li>
-                                        <li class="paginate_button page-item next" id="dataTable_next">
-                                            <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                                        </li>
-                                    </ul>
-                                </div>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Users</h6>
+            </div>
+            <div class="card-body">
+                <div th:if="${#lists.isEmpty(userList)}">
+                    <p>Search not found.</p>
+                </div>
+                <div class="table-responsive">
+                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6"></div>
+                            <div class="col-sm-12 col-md-6">
+                                <form th:action="@{/dashboard/admin/users}" method="get">
+                                    <div id="dataTable_filter" class="dataTables_filter">
+                                        <label>Search:
+                                            <input type="search" class="form-control form-control-sm" name="keyword"
+                                                   th:placeholder="${keyword.isEmpty()} ? 'Search for...' : ${keyword}"
+                                                   aria-controls="dataTable">
+                                        </label>
+                                    </div>
+                                </form>
                             </div>
-                           
+                        </div>
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Id</th>
+                                <th>User name</th>
+                                <th>Email</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>No.</th>
+                                <th>Id</th>
+                                <th>User name</th>
+                                <th>Email</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr th:each="user,iStat : ${userList}">
+                                <td th:text="${iStat.index + 1}"></td>
+                                <td>
+                                    <a th:href="@{/dashboard/admin/users/{id} (id = ${user.id})}" th:text="${user.id}"></a>
+                                </td>
+                                <td th:text="${user.name}"></td>
+                                <td th:text="${user.email}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate" th:unless="${#lists.isEmpty(userList)}">
+                            <ul class="pagination">
+                                <li class="paginate_button page-item previous"  th:if="${keyword.isEmpty()}" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                    <a th:if="${currentPage > 1}"
+                                       th:href="@{'/dashboard/admin/users' + '?page=' + ${currentPage - 1}}"
+                                       aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                                    <span  th:unless="${currentPage > 1}" class="page-link">Previous</span>
+                                </li>
+                                <li class="paginate_button page-item previous"  th:unless="${keyword.isEmpty()}" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                                    <a th:if="${currentPage > 1}"
+                                       th:href="@{'/dashboard/admin/users' + '?page=' + ${currentPage - 1}}"
+                                       aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                                    <span  th:unless="${currentPage > 1}" class="page-link">Previous</span>
+                                </li>
+                                <li class="paginate_button page-item"
+                                    th:if="${keyword.isEmpty()}"
+                                    th:each="i: ${#numbers.sequence(1, totalPages)}"
+                                    th:classappend="${i == currentPage} ? 'active' : ''">
+                                    <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link"
+                                       th:if="${i != currentPage}"
+                                       th:href="@{'/dashboard/admin/users?page=' + ${i}}">[[${i}]]</a>
+                                    <span th:unless="${i != currentPage}" class="page-link">[[${i}]]</span>
+                                </li>
+                                <li class="paginate_button page-item"
+                                    th:unless="${keyword.isEmpty()}"
+                                    th:each="i: ${#numbers.sequence(1, totalPages)}"
+                                    th:classappend="${i == currentPage} ? 'active' : ''">
+                                    <a aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link"
+                                       th:if="${i != currentPage}"
+                                       th:href="@{'/dashboard/admin/users?page=' + ${i} +'&keyword=' + ${keyword}}">[[${i}]]</a>
+                                    <span th:unless="${i != currentPage}" class="page-link">[[${i}]]</span>
+                                </li>
+                                <li class="paginate_button page-item next" th:if="${keyword.isEmpty()}" th:classappend="${currentPage == totalPages} ? 'disabled' : ''">
+                                    <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link"
+                                       th:if="${currentPage < totalPages}"
+                                       th:href="@{'/dashboard/admin/users' + '?page=' + ${currentPage + 1}}">Next</a>
+                                    <span th:unless="${currentPage < totalPages}" class="page-link">Next</span>
+                                </li>
+                                <li class="paginate_button page-item next" th:unless="${keyword.isEmpty()}" th:classappend="${currentPage == totalPages} ? 'disabled' : ''">
+                                    <a aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link"
+                                       th:if="${currentPage < totalPages}"
+                                       th:href="@{'/dashboard/admin/users?page=' + ${currentPage + 1} +'&keyword=' + ${keyword}}">Next</a>
+                                    <span th:unless="${currentPage < totalPages}" class="page-link">Next</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+
                 </div>
-
             </div>
-        </th:block>
+        </div>
 
-    <th:block id="js">
+    </div>
+</th:block>
 
-        <!-- Page level plugins -->
-        <script th:src="@{dashboard/vendor/datatables/jquery.dataTables.min.js}"></script>
-        <script th:src="@{dashboard/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<th:block id="js">
 
-        <!-- Page level custom scripts -->
-        <script th:src="@{dashboard/js/demo/datatables-demo.js}"></script>
-    </th:block>
+    <!-- Page level plugins -->
+    <script th:src="@{/dashboard/vendor/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/dashboard/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+    <script th:src="@{/dashboard/js/demo/datatables-demo.js}"></script>
+
+    <!-- Page level custom scripts -->
+    <script th:src="@{/dashboard/js/demo/datatables-demo.js}"></script>
+</th:block>
 </body>
 
 </html>

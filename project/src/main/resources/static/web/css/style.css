@@ -2743,10 +2743,11 @@ a {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	letter-spacing: 1px;
+	background-color: #f2f2f2;
 }
 
 .signin__form .nav-item .nav-link.active {
-	background: #f2f2f2;
+	background: #fff;
 }
 
 .signin__form__text {

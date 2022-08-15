@@ -90,7 +90,7 @@
                                                     <div class="label" th:text="${blogHeader.categories.get(0).name}">Vegan</div>
                                                 </div>
                                                 <div class="header__megamenu__item--text">
-                                                    <h5><a th:href="@{/detail/{id} (id = ${blogHeader.id})}" th:text="${#strings.substring(blogHeader.title,0,30) + '...'}">How to Make a Milkshake With Any Ice Cream ...</a>
+                                                    <h5><a th:href="@{/detail/{id}/{slug} (id = ${blogHeader.id}, slug = ${blogHeader.slug})}" th:text="${#strings.substring(blogHeader.title,0,30) + '...'}">How to Make a Milkshake With Any Ice Cream ...</a>
                                                     </h5>
                                                 </div>
                                             </div>

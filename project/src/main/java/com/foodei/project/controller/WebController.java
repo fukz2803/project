@@ -126,7 +126,7 @@ public class WebController {
         return "web/about";
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/detail/{id}/{slug}")
     public String getDetailPage(Model model,
                                 @PathVariable("id") String id){
         Blog blog = blogService.getBlogById(id);

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{}, ~{:: #main}, ~{})}">
+      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{}, ~{:: #main}, ~{:: #js})}">
 
 <head>
     <title>FoodieBlog Admin | Dashboard</title>
@@ -337,8 +337,19 @@
             </div>
 
         </div>
+
+
     </th:block>
     <!-- /.container-fluid -->
+
+<th:block id="js">
+    <!-- Page level plugins -->
+    <script th:src="@{/dashboard/vendor/chart.js/Chart.min.js}"></script>
+
+    <!-- Page level custom scripts -->
+    <script th:src="@{/dashboard/js/demo/chart-area-demo.js}"></script>
+    <script th:src="@{/dashboard/js/demo/chart-pie-demo.js}"></script>
+</th:block>
 </body>
 
 </html>

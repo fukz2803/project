@@ -42,7 +42,7 @@
                                                     <li th:each="categoryBlogPage : ${blogPage.categories}" >
                                                         <a th:href="@{/category/{name} (name=${categoryBlogPage.name})}" th:text="${categoryBlogPage.name}"></a></li>
                                                 </ul>
-                                                <h3><a th:href="@{/detail/{id} (id=${blogPage.id})}" th:text="${blogPage.title}">The Best Weeknight Baked Potatoes, 3 Creative Ways</a></h3>
+                                                <h3><a th:href="@{/detail/{id}/{slug} (id=${blogPage.id}, slug = ${blogPage.slug})}" th:text="${blogPage.title}">The Best Weeknight Baked Potatoes, 3 Creative Ways</a></h3>
                                                 <ul class="post__widget">
                                                     <li>by <span th:text="${blogPage.user.name}">Admin</span></li>
                                                     <li>3 min read</li>
@@ -145,7 +145,7 @@
                                                 </div>
                                                 <div class="post__text">
                                                     <span th:text="${blogComment.categories.get(0).name}">Dinner</span>
-                                                    <h5><a th:href="@{/detail/{id} (id=${blogComment.id})}" th:text="${blogComment.title}">Grilled Potato and Green Bean Salad</a></h5>
+                                                    <h5><a th:href="@{/detail/{id}/{slug} (id=${blogComment.id}, slug = ${blogComment.slug})}" th:text="${blogComment.title}">Grilled Potato and Green Bean Salad</a></h5>
                                                 </div>
                                             </div>
                                         </div>
