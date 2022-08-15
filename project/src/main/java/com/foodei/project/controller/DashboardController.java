@@ -25,33 +25,5 @@ public class DashboardController {
     }
 
 
-    @GetMapping("/dashboard/users")
-    public String getUserListPage(){
-        return "dashboard/users";
-    }
 
-    @GetMapping("/dashboard/create-user")
-    public String getCreateUserPage(){
-        return "dashboard/create-user";
-    }
-
-    @GetMapping("/dashboard/user")
-    public String getUserProfilePage(){
-        return "dashboard/profile";
-    }
-
-    @GetMapping("/dashboard/register")
-    public String getRegisterPage(){
-        return "dashboard/register";
-    }
-
-    @GetMapping("/dashboard/login")
-    public String getLoginPage(){
-        return "dashboard/login";
-    }
-
-    @GetMapping("/dashboard/forgot-password")
-    public String getForgotPasswordPage(){
-        return "dashboard/forgot-password";
-    }
 }

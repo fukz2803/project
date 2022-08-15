@@ -7,9 +7,27 @@
     color: #4e73df;
 }
 
-#dataTable .btn-danger {
+#dataTable .btn-circle {
     color: #ffffff;
 }
 .thumbnail-preview-container img {
     max-width: 100%;
+}
+
+#dataTable .btn-danger:hover{
+    color: #dc3545;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+#dataTable .btn-success:hover{
+    color:#169b6b;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+#dataTable .btn-warning:hover{
+    color: #f4b30d;
+    background-color: #fff;
+    border-color: #fff;
 }

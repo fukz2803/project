@@ -48,6 +48,8 @@ public interface BlogRepository extends JpaRepository<Blog, String> {
     //Dashboard - own blogs
     Page<Blog> findByTitleContainsIgnoreCaseAndUser_IdEqualsOrderByCreateAtDesc(String title, Integer id, Pageable pageable);
 
+    List<Blog> findByUser_IdEquals(Integer id);
+
 
 
 }

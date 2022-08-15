@@ -20,4 +20,8 @@ public class UserService {
         Pageable pageable = PageRequest.of(page, pageSize);
         return userRepository.findByNameContainsIgnoreCaseAndEmailContainsIgnoreCase(name, email, pageable);
     }
+
+    public User getUserById(Integer id){
+        return userRepository.getById(id);
+    }
 }

@@ -99,4 +99,9 @@ public class BlogService {
     public void deleteBlog(Blog blog){
         blogRepository.delete(blog);
     }
+
+    //Dashboard - own blogs
+    public List<Blog> getBlogsByUserId(Integer id){
+        return blogRepository.findByUser_IdEquals(id);
+    }
 }

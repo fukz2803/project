@@ -17,20 +17,25 @@
     </button>
 
     <!-- Topbar Search -->
-    <form th:action="@{/dashboard/blogs}" method="get"
-            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div class="input-group">
-            <input type="search" name="keyword" class="form-control bg-light border-0 small"
-                   th:placeholder="${keyword.isEmpty()} ? 'Search for...' : ${keyword}"
-                   aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
-            </div>
-        </div>
-    </form>
-
+<!--    <form th:action="@{/dashboard/blogs}" method="get"-->
+<!--            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">-->
+<!--        <div class="input-group">-->
+<!--            <input type="search" name="keyword" class="form-control bg-light border-0 small"-->
+<!--                   th:placeholder="${keyword.isEmpty()} ? 'Search for...' : ${keyword}"-->
+<!--                   aria-label="Search" aria-describedby="basic-addon2">-->
+<!--            <div class="input-group-append">-->
+<!--                <button class="btn btn-primary" type="submit">-->
+<!--                    <i class="fas fa-search fa-sm"></i>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+    <a th:href="@{/}" class="btn btn-primary btn-icon-split btn-sm">
+        <span class="icon text-white-50">
+            <i class="fas fa-home"></i>
+        </span>
+        <span class="text">Foodie Blog</span>
+    </a>
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
 
