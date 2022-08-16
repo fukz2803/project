@@ -10,4 +10,6 @@ public class ProjectApplication {
 		SpringApplication.run(ProjectApplication.class, args);
 	}
 
+	String UUID = java.util.UUID.randomUUID().toString();
+
 }

@@ -1,9 +1,7 @@
 package com.foodei.project.service;
 
-import com.foodei.project.dto.BlogInfo;
 import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.Category;
-import com.foodei.project.entity.Comment;
 import com.foodei.project.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class BlogService {
@@ -90,9 +87,9 @@ public class BlogService {
     }
 
     //Dashboard - own blogs
-    public Page<Blog> findAllBlogByUserId(int page, int pageSize, String title, Integer id){
+    public Page<Blog> findAllBlogByUserId(int page, int pageSize, String title, UUID id){
         Pageable pageable = PageRequest.of(page, pageSize);
-        return blogRepository.findByTitleContainsIgnoreCaseAndUser_IdEqualsOrderByCreateAtDesc(title, id, pageable);
+        return blogRepository.findByTitleContainsIgnoreCaseAndUser_IdOrderByPublishedAtDesc(title, id, pageable);
     }
 
     //Dashboard - delete blog
@@ -101,7 +98,7 @@ public class BlogService {
     }
 
     //Dashboard - own blogs
-    public List<Blog> getBlogsByUserId(Integer id){
-        return blogRepository.findByUser_IdEquals(id);
+    public List<Blog> getBlogsByUserId(UUID id){
+        return blogRepository.findByUser_Id(id);
     }
 }

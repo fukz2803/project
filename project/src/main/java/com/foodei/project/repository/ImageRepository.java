@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ImageRepository extends JpaRepository<Image, UUID> {
-    List<Image> getImagesByUserId(Integer id);
+    List<Image> findByUser_Id(UUID id);
+
 }

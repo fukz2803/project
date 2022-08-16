@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class BlogController {
@@ -31,7 +32,7 @@ public class BlogController {
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
         if (page < 1){
-            return "dashboard/500";
+            return "dashboard/404";
         }
 
         Page<Blog> blogPage = blogService.findAllBlogsPageByTitle(page - 1, 20, keyword);
@@ -49,7 +50,7 @@ public class BlogController {
 
     @GetMapping("/dashboard/my-blogs/{id}")
     public String getMyBlogsPage(Model model,
-                                 @PathVariable("id") Integer id,
+                                 @PathVariable("id") UUID id,
                                  @RequestParam(required = false, defaultValue = "") String keyword,
                                  @RequestParam(required = false,defaultValue = "1") Integer page){
         model.addAttribute("currentPage", page);

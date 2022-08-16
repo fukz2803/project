@@ -1,6 +1,5 @@
 package com.foodei.project.service;
 
-import com.foodei.project.dto.UserDto;
 import com.foodei.project.entity.User;
 import com.foodei.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.modelmapper.ModelMapper;
+
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -21,7 +21,7 @@ public class UserService {
         return userRepository.findByNameContainsIgnoreCaseAndEmailContainsIgnoreCase(name, email, pageable);
     }
 
-    public User getUserById(Integer id){
+    public User getUserById(UUID id){
         return userRepository.getById(id);
     }
 }

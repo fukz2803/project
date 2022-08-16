@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{:: #js})}">
+      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{})}">
 
 <head>
     <title>FoodieBlog Admin | Blogs</title>
@@ -23,9 +23,6 @@
                         <h6 class="m-0 font-weight-bold text-primary">Blogs</h6>
                     </div>
                     <div class="card-body">
-                        <div th:if="${#lists.isEmpty(blogListPage)}">
-                            <p>Search not found.</p>
-                        </div>
                         <div class="table-responsive">
                             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
@@ -35,14 +32,17 @@
                                             <div id="dataTable_filter" class="dataTables_filter">
                                                 <label>Search:
                                                     <input type="search" class="form-control form-control-sm" name="keyword"
-                                                           th:placeholder="${keyword.isEmpty()} ? 'Search for...' : ${keyword}"
+                                                           th:placeholder="${keyword.isEmpty()} ? 'Search for title' : ${keyword}"
                                                            aria-controls="dataTable">
                                                 </label>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <div th:if="${#lists.isEmpty(blogListPage)}">
+                                    <p>Search not found.</p>
+                                </div>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" th:unless="${#lists.isEmpty(blogListPage)}">
                                     <thead>
                                     <tr>
                                         <th>Title</th>
@@ -133,16 +133,6 @@
             </div>
         </th:block>
 
-    <th:block id="js">
-
-        <!-- Page level plugins -->
-        <script th:src="@{/dashboard/vendor/datatables/jquery.dataTables.min.js}"></script>
-        <script th:src="@{/dashboard/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
-        <script th:src="@{/dashboard/js/demo/datatables-demo.js}"></script>
-
-        <!-- Page level custom scripts -->
-        <script th:src="@{/dashboard/js/demo/datatables-demo.js}"></script>
-    </th:block>
 </body>
 
 </html>

@@ -1,6 +1,5 @@
 package com.foodei.project.controller;
 
-import com.foodei.project.dto.UserDto;
 import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.User;
 import com.foodei.project.service.BlogService;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class UserController {
@@ -47,7 +47,7 @@ public class UserController {
 
     @GetMapping("/dashboard/admin/user/{id}")
     public String getUserDetail(Model model,
-                                @PathVariable("id") Integer id){
+                                @PathVariable("id") UUID id){
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
 

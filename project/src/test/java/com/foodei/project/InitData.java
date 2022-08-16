@@ -48,7 +48,7 @@ public class InitData {
                     .name(faker.name().fullName())
                     .email(faker.internet().emailAddress())
                     .password(faker.number().digits(3))
-                    .identityCard(new IdentityCard())
+                    .state(rd.nextInt(1,3))
                     .build();
 
             userRepository.save(user);
@@ -57,10 +57,10 @@ public class InitData {
 
     @Test
     void save_category() {
-        Category category1 = Category.builder().name("Breakfast").build();
-        Category category2 = Category.builder().name("Lunch").build();
-        Category category3 = Category.builder().name("Dinner").build();
-        Category category4 = Category.builder().name("Desserts").build();
+        Category category1 = Category.builder().name("Breakfast").avatar("dashboard/web/img/categories/cat-1.jpg").build();
+        Category category2 = Category.builder().name("Lunch").avatar("dashboard/web/img/categories/cat-2.jpg").build();
+        Category category3 = Category.builder().name("Dinner").avatar("dashboard/web/img/categories/cat-3.jpg").build();
+        Category category4 = Category.builder().name("Desserts").avatar("dashboard/web/img/categories/cat-4.jpg").build();
 
         categoryRepository.saveAll(List.of(category1,category2,category3,category4));
     }
@@ -88,7 +88,7 @@ public class InitData {
         List<User> users = userRepository.findAll();
 
         users.forEach(user -> {
-            List<Image> images = imageRepository.getImagesByUserId(user.getId());
+            List<Image> images = imageRepository.findByUser_Id(user.getId());
             String imageRd = images.get(rd.nextInt(images.size())).getUrl();
             user.setAvatar(imageRd);
             userRepository.save(user);
@@ -97,7 +97,7 @@ public class InitData {
 
     @Test
     void get_images_by_user_id() {
-        List<Image> images = imageRepository.getImagesByUserId(21);
+        List<Image> images = imageRepository.findByUser_Id();
         images.forEach(System.out::println);
     }
 
@@ -109,7 +109,7 @@ public class InitData {
         for (int i = 0; i < 30; i++) {
             User userRd = users.get(rd.nextInt(users.size()));
 
-            List<Image> images = imageRepository.getImagesByUserId(userRd.getId());
+            List<Image> images = imageRepository.findByUser_Id(userRd.getId());
             String imageRd = images.get(rd.nextInt(images.size())).getUrl();
 
             List<Category> categoriesRd = new ArrayList<>();
