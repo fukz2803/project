@@ -50,6 +50,8 @@
                                     <th>Id</th>
                                     <th>User name</th>
                                     <th>Email</th>
+                                    <th>Role</th>
+                                    <th>State</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -59,6 +61,8 @@
                                     <th>Id</th>
                                     <th>User name</th>
                                     <th>Email</th>
+                                    <th>Role</th>
+                                    <th>State</th>
                                     <th>Action</th>
                                 </tr>
                                 </tfoot>
@@ -68,6 +72,16 @@
                                     <td th:text="${user.id}"></td>
                                     <td><a th:href="@{/dashboard/admin/user/{id} (id = ${user.id})}" th:text="${user.name}"></a> </td>
                                     <td th:text="${user.email}"></td>
+                                    <td th:switch="${user.role}">
+                                        <span th:case="0">Admin</span>
+                                        <span th:case="1">Editor</span>
+                                        <span th:case="2">User</span>
+                                    </td>
+                                    <td th:switch="${user.state}">
+                                        <span th:case="1">Active</span>
+                                        <span th:case="2">Pending</span>
+                                        <span th:case="3">Disabled</span>
+                                    </td>
                                     <td>
                                         <a class="btn btn-success btn-circle">
                                             <i class="fas fa-check"></i>

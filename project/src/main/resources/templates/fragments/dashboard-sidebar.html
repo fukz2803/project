@@ -52,8 +52,8 @@
                    th:href="@{/dashboard/my-blogs}"><span><i class="bi bi-book-fill"></i></span>&nbsp;&nbsp;My blog
                 </a>
                 <a class="collapse-item"
-                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/create-blog'} ? 'active' : ''"
-                   th:href="@{/dashboard/create-blog}"><span><i class="bi bi-plus-square-fill"></i></span>&nbsp;&nbsp;Create blog
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/blogs/create-blog'} ? 'active' : ''"
+                   th:href="@{/dashboard/blogs/create-blog}"><span><i class="bi bi-plus-square-fill"></i></span>&nbsp;&nbsp;Create blog
                 </a>
             </div>
         </div>
@@ -64,7 +64,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Blogs
+        Categories
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
@@ -94,7 +94,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        User
+        Users
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->

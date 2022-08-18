@@ -35,7 +35,7 @@
                                   <div class="col-md-6">
                                       <div class="profile-head">
                                           <h5>Kshiti Ghelani</h5>
-                                          <h6>Web Developer and Designer</h6>
+<!--                                          <h6>Web Developer and Designer</h6>-->
                                           <p class="proile-rating">Blog : <span th:text="${blogs.size()}"></span> articles</p>
                                           <ul class="nav nav-tabs" id="myTab" role="tablist">
                                               <li class="nav-item">
@@ -70,7 +70,7 @@
                                               type="submit"
                                               class="profile-edit-btn"
                                               name="btnAddMore"
-                                              value="Lưu"
+                                              value="Save"
                                       />
                                   </div>
                               </div>
@@ -99,14 +99,6 @@
                                           >
                                               <div class="row">
                                                   <div class="col-md-3">
-                                                      <label>User Id</label>
-                                                  </div>
-                                                  <div class="col-md-6">
-                                                      <input class="form-control" type="text" name="" readonly th:value="${user.id}">
-                                                  </div>
-                                              </div>
-                                              <div class="row">
-                                                  <div class="col-md-3">
                                                       <label>Name</label>
                                                   </div>
                                                   <div class="col-md-6">
@@ -119,6 +111,50 @@
                                                   </div>
                                                   <div class="col-md-6">
                                                       <input class="form-control" type="text" name=""  th:value="${user.email}">
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-3">
+                                                      <label>Phone</label>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <input class="form-control" type="text" name="" th:value="${user.phone}">
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-3">
+                                                      <label>Role</label>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <select class="form-control">
+                                                          <option value="0" th:selected="${user.role == 0}" style="color:red">Admin</option>
+                                                          <option value="1" th:selected="${user.role == 1}" style="color:blue">Editor</option>
+                                                          <option value="2" th:selected="${user.role == 2}">User</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-3">
+                                                      <label>State</label>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <input class="form-control" type="text" name="" readonly th:if="${user.state == 1}" value="Active">
+                                                      <input class="form-control" type="text" name="" readonly th:if="${user.state == 2}" value="Pending">
+                                                      <input class="form-control" type="text" name="" readonly th:if="${user.state == 3}" value="Disabled">
+                                                  </div>
+                                              </div>
+                                              <div class="row mt-3">
+                                                  <div class="col-md-3">
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <div class="row">
+                                                          <div class="col-md-6">
+                                                              <a class="btn btn-success" th:classappend="${user.state == 1} ? 'disabled' : ''">Active</a>
+                                                          </div>
+                                                          <div class="col-md-6">
+                                                              <a class="btn btn-danger" th:classappend="${user.state != 1} ? 'disabled' : ''">Disable</a>
+                                                          </div>
+                                                      </div>
                                                   </div>
                                               </div>
                                           </div>

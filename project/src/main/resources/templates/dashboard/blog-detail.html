@@ -77,7 +77,7 @@
                                                 <label for="blog-category">Category</label>
                                                 <div class="select2-purple">
                                                     <select class="select2 form-control" multiple="multiple" id="blog-category">
-                                                        <option th:each="category : ${categories}"
+                                                        <option th:each="category,i : ${categories}"
                                                                 th:value="${category.id}"
                                                                 th:text="${category.name}">
                                                         </option>

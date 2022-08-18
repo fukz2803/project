@@ -32,9 +32,11 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    // 1 - Active ; 2 - Pending ; 3 - Disabled
     @Column(name = "state")
     private Integer state;
 
+    // 0 - Admin ; 1 - Editor ; 2 - User
     @Column(name = "role")
     private Integer role;
 

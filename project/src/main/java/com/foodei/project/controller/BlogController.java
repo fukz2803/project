@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class BlogController {
@@ -31,7 +30,7 @@ public class BlogController {
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
         if (page < 1){
-            return "dashboard/404";
+            return "redirect:/dashboard/error";
         }
 
         Page<Blog> blogPage = blogService.findAllBlogsPageByTitle(page - 1, 20, keyword);
@@ -54,9 +53,9 @@ public class BlogController {
                                  @RequestParam(required = false,defaultValue = "1") Integer page){
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
-        if (page < 1){
-            return "dashboard/500";
-        }
+//        if (page < 1){
+//            return "dashboard/500";
+//        }
         Page<Blog> blogPage = blogService.findAllBlogByUserId(page - 1, 20, keyword, id);
 
         List<Blog> blogListPage = blogPage.getContent();
@@ -70,7 +69,7 @@ public class BlogController {
         return "dashboard/my-blogs";
     }
 
-    @GetMapping("/dashboard/create-blog")
+    @GetMapping("/dashboard/blogs/create-blog")
     public String getCreateBlogPage(Model model){
 
         model.addAttribute("blog", new Blog());
@@ -81,7 +80,7 @@ public class BlogController {
         return "dashboard/blog-create";
     }
 
-    @PostMapping("dashboard/create-blog")
+    @PostMapping("dashboard/blogs/create-blog")
     public String createBlog(@ModelAttribute Blog blog, BindingResult result){
         if (result.hasErrors()){
             return "redirect:/dashboard/create-blog";
@@ -102,7 +101,6 @@ public class BlogController {
 
         return "dashboard/blog-detail";
     }
-
 
 
     @GetMapping("/dashboard/blogs/delete/{id}")
