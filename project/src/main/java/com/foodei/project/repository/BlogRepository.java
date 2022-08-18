@@ -42,15 +42,16 @@ public interface BlogRepository extends JpaRepository<Blog, String> {
     //Dashboard - Blogs
     Page<Blog> findByTitleContainsIgnoreCaseOrderByCreateAtDesc(String title, Pageable pageable);
 
-    Page<Blog> findByTitleContainsIgnoreCaseAndUser_IdOrderByPublishedAtDesc(String title, UUID id, Pageable pageable);
-
 
     //Dashboard - own blogs
-
+    @Query("""
+            select b from Blog b
+            where upper(b.title) like upper(concat('%', ?1, '%')) and b.user.id = ?2
+            order by b.publishedAt DESC""")
+    Page<Blog> findByTitleContainsIgnoreCaseAndUser_IdOrderByPublishedAtDesc(String title, String id, Pageable pageable);
 
     //Dashboard - profile
-    List<Blog> findByUser_Id(UUID id);
-
+    List<Blog> findByUser_Id(String id);
 
 
 

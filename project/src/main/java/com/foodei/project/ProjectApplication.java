@@ -3,6 +3,8 @@ package com.foodei.project;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.UUID;
+
 @SpringBootApplication
 public class ProjectApplication {
 
@@ -10,6 +12,6 @@ public class ProjectApplication {
 		SpringApplication.run(ProjectApplication.class, args);
 	}
 
-	String UUID = java.util.UUID.randomUUID().toString();
+
 
 }

@@ -21,7 +21,7 @@ public class UserService {
         return userRepository.findByNameContainsIgnoreCaseAndEmailContainsIgnoreCase(name, email, pageable);
     }
 
-    public User getUserById(UUID id){
-        return userRepository.getById(id);
+    public User getUserById(String id){
+        return userRepository.findById(id);
     }
 }

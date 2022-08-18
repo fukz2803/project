@@ -15,13 +15,10 @@ import java.util.UUID;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
+    @GeneratedValue(generator = "custom_generate")
+    @GenericGenerator(name = "custom_generate", strategy = "com.foodei.project.generator.CustomIdGenerator")
+    @Column(name = "id", nullable = false)
+    private String id;
 
     @Column(name = "name")
     private String name;
@@ -37,5 +34,11 @@ public class User {
 
     @Column(name = "state")
     private Integer state;
+
+    @Column(name = "role")
+    private Integer role;
+
+    @Column(name = "phone")
+    private String phone;
 
 }

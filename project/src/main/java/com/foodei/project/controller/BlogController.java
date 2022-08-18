@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -50,7 +49,7 @@ public class BlogController {
 
     @GetMapping("/dashboard/my-blogs/{id}")
     public String getMyBlogsPage(Model model,
-                                 @PathVariable("id") UUID id,
+                                 @PathVariable("id") String id,
                                  @RequestParam(required = false, defaultValue = "") String keyword,
                                  @RequestParam(required = false,defaultValue = "1") Integer page){
         model.addAttribute("currentPage", page);
@@ -72,15 +71,28 @@ public class BlogController {
     }
 
     @GetMapping("/dashboard/create-blog")
-    public String getCreateBlogPage(){
-        return "dashboard/create-blog";
+    public String getCreateBlogPage(Model model){
+
+        model.addAttribute("blog", new Blog());
+
+        List<Category> categories = categoryService.findAllCategoryIndex();
+        model.addAttribute("categories", categories);
+
+        return "dashboard/blog-create";
+    }
+
+    @PostMapping("dashboard/create-blog")
+    public String createBlog(@ModelAttribute Blog blog, BindingResult result){
+        if (result.hasErrors()){
+            return "redirect:/dashboard/create-blog";
+        }
+
+        return "redirect:/dashboard/blogs";
     }
 
     @GetMapping("/dashboard/blogs/detail/{id}/{slug}")
     public String getDetailBlogPage(Model model,
-                                    @PathVariable("id") String id,
-                                    @RequestParam(required = false, defaultValue = "") String keyword){
-        model.addAttribute("keyword", keyword);
+                                    @PathVariable("id") String id){
 
         Blog blog = blogService.getBlogById(id);
         model.addAttribute("blog", blog);
@@ -95,11 +107,10 @@ public class BlogController {
 
     @GetMapping("/dashboard/blogs/delete/{id}")
     public String deleteBlog(@PathVariable("id") String id){
-        Blog blog = blogService.getBlogById(id);
-
-        blogService.deleteBlog(blog);
+        blogService.deleteBlog(id);
         return "redirect:/dashboard/blogs";
     }
+
 
 
 }

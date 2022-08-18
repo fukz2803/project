@@ -43,12 +43,14 @@ public class InitData {
 
     @Test
     void save_user_identity_card() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             User user = User.builder()
                     .name(faker.name().fullName())
                     .email(faker.internet().emailAddress())
                     .password(faker.number().digits(3))
-                    .state(rd.nextInt(1,3))
+                    .state(rd.nextInt(1,4))
+                    .role(rd.nextInt(1,3))
+                    .phone(faker.phoneNumber().phoneNumber())
                     .build();
 
             userRepository.save(user);
@@ -57,10 +59,10 @@ public class InitData {
 
     @Test
     void save_category() {
-        Category category1 = Category.builder().name("Breakfast").avatar("dashboard/web/img/categories/cat-1.jpg").build();
-        Category category2 = Category.builder().name("Lunch").avatar("dashboard/web/img/categories/cat-2.jpg").build();
-        Category category3 = Category.builder().name("Dinner").avatar("dashboard/web/img/categories/cat-3.jpg").build();
-        Category category4 = Category.builder().name("Desserts").avatar("dashboard/web/img/categories/cat-4.jpg").build();
+        Category category1 = Category.builder().name("Breakfast").avatar("/web/img/categories/cat-1.jpg").build();
+        Category category2 = Category.builder().name("Lunch").avatar("/web/img/categories/cat-2.jpg").build();
+        Category category3 = Category.builder().name("Dinner").avatar("/web/img/categories/cat-3.jpg").build();
+        Category category4 = Category.builder().name("Desserts").avatar("/web/img/categories/cat-4.jpg").build();
 
         categoryRepository.saveAll(List.of(category1,category2,category3,category4));
     }
@@ -95,11 +97,11 @@ public class InitData {
         });
     }
 
-    @Test
-    void get_images_by_user_id() {
-        List<Image> images = imageRepository.findByUser_Id();
-        images.forEach(System.out::println);
-    }
+//    @Test
+//    void get_images_by_user_id() {
+//        List<Image> images = imageRepository.findByUser_Id();
+//        images.forEach(System.out::println);
+//    }
 
     @Test
     void save_blog() {

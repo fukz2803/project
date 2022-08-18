@@ -10,6 +10,6 @@ import java.io.Serializable;
 public class CustomIdGenerator implements IdentifierGenerator {
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-        return RandomStringUtils.random(3,true,true);
+        return RandomStringUtils.random(5,true,true);
     }
 }

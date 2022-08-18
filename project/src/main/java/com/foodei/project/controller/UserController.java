@@ -47,7 +47,7 @@ public class UserController {
 
     @GetMapping("/dashboard/admin/user/{id}")
     public String getUserDetail(Model model,
-                                @PathVariable("id") UUID id){
+                                @PathVariable("id") String id){
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
 

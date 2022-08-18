@@ -35,16 +35,56 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#blogs"
+           aria-expanded="true" aria-controls="blogs">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Blog manager</span>
+        </a>
+        <div id="blogs" th:classappend="${#httpServletRequest.requestURI == '/dashboard/blogs'  or #httpServletRequest.requestURI == '/dashboard/blogs/create-blog' or #httpServletRequest.requestURI == '/dashboard/my-blog'} ? 'show' : ''"
+             class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item"
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/blogs'} ? 'active' : ''"
+                   th:href="@{/dashboard/blogs}"><span><i class="bi bi-list-task"></i></span>&nbsp;&nbsp;All blogs
+                </a>
+                <a class="collapse-item"
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/my-blogs'} ? 'active' : ''"
+                   th:href="@{/dashboard/my-blogs}"><span><i class="bi bi-book-fill"></i></span>&nbsp;&nbsp;My blog
+                </a>
+                <a class="collapse-item"
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/create-blog'} ? 'active' : ''"
+                   th:href="@{/dashboard/create-blog}"><span><i class="bi bi-plus-square-fill"></i></span>&nbsp;&nbsp;Create blog
+                </a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Blogs
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Quản lý bài viết</span>
+            <i class="bi bi-table"></i>
+            <span>Category manager</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTwo" th:classappend="${#httpServletRequest.requestURI == '/dashboard/categories' or #httpServletRequest.requestURI == '/dashboard/create-category'} ? 'show' : ''"
+             class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" th:href="@{/dashboard/blogs}"><span><i class="bi bi-list-task"></i></span>&nbsp;&nbsp;Tất cả bài viết</a>
-                <a class="collapse-item" th:href="@{/dashboard/my-blogs}"><span><i class="bi bi-book-fill"></i></span>&nbsp;&nbsp;Bài viết của tôi</a>
-                <a class="collapse-item" th:href="@{/dashboard/create-blog}"><span><i class="bi bi-plus-square-fill"></i></span>&nbsp;&nbsp;Tạo bài viết</a>
+                <a class="collapse-item"
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/categories'} ? 'active' : ''"
+                   th:href="@{/dashboard/categories}"><span><i class="bi bi-bookmarks-fill"></i></span>&nbsp;&nbsp;All categories
+                </a>
+                <a class="collapse-item"
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/create-category'} ? 'active' : ''"
+                   th:href="@{/dashboard/create-category}"><span><i class="bi bi-bookmark-plus-fill"></i></span>&nbsp;&nbsp;Create category
+                </a>
             </div>
         </div>
     </li>
@@ -62,15 +102,24 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
            aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
-            <span>Quản lý User</span>
+            <span>User Manager</span>
         </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="collapsePages"
+             th:classappend="${#httpServletRequest.requestURI == '/dashboard/admin/users' or #httpServletRequest.requestURI == '/dashboard/admin/create-user' or #httpServletRequest.requestURI == '/dashboard/user'} ? 'show' : ''"
+             class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" th:href="@{/dashboard/admin/users}"><span><i class="bi bi-people-fill"></i></span>&nbsp;&nbsp;Danh sách user</a>
-
-                <a class="collapse-item" th:href="@{/dashboard/admin/create-user}"><span><i class="bi bi-person-plus-fill"></i></span> &nbsp;&nbsp;Tạo user </a>
-
-                <a class="collapse-item" th:href="@{/dashboard/user}"><span><i class="bi bi-person-circle"></i></span>&nbsp;&nbsp; Hồ sơ cá nhân</a>
+                <a class="collapse-item"
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/admin/users'} ? 'active' : ''"
+                   th:href="@{/dashboard/admin/users}"><span><i class="bi bi-people-fill"></i></span>&nbsp;&nbsp;All user
+                </a>
+                <a class="collapse-item"
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/admin/create-user'} ? 'active' : ''"
+                   th:href="@{/dashboard/admin/create-user}"><span><i class="bi bi-person-plus-fill"></i></span> &nbsp;&nbsp;Create user
+                </a>
+                <a class="collapse-item"
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/user'} ? 'active' : ''"
+                   th:href="@{/dashboard/user}"><span><i class="bi bi-person-circle"></i></span>&nbsp;&nbsp; Profile
+                </a>
 
             </div>
         </div>
@@ -88,21 +137,5 @@
 </ul>
 <!-- End of Sidebar -->
 
-<!-- Bootstrap core JavaScript-->
-    <script th:src="@{/dashboard/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script th:src="@{/dashboard/vendor/jquery-easing/jquery.easing.min.js}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script th:src="@{/dashboard/js/sb-admin-2.min.js}"></script>
-
-    <!-- Page level plugins -->
-    <script th:src="@{/dashboard/vendor/chart.js/Chart.min.js}"></script>
-
-    <!-- Page level custom scripts -->
-    <script th:src="@{/dashboard/js/demo/chart-area-demo.js}"></script>
-    <script th:src="@{/dashboard/js/demo/chart-pie-demo.js}"></script>
     </body>
 </html>

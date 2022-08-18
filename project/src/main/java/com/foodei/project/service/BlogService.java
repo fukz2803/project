@@ -18,6 +18,10 @@ public class BlogService {
     @Autowired
     private BlogRepository blogRepository;
 
+    public List<Blog> findAll(){
+        return blogRepository.findAll();
+    }
+
     //Index Page
     public List<Blog> findAllBlogsIndex(){
         return blogRepository.findBlogsByStatusEqualsOrderByPublishedAtDesc();
@@ -87,18 +91,19 @@ public class BlogService {
     }
 
     //Dashboard - own blogs
-    public Page<Blog> findAllBlogByUserId(int page, int pageSize, String title, UUID id){
+    public Page<Blog> findAllBlogByUserId(int page, int pageSize, String title, String id){
         Pageable pageable = PageRequest.of(page, pageSize);
         return blogRepository.findByTitleContainsIgnoreCaseAndUser_IdOrderByPublishedAtDesc(title, id, pageable);
     }
 
     //Dashboard - delete blog
-    public void deleteBlog(Blog blog){
-        blogRepository.delete(blog);
+    public void deleteBlog(String id){
+        List<Blog> blogs = findAll();
+        blogs.removeIf(blog -> blog.getId().equals(id));
     }
 
     //Dashboard - own blogs
-    public List<Blog> getBlogsByUserId(UUID id){
+    public List<Blog> getBlogsByUserId(String id){
         return blogRepository.findByUser_Id(id);
     }
 }
