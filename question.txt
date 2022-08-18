@@ -1,0 +1,1 @@
+- làm thế nào để biết user nào đang đăng nhập và gán vào cho Blog
