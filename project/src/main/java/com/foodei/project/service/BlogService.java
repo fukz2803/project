@@ -3,6 +3,8 @@ package com.foodei.project.service;
 import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.Category;
 import com.foodei.project.repository.BlogRepository;
+import com.foodei.project.request.BlogRequest;
+import com.github.slugify.Slugify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,9 @@ public class BlogService {
 
     @Autowired
     private BlogRepository blogRepository;
+    @Autowired
+    private Slugify slugify;
+
 
     public List<Blog> findAll(){
         return blogRepository.findAll();
@@ -90,7 +95,7 @@ public class BlogService {
         return blogRepository.findByTitleContainsIgnoreCaseOrderByCreateAtDesc(title, pageable);
     }
 
-    //Dashboard - own blogs
+    //Dashboard - page blog by user
     public Page<Blog> findAllBlogByUserId(int page, int pageSize, String title, String id){
         Pageable pageable = PageRequest.of(page, pageSize);
         return blogRepository.findByTitleContainsIgnoreCaseAndUser_IdOrderByPublishedAtDesc(title, id, pageable);
@@ -102,8 +107,48 @@ public class BlogService {
         blogs.removeIf(blog -> blog.getId().equals(id));
     }
 
-    //Dashboard - own blogs
+    //Dashboard - list blog of user
     public List<Blog> getBlogsByUserId(String id){
         return blogRepository.findByUser_Id(id);
+    }
+
+    //Dashboard - create and edit
+    public Blog createAndEditSlug(Blog blog){
+        blog.setSlug(slugify.slugify(blog.getSlug()));
+        return blogRepository.save(blog);
+    }
+
+    public BlogRequest toBlogRequest(Blog blog){
+        return BlogRequest.builder()
+                .id(blog.getId())
+                .author(blog.getUser())
+                .categories(blog.getCategories())
+                .content(blog.getContent())
+                .description(blog.getDescription())
+                .slug(blog.getSlug())
+                .status(blog.getStatus())
+                .thumbnail(blog.getThumbnail())
+                .title(blog.getTitle())
+                .build();
+    }
+
+    public Blog fromRequestToBlog(BlogRequest blogRequest){
+        String thumbnail = blogRequest.getThumbnail();
+
+        if (thumbnail == null){
+            thumbnail = getBlogById(blogRequest.getId()).getThumbnail();
+        }
+
+        return Blog.builder()
+                .id(blogRequest.getId())
+                .title(blogRequest.getTitle())
+                .description(blogRequest.getDescription())
+                .content(blogRequest.getContent())
+                .status(blogRequest.getStatus())
+                .categories(blogRequest.getCategories())
+                .slug(blogRequest.getSlug())
+                .thumbnail(thumbnail)
+                .status(blogRequest.getStatus())
+                .build();
     }
 }

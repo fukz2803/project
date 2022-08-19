@@ -2,8 +2,11 @@ package com.foodei.project.controller;
 
 import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.Category;
+import com.foodei.project.entity.Image;
+import com.foodei.project.request.BlogRequest;
 import com.foodei.project.service.BlogService;
 import com.foodei.project.service.CategoryService;
+import com.foodei.project.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,8 @@ public class BlogController {
     private BlogService blogService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ImageService imageService;
 
 
     @GetMapping("/dashboard/blogs")
@@ -80,27 +85,53 @@ public class BlogController {
         return "dashboard/blog-create";
     }
 
-    @PostMapping("dashboard/blogs/create-blog")
+    @PostMapping("/dashboard/blogs/create-blog")
     public String createBlog(@ModelAttribute Blog blog, BindingResult result){
         if (result.hasErrors()){
-            return "redirect:/dashboard/create-blog";
+            return "/dashboard/blogs/create-blog";
         }
 
         return "redirect:/dashboard/blogs";
     }
 
-    @GetMapping("/dashboard/blogs/detail/{id}/{slug}")
+    @GetMapping("/dashboard/blogs/detail/{id}")
     public String getDetailBlogPage(Model model,
                                     @PathVariable("id") String id){
 
         Blog blog = blogService.getBlogById(id);
         model.addAttribute("blog", blog);
 
+        BlogRequest blogRequest = blogService.toBlogRequest(blog);
+        model.addAttribute("blogRequest",blogRequest);
+
+        String thumbnail = imageService.showUrl(blogRequest.getThumbnail());
+        model.addAttribute("thumbnail", thumbnail);
+
         List<Category> categories = categoryService.findAllCategoryIndex();
         model.addAttribute("categories", categories);
 
         return "dashboard/blog-detail";
     }
+
+    @PostMapping("/dashboard/blogs/edit/{id}")
+    public String editBlog(@PathVariable("id") String id, @ModelAttribute BlogRequest blogRequest, BindingResult result){
+        if (result.hasErrors()){
+            return "/dashboard/blogs/detail/" + id;
+        }
+
+        Image image;
+        if (blogRequest.getImage() != null && !blogRequest.getImage().isEmpty()){
+            image = imageService.uploadImage(blogRequest.getImage());
+            blogRequest.setThumbnail(image.getUrl());
+        }
+
+        Blog blog = blogService.fromRequestToBlog(blogRequest);
+        blogService.createAndEditSlug(blog);
+
+        return "redirect:/dashboard/blogs/detail/" + id;
+    }
+
+
 
 
     @GetMapping("/dashboard/blogs/delete/{id}")
