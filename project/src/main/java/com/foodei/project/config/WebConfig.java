@@ -29,13 +29,5 @@ public class WebConfig {
         return new ModelMapper();
     }
 
-//    @Bean
-//    public Java8TimeDialect java8TimeDialect() {
-//        return new Java8TimeDialect();
-//    }
 
-//    @Bean
-//    public LayoutDialect layoutDialect() {
-//        return new LayoutDialect();
-//    }
 }

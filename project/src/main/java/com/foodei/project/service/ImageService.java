@@ -24,7 +24,7 @@ public class ImageService {
     private ImageRepository imageRepository;
 
     // Folder path để upload file
-    private final Path rootPath = Paths.get("uploads");
+    private final Path rootPath = Paths.get("src/main/resources/static/uploads");
     private final Path imagesPath = rootPath.resolve("images");
 
     public ImageService() {
