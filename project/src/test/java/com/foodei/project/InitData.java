@@ -43,13 +43,28 @@ public class InitData {
 
     @Test
     void save_user_identity_card() {
+        String role1 = "MEMBER";
+        String role2 = "EDITOR";
+        String role3 = "ADMIN";
+        List<String> roles = new ArrayList<>();
+        roles.addAll(List.of(role1,role2,role3));
+
         for (int i = 0; i < 20; i++) {
+            List<String> rolesRd = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
+                String rolerd = roles.get(rd.nextInt(roles.size()));
+
+                if (!rolesRd.contains(rolerd)){
+                    rolesRd.add(rolerd);
+                }
+            }
+
             User user = User.builder()
                     .name(faker.name().fullName())
                     .email(faker.internet().emailAddress())
                     .password(faker.number().digits(3))
                     .state(rd.nextInt(1,4))
-                    .role(rd.nextInt(1,3))
+                    .role(rolesRd)
                     .phone(faker.phoneNumber().phoneNumber())
                     .build();
 

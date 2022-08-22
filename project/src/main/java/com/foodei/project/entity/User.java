@@ -1,9 +1,14 @@
 package com.foodei.project.entity;
 
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -13,6 +18,10 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "user")
+@TypeDef(
+        name = "json",
+        typeClass = JsonStringType.class
+)
 public class User {
     @Id
     @GeneratedValue(generator = "custom_generate")
@@ -36,11 +45,13 @@ public class User {
     @Column(name = "state")
     private Integer state;
 
-    // 0 - Admin ; 1 - Editor ; 2 - User
-    @Column(name = "role")
-    private Integer role;
+    @Type(type = "json")
+    @Column(name = "role", columnDefinition = "json")
+    private List<String> role;
 
     @Column(name = "phone")
     private String phone;
+
+
 
 }

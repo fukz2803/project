@@ -20,7 +20,7 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String getDashboardPage(Model model, @RequestParam(required = false, defaultValue = "") String keyword){
         model.addAttribute("keyword", keyword);
-        return "dashboard/index";
+        return "/dashboard/index";
     }
 
     @GetMapping("/dashboard/error")

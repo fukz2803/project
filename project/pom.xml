@@ -33,7 +33,24 @@
 <!--			<artifactId>thymeleaf-layout-dialect</artifactId>-->
 <!--			<version>3.0.0</version>-->
 <!--		</dependency>-->
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.vladmihalcea</groupId>
+			<artifactId>hibernate-types-52</artifactId>
+			<version>2.16.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.github.slugify</groupId>
@@ -64,12 +81,6 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-devtools</artifactId>-->
-<!--			<version>2.7.2</version>-->
-<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.modelmapper</groupId>
@@ -96,29 +107,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--			<version>2.7.2</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.projectlombok</groupId>-->
-<!--			<artifactId>lombok</artifactId>-->
-<!--			<version>1.18.24</version>-->
-<!--			<scope>provided</scope>-->
-<!--		</dependency>-->
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/net.sourceforge.nekohtml/nekohtml &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>net.sourceforge.nekohtml</groupId>-->
-<!--			<artifactId>nekohtml</artifactId>-->
-<!--			<version>1.9.22</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>nz.net.ultraq.thymeleaf</groupId>-->
-<!--			<artifactId>thymeleaf-layout-dialect</artifactId>-->
-<!--			<version>2.4.1</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-jdbc</artifactId>
+		</dependency>
 
 
 	</dependencies>
