@@ -4,16 +4,19 @@ import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.Category;
 import com.foodei.project.entity.Image;
 import com.foodei.project.request.BlogRequest;
+import com.foodei.project.security.UserDetailCustom;
 import com.foodei.project.service.BlogService;
 import com.foodei.project.service.CategoryService;
 import com.foodei.project.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -34,9 +37,9 @@ public class BlogController {
 
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
-        if (page < 1){
-            return "redirect:/dashboard/error";
-        }
+//        if (page < 1){
+//            return "redirect:/dashboard/error";
+//        }
 
         Page<Blog> blogPage = blogService.findAllBlogsPageByTitle(page - 1, 20, keyword);
 
@@ -51,17 +54,17 @@ public class BlogController {
         return "dashboard/blogs";
     }
 
-    @GetMapping("/dashboard/my-blogs/{id}")
+    @GetMapping("/dashboard/my-blogs")
     public String getMyBlogsPage(Model model,
-                                 @PathVariable("id") String id,
                                  @RequestParam(required = false, defaultValue = "") String keyword,
                                  @RequestParam(required = false,defaultValue = "1") Integer page){
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
-//        if (page < 1){
-//            return "dashboard/500";
-//        }
-        Page<Blog> blogPage = blogService.findAllBlogByUserId(page - 1, 20, keyword, id);
+
+        // Lấy ra thông tin user đang đăng nhập
+        UserDetailCustom user = (UserDetailCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Page<Blog> blogPage = blogService.findAllBlogByUserId(page - 1, 20, keyword, user.getUser().getId());
 
         List<Blog> blogListPage = blogPage.getContent();
         model.addAttribute("blogListPage",blogListPage);
@@ -119,11 +122,14 @@ public class BlogController {
             return "/dashboard/blogs/detail/" + id;
         }
 
+        // Lấy ra thông tin user đang đăng nhập
+        UserDetailCustom user = (UserDetailCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         Image image;
-        if (blogRequest.getImage() != null && !blogRequest.getImage().isEmpty()){
-            image = imageService.uploadImage(blogRequest.getImage());
-            blogRequest.setThumbnail(image.getUrl());
-        }
+//        if (blogRequest.getImage() != null && !blogRequest.getImage().isEmpty()){
+////            image = imageService.uploadImage(blogRequest.getImage(), user.getUser());
+//            blogRequest.setThumbnail(image.getUrl());
+//        }
 
         Blog blog = blogService.fromRequestToBlog(blogRequest);
         blogService.createAndEditSlug(blog);
@@ -135,9 +141,10 @@ public class BlogController {
 
 
     @GetMapping("/dashboard/blogs/delete/{id}")
-    public String deleteBlog(@PathVariable("id") String id){
+    public String deleteBlog(@PathVariable("id") String id, HttpServletRequest request){
+        String referer = request.getHeader("Referer");
         blogService.deleteBlog(id);
-        return "redirect:/dashboard/blogs";
+        return "redirect:" + referer;
     }
 
 

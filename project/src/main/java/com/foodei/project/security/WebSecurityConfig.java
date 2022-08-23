@@ -1,7 +1,6 @@
 package com.foodei.project.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,16 +30,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                     .authorizeRequests()
-                    .antMatchers("/","/blogs","/category/**","/about","/contact").permitAll()
-                    .antMatchers("/dashboard/**").hasRole("MEMBER")
-                    .antMatchers("/dashboard/profile/**",
-                            "/dashboard/admin/profile/{id}").hasRole("MEMBER")
+                    .antMatchers("/","/blogs","/category/**","/about","/contact",
+                            "/dashboard/forgot-password",
+                            "/dashboard/register").permitAll()
+                    .antMatchers("/dashboard/profile/**").hasRole("MEMBER")
                     .antMatchers("/dashboard/blogs",
                             "/dashboard/admin/users",
                             "/dashboard/categories",
@@ -48,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/dashboard/my-blogs/**",
                             "/dashboard/blogs/create-blog",
                             "/dashboard/blogs/detail/**",
-                            "/dashboard/blogs/delete/").hasAnyRole("EDITOR","ADMIN")
+                            "/dashboard/blogs/delete/",
+                            "/dashboard/blogs/edit/**").hasAnyRole("EDITOR","ADMIN")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -56,8 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/login-custom")
                     .usernameParameter("email")
                     .passwordParameter("password")
-//                    .defaultSuccessUrl("/")
-                    .successForwardUrl("/dashboard")
+                    .defaultSuccessUrl("/")
                     .permitAll()
                 .and()
                     .logout()

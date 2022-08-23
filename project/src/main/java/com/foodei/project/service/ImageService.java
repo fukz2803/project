@@ -1,6 +1,7 @@
 package com.foodei.project.service;
 
 import com.foodei.project.entity.Image;
+import com.foodei.project.entity.User;
 import com.foodei.project.exception.BadRequestException;
 import com.foodei.project.exception.StorageException;
 import com.foodei.project.repository.ImageRepository;
@@ -40,7 +41,7 @@ public class ImageService {
     }
 
     // Upload file
-    public Image uploadImage(MultipartFile file) {
+    public Image uploadImage(MultipartFile file, User user) {
         // Create image path if not exist
         createFolder(imagesPath.toString());
 
@@ -49,10 +50,7 @@ public class ImageService {
 
         // Create image instance
         Image image = new Image();
-        imageRepository.saveAndFlush(image);
-        Path linkPath = imagesPath.resolve(String.valueOf(image.getId()));
-        image.setUrl(linkPath.toString());
-        imageRepository.saveAndFlush(image);
+
 
         // Create path of file
         File fileServer = new File(image.getUrl());
@@ -61,7 +59,11 @@ public class ImageService {
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fileServer));
             stream.write(file.getBytes());
             stream.close();
-
+            imageRepository.save(image);
+            Path linkPath = imagesPath.resolve(String.valueOf(image.getId()));
+            image.setUrl(linkPath.toString());
+            image.setUser(user);
+            imageRepository.save(image);
             return image;
         } catch (Exception e) {
             throw new StorageException("Errors occur while uploading file");

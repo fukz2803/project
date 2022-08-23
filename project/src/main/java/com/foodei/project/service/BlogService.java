@@ -103,8 +103,10 @@ public class BlogService {
 
     //Dashboard - delete blog
     public void deleteBlog(String id){
-        List<Blog> blogs = findAll();
-        blogs.removeIf(blog -> blog.getId().equals(id));
+        Optional<Blog> blog = blogRepository.findById(id);
+        if (blog.isPresent()){
+            blogRepository.delete(blog.get());
+        }
     }
 
     //Dashboard - list blog of user

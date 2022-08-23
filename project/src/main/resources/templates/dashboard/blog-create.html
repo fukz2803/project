@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{}, ~{:: #main}, ~{:: #js})}">
+      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{:: #js})}">
 
 <head>
     <title>FoodieBlog Admin | Blog Detail</title>
-<!--    <th:block id="css">-->
-<!--        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />-->
-<!--        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>-->
-<!--    </th:block>-->
+    <th:block id="css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    </th:block>
 </head>
 
 <body id="page-top">
@@ -20,7 +20,7 @@
                 <div class="container-fluid">
                     <div class="row py-2">
                         <div class="col-6">
-                            <a th:href="@{admin}" class="btn btn-default">
+                            <a th:href="@{/dashboard/my-blogs}" class="btn btn-default">
                                 <i class="fas fa-chevron-left"></i> Back
                             </a>
                             <button type="submit" class="btn btn-info px-4" id="btn-save">
@@ -28,11 +28,6 @@
                             </button>
                         </div>
 
-<!--                        <div class="col-6 d-flex justify-content-end">-->
-<!--                            <a th:href="@{/dashboard/blogs/delete/{id} (id = ${blog.id})}" type="button" class="btn btn-danger px-4" id="btn-delete">-->
-<!--                                Delete-->
-<!--                            </a>-->
-<!--                        </div>-->
                     </div>
 
                     <div class="row">

@@ -79,6 +79,8 @@ public class Blog {
         }
     }
 
+
+
     @PreRemove
     public void preRemove() {
         this.categories = null;

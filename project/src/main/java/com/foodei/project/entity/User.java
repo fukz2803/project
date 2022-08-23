@@ -7,9 +7,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
 @Builder
 @AllArgsConstructor
@@ -22,7 +21,7 @@ import java.util.UUID;
         name = "json",
         typeClass = JsonStringType.class
 )
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(generator = "custom_generate")
     @GenericGenerator(name = "custom_generate", strategy = "com.foodei.project.generator.CustomIdGenerator")

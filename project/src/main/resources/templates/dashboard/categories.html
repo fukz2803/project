@@ -28,7 +28,7 @@
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6"></div>
                                     <div class="col-sm-12 col-md-6">
-                                        <form th:action="@{admin}" method="get">
+                                        <form th:action="@{/dashboard/categories}" method="get">
                                             <div id="dataTable_filter" class="dataTables_filter">
                                                 <label>Search:
                                                     <input type="search" class="form-control form-control-sm" name="keyword"
@@ -64,9 +64,9 @@
                                         <td th:text="${i.index + 1}"></td>
                                         <td th:text="${category.id}"></td>
                                         <td>
-                                            <a th:href="@{admin}" th:text="${category.name}"></a>
+                                            <a th:href="@{/dashboard}" th:text="${category.name}"></a>
                                         </td>
-                                        <td><a class="btn btn-danger btn-circle" th:href="@{admin}">
+                                        <td><a class="btn btn-danger btn-circle" th:href="@{/dashboard/categories/delete/{id} (id = ${category.id})}">
                                             <i class="fas fa-trash"></i>
                                         </a></td>
                                     </tr>
