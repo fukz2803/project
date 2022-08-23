@@ -44,7 +44,7 @@ public class UserController {
         return "dashboard/users";
     }
 
-    @GetMapping("/dashboard/admin/user/{id}")
+    @GetMapping("/dashboard/admin/profile/{id}")
     public String getUserDetail(Model model,
                                 @PathVariable("id") String id){
         User user = userService.getUserById(id);

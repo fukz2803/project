@@ -30,29 +30,43 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                     .authorizeRequests()
                     .antMatchers("/","/blogs","/category/**","/about","/contact").permitAll()
-                    .antMatchers("/dashboard/**").hasAnyRole("MEMBER","EDITOR","ADMIN")
-//                    .anyRequest().authenticated()
+                    .antMatchers("/dashboard/**").hasRole("MEMBER")
+                    .antMatchers("/dashboard/profile/**",
+                            "/dashboard/admin/profile/{id}").hasRole("MEMBER")
+                    .antMatchers("/dashboard/blogs",
+                            "/dashboard/admin/users",
+                            "/dashboard/categories",
+                            "/dashboard/categories/delete/").hasRole("ADMIN")
+                    .antMatchers("/dashboard/my-blogs/**",
+                            "/dashboard/blogs/create-blog",
+                            "/dashboard/blogs/detail/**",
+                            "/dashboard/blogs/delete/").hasAnyRole("EDITOR","ADMIN")
+                    .anyRequest().authenticated()
                 .and()
                     .formLogin()
-//                    .loginPage("/login")
-//                    .loginProcessingUrl("/login-custom")
-//                    .usernameParameter("email")
-//                    .passwordParameter("pass")
+                    .loginPage("/dashboard/login")
+                    .loginProcessingUrl("/login-custom")
+                    .usernameParameter("email")
+                    .passwordParameter("password")
 //                    .defaultSuccessUrl("/")
-//                    .successForwardUrl("/")
-//                    .permitAll()
+                    .successForwardUrl("/dashboard")
+                    .permitAll()
                 .and()
                     .logout()
-                    .logoutSuccessUrl("/login")
+                    .logoutSuccessUrl("/dashboard/login")
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
-                    .permitAll();
+                    .permitAll()
+                .and()
+                .httpBasic();
     }
 
     @Override
