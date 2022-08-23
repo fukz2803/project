@@ -27,10 +27,10 @@ public class BlogTest {
     void editBlog() {
         User user = userService.getUserById("2IVDW");
         Blog blog = blogService.getBlogById("39qC7");
-        BlogRequest blogRequest = BlogRequest.builder()
-                .title("edit blog test test test test test test").build();
+        BlogRequest blogRequest = blogService.toBlogRequest(blog);
+        blogRequest.setTitle("test test test test testtest 412412412412414");
         Blog blogedit = blogService.fromRequestToBlog(blogRequest);
-        blogService.createAndEditSlug(blogedit);
+        blogService.createAndEdit(blogedit);
 
     }
 }

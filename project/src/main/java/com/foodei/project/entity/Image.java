@@ -32,12 +32,11 @@ public class Image {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @ToString.Exclude
     private User user;
 
     @PrePersist
     public void prePersist() {
-        created_at = LocalDateTime.now().minusMonths(2);
+        created_at = LocalDateTime.now();
     }
 
 }

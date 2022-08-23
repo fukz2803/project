@@ -132,7 +132,7 @@ public class BlogController {
 //        }
 
         Blog blog = blogService.fromRequestToBlog(blogRequest);
-        blogService.createAndEditSlug(blog);
+        blogService.createAndEdit(blog);
 
         return "redirect:/dashboard/blogs/detail/" + id;
     }

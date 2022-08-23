@@ -115,8 +115,8 @@ public class BlogService {
     }
 
     //Dashboard - create and edit
-    public Blog createAndEditSlug(Blog blog){
-        blog.setSlug(slugify.slugify(blog.getSlug()));
+    public Blog createAndEdit(Blog blog){
+        blog.setSlug(slugify.slugify(blog.getTitle()));
         return blogRepository.save(blog);
     }
 
