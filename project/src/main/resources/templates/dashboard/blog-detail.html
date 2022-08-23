@@ -18,10 +18,10 @@
 
             <section class="content" id="main">
                 <div class="container-fluid">
-                    <form th:action="@{/dashboard/blogs/edit/{id} (id = ${blog.id})}" th:object="${blogRequest}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{admin}" th:object="${blogRequest}" method="post" enctype="multipart/form-data">
                         <div class="row py-2">
                             <div class="col-6">
-                                <a th:href="@{/dashboard/blogs}" class="btn btn-default">
+                                <a th:href="@{admin}" class="btn btn-default">
                                     <i class="fas fa-chevron-left"></i> Back
                                 </a>
                                 <button type="submit" class="btn btn-info px-4" id="btn-save">
@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="col-6 d-flex justify-content-end">
-                                <a th:href="@{/dashboard/blogs/delete/{id} (id = ${blog.id})}" type="button" class="btn btn-danger px-4" id="btn-delete">
+                                <a th:href="@{admin}" type="button" class="btn btn-danger px-4" id="btn-delete">
                                     Delete
                                 </a>
                             </div>

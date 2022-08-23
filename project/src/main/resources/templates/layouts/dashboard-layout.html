@@ -9,7 +9,7 @@
 
     <title th:replace="${title}"></title>
     <!-- Custom fonts for this template-->
-    <link th:href="@{/dashboard/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/admin/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
 <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">-->
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -30,8 +30,8 @@
 
 
     <!-- Custom styles for this template-->
-    <link th:href="@{/dashboard/css/sb-admin-2.min.css}" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/dashboard/css/style.css}">
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/admin/css/style.css}">
     <th:block th:replace="${css} ?: ~{}"></th:block>
 </head>
     <body id="page-top">
@@ -88,21 +88,21 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" th:href="@{/dashboard/login}">Logout</a>
+                        <a class="btn btn-primary" th:href="@{/dashboard}">Logout</a>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Bootstrap core JavaScript-->
-        <script th:src="@{/dashboard/vendor/jquery/jquery.min.js}"></script>
-        <script th:src="@{/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/admin/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/admin/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
         <!-- Core plugin JavaScript-->
-        <script th:src="@{/dashboard/vendor/jquery-easing/jquery.easing.min.js}"></script>
+        <script th:src="@{/admin/vendor/jquery-easing/jquery.easing.min.js}"></script>
 
         <!-- Custom scripts for all pages-->
-        <script th:src="@{/dashboard/js/sb-admin-2.min.js}"></script>
+        <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
 
 <!--        select 2-->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

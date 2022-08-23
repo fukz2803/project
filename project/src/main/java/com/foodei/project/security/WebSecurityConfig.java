@@ -35,10 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                     .authorizeRequests()
-//                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                     .antMatchers("/","/blogs","/category/**","/about","/contact").permitAll()
                     .antMatchers("/dashboard/**").hasAnyRole("MEMBER","EDITOR","ADMIN")
-                    .anyRequest().authenticated()
+//                    .anyRequest().authenticated()
                 .and()
                     .formLogin()
 //                    .loginPage("/login")
@@ -58,6 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/static/**");
+        web.ignoring().antMatchers("/web/**","/admin/**");
     }
 }
