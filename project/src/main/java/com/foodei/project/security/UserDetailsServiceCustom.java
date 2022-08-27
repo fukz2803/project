@@ -16,27 +16,13 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        boolean enabled = true;
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
-        try {
-            UserDe user = userRepository.findByEmail(email).get();
-            if (user == null){
+
+            User user = userRepository.findByEmail(email).get();
+            if (user != null && user.isEnabled()){
+                return user;
+            } else {
                 throw new UsernameNotFoundException("Not found user with email " + email);
             }
-
-            return new UserDetailCustom(
-                    user.getEmail(),
-                    user.getPassword().toLowerCase(),
-                    user.
-            );
-
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-
-
 
     }
 }

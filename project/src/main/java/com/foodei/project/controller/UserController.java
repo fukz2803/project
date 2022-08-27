@@ -2,18 +2,17 @@ package com.foodei.project.controller;
 
 import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.User;
-import com.foodei.project.request.LoginRequest;
-import com.foodei.project.security.UserDetailCustom;
 import com.foodei.project.service.BlogService;
 import com.foodei.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -54,8 +53,8 @@ public class UserController {
     public String getUserDetail(Model model,
                                 @PathVariable("id") String id){
         // Lấy ra thông tin user đang đăng nhập
-        UserDetailCustom currentUser = (UserDetailCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!currentUser.getUser().getRole().contains("ADMIN")){
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!currentUser.getRole().contains("ADMIN")){
             return "error/403";
         }
 
@@ -71,10 +70,10 @@ public class UserController {
     @GetMapping("/dashboard/user/profile")
     public String getUserDetail(Model model){
         // Lấy ra thông tin user đang đăng nhập
-        UserDetailCustom user = (UserDetailCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", user.getUser());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user);
 
-        List<Blog> blogs = blogService.getBlogsByUserId(user.getUser().getId());
+        List<Blog> blogs = blogService.getBlogsByUserId(user.getId());
         model.addAttribute("blogs", blogs);
 
         model.addAttribute("userService", userService);

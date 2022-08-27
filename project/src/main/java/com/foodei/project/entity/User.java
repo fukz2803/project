@@ -5,9 +5,13 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Builder
@@ -21,7 +25,7 @@ import java.util.List;
         name = "json",
         typeClass = JsonStringType.class
 )
-public class User implements Serializable {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(generator = "custom_generate")
     @GenericGenerator(name = "custom_generate", strategy = "com.foodei.project.generator.CustomIdGenerator")
@@ -60,5 +64,41 @@ public class User implements Serializable {
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> roles = new ArrayList<>();
+        this.getRole().forEach(r -> roles.add(new SimpleGrantedAuthority("ROLE_" + r)));
+        return roles;
+    }
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
 
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    
 }

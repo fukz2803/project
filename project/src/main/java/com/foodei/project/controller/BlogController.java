@@ -7,7 +7,6 @@ import com.foodei.project.entity.User;
 import com.foodei.project.repository.ImageRepository;
 import com.foodei.project.repository.UserRepository;
 import com.foodei.project.request.BlogRequest;
-import com.foodei.project.security.UserDetailCustom;
 import com.foodei.project.service.BlogService;
 import com.foodei.project.service.CategoryService;
 import com.foodei.project.service.ImageService;
@@ -77,9 +76,9 @@ public class BlogController {
         }
 
         // Lấy ra thông tin user đang đăng nhập
-        UserDetailCustom user = (UserDetailCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Page<Blog> blogPage = blogService.findAllBlogByUserId(page - 1, 20, keyword, user.getUser().getId());
+        Page<Blog> blogPage = blogService.findAllBlogByUserId(page - 1, 20, keyword, user.getId());
 
         List<Blog> blogListPage = blogPage.getContent();
         model.addAttribute("blogListPage",blogListPage);
@@ -116,8 +115,8 @@ public class BlogController {
     public String getDetailBlogPage(Model model,
                                     @PathVariable("id") String id){
         // Lấy ra thông tin user đang đăng nhập
-        UserDetailCustom currentUser = (UserDetailCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String currentUserId = currentUser.getUser().getId();
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String currentUserId = currentUser.getId();
 
         Blog blog = blogService.getBlogById(id);
         String AuthorId = blog.getUser().getId();
@@ -149,16 +148,16 @@ public class BlogController {
         }
 
         // Lấy ra thông tin user đang đăng nhập
-        UserDetailCustom user = (UserDetailCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Image image = new Image();
         if (imageUpload != null && !imageUpload.isEmpty()){
-            image = imageService.uploadImage(imageUpload, user.getUser());
+            image = imageService.uploadImage(imageUpload, user);
             blogRequest.setThumbnail(image.getUrl());
         }
 
         Blog blog = blogService.fromRequestToBlog(blogRequest);
-        blog.setUser(user.getUser());
+        blog.setUser(user);
         blogService.createAndEdit(blog);
 
         return "redirect:/dashboard/blogs/detail/" + id;

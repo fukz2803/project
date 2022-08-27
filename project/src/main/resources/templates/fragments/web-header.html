@@ -179,7 +179,7 @@
 <!--                           </div>-->
                            <nav class="header__menu">
                                <ul>
-                                   <li class="dropdown"><a><th:block th:text="${#authentication.getPrincipal().getUser().getName()}">name</th:block></a>
+                                   <li class="dropdown"><a><th:block th:text="${#authentication.getPrincipal().getName()}">name</th:block></a>
                                        <ul class="dropdown__menu">
                                            <li><a th:href="@{/dashboard/user/profile}" sec:authorize="hasRole('MEMBER')">
                                                <i class="bi bi-person-circle"></i>
