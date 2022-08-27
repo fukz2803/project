@@ -2,15 +2,18 @@ package com.foodei.project.controller;
 
 import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.User;
+import com.foodei.project.request.LoginRequest;
+import com.foodei.project.security.UserDetailCustom;
 import com.foodei.project.service.BlogService;
 import com.foodei.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,20 +26,23 @@ public class UserController {
     private BlogService blogService;
 
 
+
     @GetMapping("/dashboard/admin/users")
     public String getUsersListPage(Model model,
                                    @RequestParam(required = false, defaultValue = "") String keyword,
                                    @RequestParam(required = false,defaultValue = "1") Integer page){
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
-//        if (page < 1){
-//            return "dashboard/404";
-//        }
+        if (page < 1){
+            return "error/404";
+        }
 
         Page<User> userPage = userService.findAllUserByNameAndEmail(page - 1, 20, keyword, keyword);
 
         List<User> userList = userPage.getContent();
         model.addAttribute("userList",userList);
+
+        model.addAttribute("userService", userService);
 
         int totalPages = userPage.getTotalPages();
         model.addAttribute("totalPages", totalPages);
@@ -44,9 +50,15 @@ public class UserController {
         return "dashboard/users";
     }
 
-    @GetMapping("/dashboard/admin/profile/{id}")
+    @GetMapping("/dashboard/user/detail/{id}")
     public String getUserDetail(Model model,
                                 @PathVariable("id") String id){
+        // Lấy ra thông tin user đang đăng nhập
+        UserDetailCustom currentUser = (UserDetailCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!currentUser.getUser().getRole().contains("ADMIN")){
+            return "error/403";
+        }
+
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
 
@@ -56,18 +68,42 @@ public class UserController {
         return "dashboard/profile";
     }
 
-    @GetMapping("/dashboard/register")
-    public String getRegisterPage(){
-        return "dashboard/register";
+    @GetMapping("/dashboard/user/profile")
+    public String getUserDetail(Model model){
+        // Lấy ra thông tin user đang đăng nhập
+        UserDetailCustom user = (UserDetailCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user.getUser());
+
+        List<Blog> blogs = blogService.getBlogsByUserId(user.getUser().getId());
+        model.addAttribute("blogs", blogs);
+
+        model.addAttribute("userService", userService);
+//        model.addAttribute("updateUser")
+
+        return "dashboard/profile";
     }
 
-    @GetMapping("/dashboard/login")
-    public String getLoginPage(){
-        return "dashboard/login";
+    @PostMapping("/dashboard/user/update-user")
+    public String updateUser(Model model){
+
+
+        return "dashboard/profile";
     }
 
-    @GetMapping("/dashboard/forgot-password")
-    public String getForgotPasswordPage(){
-        return "dashboard/forgot-password";
+    @GetMapping("/dashboard/admin/user-active/{id}")
+    public String avticeUser(@PathVariable("id") String id){
+        User user = userService.getUserById(id);
+        userService.enableUser(user.getEmail());
+
+        return "redirect:/dashboard/admin/users";
     }
+
+    @GetMapping("/dashboard/admin/user-disable/{id}")
+    public String disableUser(@PathVariable("id") String id){
+        User user = userService.getUserById(id);
+        userService.disableUser(user.getEmail());
+
+        return "redirect:/dashboard/admin/users";
+    }
+
 }

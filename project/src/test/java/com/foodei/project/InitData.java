@@ -8,6 +8,7 @@ import com.github.slugify.Slugify;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +41,13 @@ public class InitData {
     private Random rd;
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
 
     @Test
     void save_user_identity_card() {
-        String role1 = "MEMBER";
-        String role2 = "EDITOR";
-        String role3 = "ADMIN";
-        List<String> roles = new ArrayList<>();
-        roles.addAll(List.of(role1,role2,role3));
+        List<String> roles = new ArrayList(List.of("MEMBER","EDITOR","ADMIN"));
 
         for (int i = 0; i < 20; i++) {
             List<String> rolesRd = new ArrayList<>();
@@ -62,8 +62,7 @@ public class InitData {
             User user = User.builder()
                     .name(faker.name().fullName())
                     .email(faker.internet().emailAddress())
-                    .password(faker.number().digits(3))
-                    .state(rd.nextInt(1,4))
+                    .password(passwordEncoder.encode(faker.number().digits(6)))
                     .role(rolesRd)
                     .phone(faker.phoneNumber().phoneNumber())
                     .build();

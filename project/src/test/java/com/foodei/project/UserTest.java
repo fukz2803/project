@@ -2,9 +2,17 @@ package com.foodei.project;
 
 import com.foodei.project.entity.User;
 import com.foodei.project.repository.UserRepository;
+import com.foodei.project.request.UserRequest;
+import com.foodei.project.service.AuthService;
+import com.foodei.project.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
@@ -13,33 +21,67 @@ import java.util.List;
 public class UserTest {
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private AuthService authService;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+
 
     @Test
     void save_user() {
         User user1 = User.builder()
                 .name("Nguyễn Văn A")
                 .email("a@gmail.com")
-                .password(passwordEncoder.encode("111"))
+                .password(passwordEncoder.encode("123123"))
                 .role(List.of("MEMBER", "EDITOR", "ADMIN"))
+                .enabled(true)
                 .build();
 
         User user2 = User.builder()
                 .name("Trần Văn B")
                 .email("b@gmail.com")
-                .password(passwordEncoder.encode("111"))
+                .password(passwordEncoder.encode("123123"))
                 .role(List.of("MEMBER", "EDITOR"))
+                .enabled(true)
                 .build();
 
         User user3 = User.builder()
                 .name("Ngô Thị C")
                 .email("c@gmail.com")
-                .password(passwordEncoder.encode("111"))
+                .password(passwordEncoder.encode("123123"))
                 .role(List.of("MEMBER"))
+                .enabled(true)
                 .build();
 
         userRepository.saveAll(List.of(user1, user2, user3));
+    }
+
+    @Test
+    void createUser() {
+        String pass = passwordEncoder.encode("123123");
+        UserRequest userRequest = new UserRequest("a1","fukz2803@gmail.com",pass,pass,"0123456798");
+        authService.registerNewUserAccount(userRequest);
+    }
+
+
+
+    @Test
+    void delete() {
+        User user = userRepository.findById("BuqS9");
+        userRepository.delete(user);
+    }
+
+    @Test
+    void sendMail() {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setText("aksjbfkjabsfkjbkaf");
+        message.setTo("fukz2803@gmail.com");
+        message.setSubject("test test");
+        javaMailSender.send(message);
     }
 }

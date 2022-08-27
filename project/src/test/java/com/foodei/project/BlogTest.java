@@ -20,17 +20,15 @@ public class BlogTest {
 
     @Test
     void deleteBlog() {
-        blogService.deleteBlog("0lpgu");
+        blogService.deleteBlog("Qr4E4");
     }
 
     @Test
     void editBlog() {
-        User user = userService.getUserById("2IVDW");
-        Blog blog = blogService.getBlogById("39qC7");
+        Blog blog = blogService.getBlogById("mek70");
         BlogRequest blogRequest = blogService.toBlogRequest(blog);
-        blogRequest.setTitle("test test test test testtest 412412412412414");
+        blogRequest.setTitle("test test test test testtest 123");
         Blog blogedit = blogService.fromRequestToBlog(blogRequest);
         blogService.createAndEdit(blogedit);
-
     }
 }

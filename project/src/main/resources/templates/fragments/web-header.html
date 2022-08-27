@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -36,7 +36,7 @@
             <div class="humberger__menu__title sidebar__item__title">
                 <h6>About me</h6>
             </div>
-            <img src="img/humberger/humberger-about.jpg" alt="">
+            <img th:src="@{/web/img/humberger/humberger-about.jpg}" alt="">
             <h6>Hi every one! I,m Lena Mollein.</h6>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua.</p>
@@ -48,21 +48,7 @@
                 <a href="#"><i class="fa fa-envelope-o"></i></a>
             </div>
         </div>
-        <div class="humberger__menu__subscribe">
-            <div class="humberger__menu__title sidebar__item__title">
-                <h6>Subscribe</h6>
-            </div>
-            <p>Subscribe to our newsletter and get our newest updates right on your inbox.</p>
-            <form action="#">
-                <input type="text" class="email-input" placeholder="Your email">
-                <label for="agree-check">
-                    I agree to the terms & conditions
-                    <input type="checkbox" id="agree-check">
-                    <span class="checkmark"></span>
-                </label>
-                <button type="submit" class="site-btn">Subscribe</button>
-            </form>
-        </div>
+
     </div>
     <!-- Humberger End -->
 
@@ -108,13 +94,138 @@
                                 </li>
                                 <li th:classappend="${#httpServletRequest.requestURI == '/about'} ? 'active' : ''"><a th:href="@{/about}">About</a></li>
                                 <li th:classappend="${#httpServletRequest.requestURI == '/contact'} ? 'active' : ''"><a th:href="@{/contact}">Contact</a></li>
+                                <li><div class="header__search">
+                                    <i class="fa fa-search search-switch"></i>
+                                </div></li>
                             </ul>
                         </nav>
                     </div>
+
+
                     <div class="col-lg-2 col-md-1 col-6 order-md-3 order-2">
-                        <div class="header__search">
-                            <i class="fa fa-search search-switch"></i>
-                        </div>
+                       <th:block sec:authorize="not isAuthenticated()">
+                           <nav class="header__menu">
+                               <ul>
+                                   <li>
+                                       <a th:href="@{/login}">Login</a>
+                                   </li>
+                                   <li>
+                                       <a th:href="@{/register}">Register</a>
+                                   </li>
+                               </ul>
+                           </nav>
+<!--                           <button type="button" class="btn btn-primary" style="background-color: #f4952f; border-color: #f4952f" data-bs-toggle="modal" data-bs-target="#modal-login">-->
+<!--                               Login-->
+<!--                           </button>-->
+
+<!--                           &lt;!&ndash; Modal &ndash;&gt;-->
+<!--                           <div class="modal fade" id="modal-login" tabindex="-1" aria-labelledby="modal-login" aria-hidden="true">-->
+<!--                               <div class="modal-dialog">-->
+<!--                                   <form th:action="@{/login}" method="post" >-->
+<!--                                       <div class="modal-content">-->
+<!--                                           <div class="modal-header">-->
+<!--                                               <h5 class="modal-title" id="exampleModalLabel1">Login</h5>-->
+<!--                                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                                           </div>-->
+<!--                                           <div class="modal-body">-->
+<!--                                               <div class="mb-3">-->
+<!--                                                   <label for="email" class="form-label">Email</label>-->
+<!--                                                   <input type="text" name="email" required class="form-control" id="email">-->
+<!--                                               </div>-->
+<!--                                               <div class="mb-3">-->
+<!--                                                   <label for="password" class="form-label">Password</label>-->
+<!--                                                   <input type="password" name="password" required class="form-control" id="password">-->
+<!--                                               </div>-->
+<!--                                           </div>-->
+<!--                                           <div class="modal-footer">-->
+<!--                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                                               <button type="submit" style="background-color: #f4952f; border-color: #f4952f"-->
+<!--                                                       class="btn btn-primary" id="btn-login">Login</button>-->
+<!--                                           </div>-->
+<!--                                       </div>-->
+<!--                                   </form>-->
+<!--                               </div>-->
+<!--                           </div>-->
+                       </th:block>
+                       <th:block sec:authorize="isAuthenticated()">
+<!--                           <div class="dropdown">-->
+<!--                               <button style="background-color: #f4952f; border-color: #f4952f"-->
+<!--                                       class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                                   <th:block th:text="${#authentication.getPrincipal().getUser().getName()}">name</th:block>-->
+<!--                               </button>-->
+<!--                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--                                   <a class="dropdown-item" th:href="@{/dashboard/user/profile}" sec:authorize="hasRole('MEMBER')">-->
+<!--                                       <i class="bi bi-person-circle"></i>-->
+<!--                                       Profile-->
+<!--                                   </a>-->
+<!--                                   <a class="dropdown-item" th:href="@{/dashboard/my-blogs}" sec:authorize="hasAnyRole('EDITOR', 'ADMIN')">-->
+<!--                                       <i class="bi bi-book-fill"></i>-->
+<!--                                       My blogs-->
+<!--                                   </a>-->
+<!--                                   <a class="dropdown-item" th:href="@{/dashboard/blogs}" sec:authorize="hasRole('ADMIN')">-->
+<!--                                       <i class="bi bi-list-task"></i>-->
+<!--                                       All blogs-->
+<!--                                   </a>-->
+<!--                                   <a class="dropdown-item" th:href="@{/dashboard/admin/users}" sec:authorize="hasRole('ADMIN')">-->
+<!--                                       <i class="bi bi-people-fill"></i>-->
+<!--                                       All users-->
+<!--                                   </a>-->
+<!--                                   <div class="dropdown-divider"></div>-->
+<!--                                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">-->
+<!--                                       <i class="bi bi-box-arrow-right"></i>-->
+<!--                                       Logout-->
+<!--                                   </a>-->
+<!--                               </div>-->
+<!--                           </div>-->
+                           <nav class="header__menu">
+                               <ul>
+                                   <li class="dropdown"><a><th:block th:text="${#authentication.getPrincipal().getUser().getName()}">name</th:block></a>
+                                       <ul class="dropdown__menu">
+                                           <li><a th:href="@{/dashboard/user/profile}" sec:authorize="hasRole('MEMBER')">
+                                               <i class="bi bi-person-circle"></i>
+                                               Profile
+                                           </a></li>
+                                           <li><a  th:href="@{/dashboard/my-blogs}" sec:authorize="hasAnyRole('EDITOR', 'ADMIN')">
+                                               <i class="bi bi-book-fill"></i>
+                                               My blogs
+                                           </a></li>
+                                           <li><a  th:href="@{/dashboard/blogs}" sec:authorize="hasRole('ADMIN')">
+                                               <i class="bi bi-list-task"></i>
+                                               All blogs
+                                           </a></li>
+                                           <li><a  th:href="@{/dashboard/admin/users}" sec:authorize="hasRole('ADMIN')">
+                                               <i class="bi bi-people-fill"></i>
+                                               All users
+                                           </a></li>
+                                           <li><a  href="#" data-toggle="modal" data-target="#logoutModal">
+                                               <i class="bi bi-box-arrow-right"></i>
+                                               Logout
+                                           </a></li>
+                                       </ul>
+                                   </li>
+                               </ul>
+                           </nav>
+                       </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        Log out modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" th:href="@{/logout}">Logout</a>
                     </div>
                 </div>
             </div>
@@ -122,87 +233,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-3">
-                    <div class="header__btn">
-                        <button type="button" class="btn primary-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Subscribe
-                        </button>
-                    </div>
-                    <!-- Button trigger modal -->
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="signin">
-                                    <div class="signin__warp">
-                                        <div class="signin__content">
-                                            <div class="signin__logo">
-                                                <a href="#"><img src="img/siign-in-logo.png" alt=""></a>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt labore dolore
-                                                magna aliqua viverra.</p>
-                                            <div class="signin__form">
-                                                <ul class="nav nav-tabs" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="false">
-                                                            Sign up
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">
-                                                            Sign in
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                </ul>
-                                                <div class="tab-content">
-                                                    <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                                        <div class="signin__form__text">
-                                                            <p>with your social network :</p>
-                                                            <div class="signin__form__signup__social">
-                                                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                                                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                                                <a href="#" class="google"><i class="fa fa-google"></i></a>
-                                                            </div>
-                                                            <div class="divide">or</div>
-                                                            <form action="#">
-                                                                <input type="text" placeholder="User Name*">
-                                                                <input type="text" placeholder="Password">
-                                                                <input type="text" placeholder="Confirm Password">
-                                                                <input type="text" placeholder="Email Address">
-                                                                <input type="text" placeholder="Full Name">
-                                                                <label for="sign-agree-check">
-                                                                    I agree to the terms & conditions
-                                                                    <input type="checkbox" id="sign-agree-check">
-                                                                    <span class="checkmark"></span>
-                                                                </label>
-                                                                <button type="submit" class="site-btn">Register Now</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane" id="tabs-2" role="tabpanel">
-                                                        <div class="signin__form__text">
-                                                            <p>with your social network :</p>
-                                                            <div class="signin__form__signup__social">
-                                                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                                                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                                                <a href="#" class="google"><i class="fa fa-google"></i></a>
-                                                            </div>
-                                                            <div class="divide">or</div>
-                                                            <form action="#">
-                                                                <input type="text" placeholder="User Name*">
-                                                                <input type="text" placeholder="Password">
-                                                                <button type="submit" class="site-btn">Sign In</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -224,5 +254,6 @@
     </header>
     <!-- Header Section End -->
 </div>
+
 </body>
 </html>

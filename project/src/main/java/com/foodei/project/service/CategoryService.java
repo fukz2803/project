@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -29,7 +30,9 @@ public class CategoryService {
     }
 
     public void deleteCategory(Integer id){
-        List<Category> categories = findAll();
-        categories.removeIf(category -> category.getId() == id);
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category.isPresent()){
+            categoryRepository.delete(category.get());
+        }
     }
 }

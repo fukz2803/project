@@ -4,9 +4,12 @@ import com.foodei.project.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -19,6 +22,17 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("select u from User u where u.id = ?1")
     User findById(String id);
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
+
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.enabled = TRUE WHERE u.email = ?1")
+    void enableUser(String email);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.enabled = FALSE WHERE u.email = ?1")
+    void disableUser(String email);
 
 }

@@ -19,13 +19,14 @@ import java.util.List;
 public class UserDetailCustom implements UserDetails {
     private User user;
 
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> roles = new ArrayList<>();
         user.getRole().forEach(r -> roles.add(new SimpleGrantedAuthority("ROLE_" + r)));
         return roles;
     }
-
     @Override
     public String getPassword() {
         return user.getPassword();

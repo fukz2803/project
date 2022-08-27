@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-primary" th:styleappend="|background-image: url(https://burst.shopifycdn.com/photos/chocolate-marshmallow-cake.jpg?width=925&format=pjpg&exif=1&iptc=1)|">
 
     <div class="container">
 
@@ -41,17 +41,20 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" th:action="@{/login-custom}" method="post">
+                                    <form class="user" th:action="@{/login}" method="post" th:object="${loginRequest}">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
+                                                   th:field="*{email}"
                                                    name="email"
                                                    required
                                                 placeholder="Enter Email Address...">
+<!--                                            <span th:if="${userService.emailExistsAndNotEnable(loginRequest.email)}" style="color: red">Unverified account</span>-->
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                    name="password"
+                                                   th:field="*{password}"
                                                    required
                                                 id="exampleInputPassword" placeholder="Password">
                                         </div>
@@ -75,10 +78,10 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" th:href="@{/dashboard/forgot-password}">Forgot Password?</a>
+                                        <a class="small" th:href="@{/forgot-password}">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" th:href="@{/dashboard/register}">Create an Account!</a>
+                                        <a class="small" th:href="@{/register}">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>

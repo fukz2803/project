@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{})}">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{:: #js})}">
 
 <head>
-    <title>FoodieBlog Admin | Profile</title>
+    <title>FoodeiBlog Admin | Profile</title>
     <th:block id="css">
         <link rel="stylesheet" th:href="@{/admin/css/profile.css}">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     </th:block>
 </head>
 
@@ -18,23 +20,23 @@
                       <h1 class="h3 mb-4 text-gray-800">Profile</h1>
 
                       <div class="container emp-profile">
-                          <form method="post">
+                          <form method="post" th:object="${user}" th:action="@{/dashboard/user/update-user}">
                               <div class="row">
                                   <div class="col-md-4">
                                       <div class="profile-img">
-                                          <img
+                                          <img    id="avatar"
                                                   th:src="@{${user.avatar}}"
                                                   alt=""
                                           />
                                           <div class="file btn btn-lg btn-primary">
                                               <label for="avatar">Change Photo</label>
-                                              <input type="file" name="file" id="avatar" />
+                                              <input type="file" name="file" id="image" />
                                           </div>
                                       </div>
                                   </div>
                                   <div class="col-md-6">
                                       <div class="profile-head">
-                                          <h5>Kshiti Ghelani</h5>
+                                          <h5 th:text="${user.name}"></h5>
 <!--                                          <h6>Web Developer and Designer</h6>-->
                                           <p class="proile-rating">Blog : <span th:text="${blogs.size()}"></span> articles</p>
                                           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -102,7 +104,7 @@
                                                       <label>Name</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <input class="form-control" type="text" name="" th:value="${user.name}">
+                                                      <input class="form-control" type="text" name="name" th:field="*{name}" th:value="${user.name}">
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -110,7 +112,7 @@
                                                       <label>Email</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <input class="form-control" type="text" name=""  th:value="${user.email}">
+                                                      <input class="form-control" type="text" name="email" th:field="*{email}" th:value="${user.email}">
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -118,7 +120,7 @@
                                                       <label>Phone</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <input class="form-control" type="text" name="" th:value="${user.phone}">
+                                                      <input class="form-control" type="number" name="phone" th:field="*{phone}" th:value="${user.phone}">
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -126,11 +128,13 @@
                                                       <label>Role</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <select class="form-control">
-                                                          <option value="0" th:selected="${user.role == 0}" style="color:red">Admin</option>
-                                                          <option value="1" th:selected="${user.role == 1}" style="color:blue">Editor</option>
-                                                          <option value="2" th:selected="${user.role == 2}">User</option>
+                                                      <select sec:authorize="hasRole('ADMIN')" th:field="*{role}"
+                                                              class="form-control select2" multiple="multiple" id="user-role">
+                                                          <option th:each="role : ${user.role}"
+                                                                  th:value="${role}"
+                                                                  th:text="${role}"></option>
                                                       </select>
+                                                      <input sec:authorize="!hasRole('ADMIN')" class="form-control" type="text" readonly name="" th:value="${userService.showRoles(user)}">
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -138,21 +142,37 @@
                                                       <label>State</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <input class="form-control" type="text" name="" readonly th:if="${user.state == 1}" value="Active">
-                                                      <input class="form-control" type="text" name="" readonly th:if="${user.state == 2}" value="Pending">
-                                                      <input class="form-control" type="text" name="" readonly th:if="${user.state == 3}" value="Disabled">
+                                                      <input class="form-control" type="text" name="" readonly th:if="${user.enabled == true}" value="Active">
+                                                      <input class="form-control" type="text" name="" readonly th:if="${user.enabled == false}" value="Disabled">
                                                   </div>
                                               </div>
-                                              <div class="row mt-3">
+                                              <div class="row">
+                                                  <div class="col-md-3">
+                                                      <label>New Password</label>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <input class="form-control" type="password" name="password" id="password" th:field="*{password}" >
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-3">
+                                                      <label>Confirm Password</label>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <input class="form-control" type="password" id="confirm_password">
+                                                      <div><span id="message"></span></div>
+                                                  </div>
+                                              </div>
+                                              <div class="row mt-3" sec:authorize="hasRole('ADMIN')">
                                                   <div class="col-md-3">
                                                   </div>
                                                   <div class="col-md-6">
                                                       <div class="row">
                                                           <div class="col-md-6">
-                                                              <a class="btn btn-success" th:classappend="${user.state == 1} ? 'disabled' : ''">Active</a>
+                                                              <a class="btn btn-success" th:classappend="${user.enabled == true} ? 'disabled' : ''">Active</a>
                                                           </div>
                                                           <div class="col-md-6">
-                                                              <a class="btn btn-danger" th:classappend="${user.state != 1} ? 'disabled' : ''">Disable</a>
+                                                              <a class="btn btn-danger" th:classappend="${user.enabled == false} ? 'disabled' : ''">Disable</a>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -220,6 +240,39 @@
                   </div>
                   <!-- /.container-fluid -->
 
+              </th:block>
+
+              <th:block id="js">
+
+                  <!--        select 2-->
+                  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+                  <script th:inline="javascript">
+
+                      const role = $("#user-role");
+                      role.select2();
+
+                      console.log("hello");
+
+                      var reader = new FileReader();
+                      reader.onload = function(r_event) {
+                          document.getElementById('avatar').setAttribute('src', r_event.target.result);
+                      };
+
+                      document.getElementsByName('image')[0].addEventListener('change', function(event) {
+                          reader.readAsDataURL(this.files[0]);
+                      });
+
+                      $('#password, #confirm_password').on('keyup', function () {
+                          if ($('#password').val() === $('#confirm_password').val()) {
+                              $('#message').html('Matching').css('color', 'green');
+                          } else
+                              $('#message').html('Not Matching').css('color', 'red');
+                      });
+
+
+                  </script>
               </th:block>
 
 </body>

@@ -24,9 +24,9 @@ public class CategoryController {
                                     @RequestParam(required = false,defaultValue = "1") Integer page){
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
-//        if (page < 1){
-//            return "dashboard/404";
-//        }
+        if (page < 1){
+            return "error/404";
+        }
 
         Page<Category> categoryPage = categoryService.findAllCategory(page - 1, 10, keyword);
 

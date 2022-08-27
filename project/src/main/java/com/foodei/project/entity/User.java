@@ -28,21 +28,17 @@ public class User implements Serializable {
     @Column(name = "id", nullable = false)
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
-
-    // 1 - Active ; 2 - Pending ; 3 - Disabled
-    @Column(name = "state")
-    private Integer state;
 
     @Type(type = "json")
     @Column(name = "role", columnDefinition = "json")
@@ -50,6 +46,18 @@ public class User implements Serializable {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "enabled")
+    private Boolean enabled = false;
+
+
+    public User(String name, String email, String password, List<String> role, String phone) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.phone = phone;
+    }
 
 
 

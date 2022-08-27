@@ -3,7 +3,7 @@
       th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{})}">
 
 <head>
-    <title>FoodieBlog Admin | Categories</title>
+    <title>FoodeiBlog Admin | Categories</title>
     <th:block id="css">
         <!-- Custom styles for this page -->
         <link th:href="@{/admin/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
@@ -64,7 +64,7 @@
                                         <td th:text="${i.index + 1}"></td>
                                         <td th:text="${category.id}"></td>
                                         <td>
-                                            <a th:href="@{/dashboard}" th:text="${category.name}"></a>
+                                            <a th:href="@{/dashboard/category/{id} (id = ${category.id})}" th:text="${category.name}"></a>
                                         </td>
                                         <td><a class="btn btn-danger btn-circle" th:href="@{/dashboard/categories/delete/{id} (id = ${category.id})}">
                                             <i class="fas fa-trash"></i>

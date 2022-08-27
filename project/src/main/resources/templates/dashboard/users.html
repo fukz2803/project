@@ -3,7 +3,7 @@
       th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{})}">
 
     <head>
-        <title>FoodieBlog Admin | Blogs</title>
+        <title>FoodeiBlog Admin | Blogs</title>
         <th:block id="css">
             <!-- Custom styles for this page -->
             <link th:href="@{/admin/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
@@ -29,7 +29,7 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6"></div>
                                 <div class="col-sm-12 col-md-6">
-                                    <form th:action="@{admin}" method="get">
+                                    <form th:action="@{/dashboard/admin/users}" method="get">
                                         <div id="dataTable_filter" class="dataTables_filter">
                                             <label>Search:
                                                 <input type="search" class="form-control form-control-sm" name="keyword"
@@ -50,6 +50,7 @@
                                     <th>Id</th>
                                     <th>User name</th>
                                     <th>Email</th>
+                                    <th>Phone</th>
                                     <th>Role</th>
                                     <th>State</th>
                                     <th>Action</th>
@@ -61,6 +62,7 @@
                                     <th>Id</th>
                                     <th>User name</th>
                                     <th>Email</th>
+                                    <th>Phone</th>
                                     <th>Role</th>
                                     <th>State</th>
                                     <th>Action</th>
@@ -70,24 +72,21 @@
                                 <tr th:each="user,iStat : ${userList}">
                                     <td th:text="${iStat.index + 1}"></td>
                                     <td th:text="${user.id}"></td>
-                                    <td><a th:href="@{admin}" th:text="${user.name}"></a> </td>
+                                    <td><a th:href="@{/dashboard/user/detail/{id} (id = ${user.id})}" th:text="${user.name}"></a> </td>
                                     <td th:text="${user.email}"></td>
-                                    <td th:switch="${user.role}">
-                                        <span th:case="0">Admin</span>
-                                        <span th:case="1">Editor</span>
-                                        <span th:case="2">User</span>
+                                    <td th:text="${user.phone}"></td>
+                                    <td th:text="${userService.showRoles(user)}">
                                     </td>
-                                    <td th:switch="${user.state}">
-                                        <span th:case="1">Active</span>
-                                        <span th:case="2">Pending</span>
-                                        <span th:case="3">Disabled</span>
+                                    <td th:switch="${user.enabled}">
+                                        <span th:case="true">Active</span>
+                                        <span th:case="false">Disabled</span>
                                     </td>
                                     <td>
-                                        <a class="btn btn-success btn-circle">
+                                        <a th:href="@{/dashboard/admin/user-active/{id} (id = ${user.id})}" class="btn btn-success btn-circle">
                                             <i class="fas fa-check"></i>
                                         </a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a class="btn btn-warning btn-circle">
+                                        <a th:href="@{/dashboard/admin/user-disable/{id} (id = ${user.id})}" class="btn btn-warning btn-circle">
                                             <i class="fas fa-exclamation-triangle"></i>
                                         </a>
                                     </td>

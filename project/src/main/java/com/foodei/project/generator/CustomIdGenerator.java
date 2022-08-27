@@ -12,4 +12,6 @@ public class CustomIdGenerator implements IdentifierGenerator {
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         return RandomStringUtils.random(5,true,true);
     }
+
+
 }

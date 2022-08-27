@@ -5,18 +5,22 @@ import com.foodei.project.entity.User;
 import com.foodei.project.exception.BadRequestException;
 import com.foodei.project.exception.StorageException;
 import com.foodei.project.repository.ImageRepository;
+import com.foodei.project.utils.FileUploadUtil;
 import com.foodei.project.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -24,52 +28,81 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
+
     // Folder path để upload file
     private final Path rootPath = Paths.get("src/main/resources/static/uploads");
-    private final Path imagesPath = rootPath.resolve("images");
+
 
     public ImageService() {
-        createFolder(rootPath.toString());
+        createFolder(rootPath);
     }
 
     // tạo folder nếu chưa tồn tại
-    public void createFolder(String path) {
-        File folder = new File(path);
-        if (!folder.exists()) {
-            folder.mkdirs();
+    public void createFolder(Path path) {
+        try {
+            Files.createDirectories(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     // Upload file
-    public Image uploadImage(MultipartFile file, User user) {
-        // Create image path if not exist
-        createFolder(imagesPath.toString());
+//    public Image uploadImage(MultipartFile file, User user) {
+//        // Tạo folder tương ứng với id user
+//        Path userDir = rootPath.resolve(String.valueOf(user.getId()));
+////        createFolder(userDir);
+//        try {
+//            Files.createDirectories(userDir);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        // Validate file
+//        validate(file);
+//
+//        // Tạo path tương ứng với fileUpload
+//        String generateFileId = String.valueOf(Instant.now().getEpochSecond());
+//        File fileServer = new File(userDir + "/" + generateFileId);
+//
+//        // Create image instance
+//        Image image = new Image();
+//
+//        try {
+//            // Use Buffer to store data
+//            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fileServer));
+//            stream.write(file.getBytes());
+//            stream.close();
+//        } catch (Exception e) {
+//            throw new StorageException("Errors occur while uploading file");
+//        }
+//        image.setUrl(fileServer.getPath());
+//        image.setUser(user);
+//        imageRepository.save(image);
+//        return image;
+//    }
 
-        // Validate file
+    public Image uploadImage(MultipartFile file, User user) throws IOException{
+        // 1: validate file
         validate(file);
 
-        // Create image instance
-        Image image = new Image();
+        String userId = user.getId();
+//        String uploadDir = rootPath.toString() + "/" + userId;
+        Path uploadDir = Paths.get(rootPath.toString(),userId);
+        String extension = Utils.getExtensionFile(file.getOriginalFilename());
+        String fileName = userId + String.valueOf(Instant.now().getEpochSecond()) + "." + extension;
+//        String urlImage = uploadDir + "/" + fileName;
+        Path urlImage = Paths.get(uploadDir.toString(),fileName);
 
+        FileUploadUtil.saveFile(uploadDir.toString(), fileName, file);
 
-        // Create path of file
-        File fileServer = new File(image.getUrl());
-        try {
-            // Use Buffer to store data
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fileServer));
-            stream.write(file.getBytes());
-            stream.close();
-            imageRepository.save(image);
-            Path linkPath = imagesPath.resolve(String.valueOf(image.getId()));
-            image.setUrl(linkPath.toString());
-            image.setUser(user);
-            imageRepository.save(image);
-            return image;
-        } catch (Exception e) {
-            throw new StorageException("Errors occur while uploading file");
-        }
+        Image image = Image.builder()
+                .url(urlImage.toString())
+                .user(user)
+                .build();
+        imageRepository.save(image);
+        return image;
+
     }
-
     public void validate(MultipartFile file) {
         // Validate file name
         String fileName = file.getOriginalFilename();
@@ -79,7 +112,7 @@ public class ImageService {
 
         // Validate file extension
         String fileExtension = Utils.getExtensionFile(fileName);
-        if (!Utils.checkFileExtenstion(fileExtension)) {
+        if (!Utils.checkFileExtenstion(fileExtension.toLowerCase())) {
             throw new BadRequestException("Invalid file");
         }
 

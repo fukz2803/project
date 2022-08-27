@@ -13,5 +13,4 @@ public interface ImageRepository extends JpaRepository<Image, UUID> {
 
     Optional<Image> findByUrl(String url);
 
-
 }
