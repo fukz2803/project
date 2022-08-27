@@ -7,10 +7,7 @@ import com.foodei.project.service.AuthService;
 import com.foodei.project.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.assertj.core.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -79,9 +76,9 @@ public class UserTest {
     @Test
     void sendMail() {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setText("aksjbfkjabsfkjbkaf");
-        message.setTo("fukz2803@gmail.com");
-        message.setSubject("test test");
+        message.setText("Bi bếu xinh đẹp lêu l");
+        message.setTo("dieuanh5195@gmail.com");
+        message.setSubject("lêu lêu");
         javaMailSender.send(message);
     }
 }
