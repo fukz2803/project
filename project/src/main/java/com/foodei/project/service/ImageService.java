@@ -8,15 +8,14 @@ import com.foodei.project.repository.ImageRepository;
 import com.foodei.project.utils.FileUploadUtil;
 import com.foodei.project.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -90,8 +89,9 @@ public class ImageService {
         Path uploadDir = Paths.get(rootPath.toString(),userId);
         String extension = Utils.getExtensionFile(file.getOriginalFilename());
         String fileName = userId + String.valueOf(Instant.now().getEpochSecond()) + "." + extension;
-//        String urlImage = uploadDir + "/" + fileName;
-        Path urlImage = Paths.get(uploadDir.toString(),fileName);
+        int lastIndexOf = uploadDir.toString().lastIndexOf("ic");
+        String urlName = uploadDir.toString().substring(lastIndexOf + 2);
+        Path urlImage = Paths.get(urlName,fileName);
 
         FileUploadUtil.saveFile(uploadDir.toString(), fileName, file);
 

@@ -41,22 +41,22 @@
             <span>Blog manager</span>
         </a>
         <div id="blogs"
-             th:classappend="${#httpServletRequest.requestURI == '/dashboard/blogs'  or #httpServletRequest.requestURI == '/dashboard/blogs/create-blog' or #httpServletRequest.requestURI == '/dashboard/my-blog'} ? 'show' : ''"
+             th:classappend="${#httpServletRequest.requestURI.contains('/dashboard/blogs') or #httpServletRequest.requestURI.equals('/dashboard/my-blogs')} ? 'show' : ''"
              class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item"
                    sec:authorize="hasRole('ADMIN')"
-                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/blogs'} ? 'active' : ''"
+                   th:classappend="${#httpServletRequest.requestURI.equals('/dashboard/blogs')} ? 'active' : ''"
                    th:href="@{/dashboard/blogs}"><span><i class="bi bi-list-task"></i></span>&nbsp;&nbsp;All blogs
                 </a>
                 <a class="collapse-item"
                    sec:authorize="hasAnyRole('ADMIN','EDITOR')"
-                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/my-blogs'} ? 'active' : ''"
+                   th:classappend="${#httpServletRequest.requestURI.equals('/dashboard/my-blogs') or #httpServletRequest.requestURI.contains('/dashboard/blogs/detail/')} ? 'active' : ''"
                    th:href="@{/dashboard/my-blogs}"><span><i class="bi bi-book-fill"></i></span>&nbsp;&nbsp;My blog
                 </a>
                 <a class="collapse-item"
                    sec:authorize="hasAnyRole('ADMIN','EDITOR')"
-                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/blogs/create-blog'} ? 'active' : ''"
+                   th:classappend="${#httpServletRequest.requestURI.equals('/dashboard/blogs/create-blog')} ? 'active' : ''"
                    th:href="@{/dashboard/blogs/create-blog}"><span><i class="bi bi-plus-square-fill"></i></span>&nbsp;&nbsp;Create blog
                 </a>
             </div>

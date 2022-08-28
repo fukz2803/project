@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -58,10 +57,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/forgot-password",
                             "/register",
                             "/confirm",
+                            "/error",
                             "/login").permitAll()
-                    .antMatchers("/dashboard/profile/**").hasRole("MEMBER")
+                    .antMatchers("/dashboard/user/profile").hasRole("MEMBER")
                     .antMatchers("/dashboard/blogs",
                             "/dashboard",
+                            "//dashboard/user/detail/**",
                             "/dashboard/admin/users",
                             "/dashboard/categories",
                             "/dashboard/categories/delete/**").hasRole("ADMIN")
@@ -70,10 +71,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/dashboard/blogs/detail/**",
                             "/dashboard/blogs/delete/",
                             "/dashboard/blogs/edit/**").hasAnyRole("EDITOR","ADMIN")
-                    .anyRequest().authenticated()
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPointCustom)
+//                    .anyRequest().authenticated()
+//                .and()
+//                .exceptionHandling()
+//                .authenticationEntryPoint(authenticationEntryPointCustom)
 //                    .formLogin()
 //                    .loginPage("/login")
 //                    .loginProcessingUrl("/login")

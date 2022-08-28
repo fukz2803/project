@@ -5,8 +5,10 @@
 <head>
     <title>FoodeiBlog Admin | Blog Detail</title>
     <th:block id="css">
+        <!--    Select 2-->
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     </th:block>
 </head>
 
@@ -96,10 +98,10 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="thumbnail-preview-container mb-3">
-                                                        <img th:src="${blog.thumbnail}" alt="" id="thumbnail" />
+                                                        <img th:src="@{${thumbnail}}" th:alt="${blog.slug}" id="thumbnail" />
                                                     </div>
                                                     <label for="blog-logo-input" class="btn btn-warning">Choose image</label>
-                                                    <input th:field="*{image}" accept="image/png, image/jpeg" type="file" id="blog-logo-input" class="d-none" name="image">
+                                                    <input accept="image/jpeg, image/png" th:field="*{image}" type="file" id="blog-logo-input" class="d-none" name="image">
                                                 </div>
                                             </div>
                                         </div>
@@ -115,19 +117,20 @@
 
 
     <th:block id="js">
-        <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
 
         <!--        select 2-->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
         <script th:inline="javascript">
-            var simplemde = new SimpleMDE({
+            // Initialize editor
+            const easyMDE = new EasyMDE({
                 element: document.getElementById("blog-content"),
                 spellChecker: false,
                 maxHeight: "500px",
                 renderingConfig: {
-                    codeSyntaxHighlighting: true
-                }
+                    codeSyntaxHighlighting: true,
+                },
             });
 
             const category = $("#blog-category");

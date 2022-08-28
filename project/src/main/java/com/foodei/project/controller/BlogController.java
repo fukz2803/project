@@ -4,13 +4,10 @@ import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.Category;
 import com.foodei.project.entity.Image;
 import com.foodei.project.entity.User;
-import com.foodei.project.repository.ImageRepository;
-import com.foodei.project.repository.UserRepository;
 import com.foodei.project.request.BlogRequest;
 import com.foodei.project.service.BlogService;
 import com.foodei.project.service.CategoryService;
 import com.foodei.project.service.ImageService;
-import com.foodei.project.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,12 +30,7 @@ public class BlogController {
     private CategoryService categoryService;
     @Autowired
     private ImageService imageService;
-    @Autowired
-    private StorageService storageService;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ImageRepository imageRepository;
+
 
 
     @GetMapping("/dashboard/blogs")
@@ -71,9 +63,9 @@ public class BlogController {
                                  @RequestParam(required = false,defaultValue = "1") Integer page){
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
-        if (page < 1){
-            return "error/404";
-        }
+//        if (page < 1){
+//            return "error/404";
+//        }
 
         // Lấy ra thông tin user đang đăng nhập
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -94,7 +86,7 @@ public class BlogController {
     @GetMapping("/dashboard/blogs/create-blog")
     public String getCreateBlogPage(Model model){
 
-        model.addAttribute("blog", new Blog());
+        model.addAttribute("blogRequest", new BlogRequest());
 
         List<Category> categories = categoryService.findAllCategoryIndex();
         model.addAttribute("categories", categories);
@@ -103,12 +95,25 @@ public class BlogController {
     }
 
     @PostMapping("/dashboard/blogs/create-blog")
-    public String createBlog(@ModelAttribute Blog blog, BindingResult result){
+    public String createBlog(@ModelAttribute BlogRequest blogRequest,
+                             @RequestParam("image") MultipartFile imageUpload,
+                             BindingResult result) throws IOException {
         if (result.hasErrors()){
-            return "/dashboard/blogs/create-blog";
+            return "dashboard/blog-create";
+        }
+        // Lấy ra thông tin user đang đăng nhập
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String currentUserId = currentUser.getId();
+
+        Image image = new Image();
+        if (imageUpload != null && !imageUpload.isEmpty()){
+            image = imageService.uploadImage(imageUpload, currentUser);
+            blogRequest.setThumbnail(image.getUrl());
         }
 
-        return "redirect:/dashboard/blogs";
+
+
+        return "redirect:/dashboard/my-blogs";
     }
 
     @GetMapping("/dashboard/blogs/detail/{id}")
@@ -122,7 +127,7 @@ public class BlogController {
         String AuthorId = blog.getUser().getId();
 
         if (!currentUserId.equals(AuthorId)){
-            return "error/403";
+            return "error/403-error";
         }
 
 
@@ -130,6 +135,9 @@ public class BlogController {
 
         BlogRequest blogRequest = blogService.toBlogRequest(blog);
         model.addAttribute("blogRequest",blogRequest);
+
+        String thumbnail = blog.getThumbnail();
+        model.addAttribute("thumbnail", thumbnail);
 
 
         List<Category> categories = categoryService.findAllCategoryIndex();

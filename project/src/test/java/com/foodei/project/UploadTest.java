@@ -1,9 +1,6 @@
 package com.foodei.project;
-import static org.assertj.core.api.Assertions.*;
 
-import com.foodei.project.service.StorageService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +10,7 @@ import java.nio.file.Paths;
 public class UploadTest {
 
 
-    private final Path rootPath = Paths.get("src/main/resources/static/uploads");
+    private final Path rootPath = Paths.get("src/main/resources/static/uploads/cmIAk21");
 
     @Test
     void makeFolder() {
@@ -34,4 +31,9 @@ public class UploadTest {
         }
     }
 
+    @Test
+    void lastIndex() {
+        int lastIndexOf = rootPath.toString().lastIndexOf("ic");
+        String s = rootPath.toString().substring(lastIndexOf + 2);
+    }
 }

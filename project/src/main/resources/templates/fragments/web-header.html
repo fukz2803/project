@@ -148,63 +148,63 @@
 <!--                           </div>-->
                        </th:block>
                        <th:block sec:authorize="isAuthenticated()">
-<!--                           <div class="dropdown">-->
-<!--                               <button style="background-color: #f4952f; border-color: #f4952f"-->
-<!--                                       class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                   <th:block th:text="${#authentication.getPrincipal().getUser().getName()}">name</th:block>-->
-<!--                               </button>-->
-<!--                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--                                   <a class="dropdown-item" th:href="@{/dashboard/user/profile}" sec:authorize="hasRole('MEMBER')">-->
-<!--                                       <i class="bi bi-person-circle"></i>-->
-<!--                                       Profile-->
-<!--                                   </a>-->
-<!--                                   <a class="dropdown-item" th:href="@{/dashboard/my-blogs}" sec:authorize="hasAnyRole('EDITOR', 'ADMIN')">-->
-<!--                                       <i class="bi bi-book-fill"></i>-->
-<!--                                       My blogs-->
-<!--                                   </a>-->
-<!--                                   <a class="dropdown-item" th:href="@{/dashboard/blogs}" sec:authorize="hasRole('ADMIN')">-->
-<!--                                       <i class="bi bi-list-task"></i>-->
-<!--                                       All blogs-->
-<!--                                   </a>-->
-<!--                                   <a class="dropdown-item" th:href="@{/dashboard/admin/users}" sec:authorize="hasRole('ADMIN')">-->
-<!--                                       <i class="bi bi-people-fill"></i>-->
-<!--                                       All users-->
-<!--                                   </a>-->
-<!--                                   <div class="dropdown-divider"></div>-->
-<!--                                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">-->
-<!--                                       <i class="bi bi-box-arrow-right"></i>-->
-<!--                                       Logout-->
-<!--                                   </a>-->
-<!--                               </div>-->
-<!--                           </div>-->
-                           <nav class="header__menu">
-                               <ul>
-                                   <li class="dropdown"><a><th:block th:text="${#authentication.getPrincipal().getName()}">name</th:block></a>
-                                       <ul class="dropdown__menu">
-                                           <li><a th:href="@{/dashboard/user/profile}" sec:authorize="hasRole('MEMBER')">
-                                               <i class="bi bi-person-circle"></i>
-                                               Profile
-                                           </a></li>
-                                           <li><a  th:href="@{/dashboard/my-blogs}" sec:authorize="hasAnyRole('EDITOR', 'ADMIN')">
-                                               <i class="bi bi-book-fill"></i>
-                                               My blogs
-                                           </a></li>
-                                           <li><a  th:href="@{/dashboard/blogs}" sec:authorize="hasRole('ADMIN')">
-                                               <i class="bi bi-list-task"></i>
-                                               All blogs
-                                           </a></li>
-                                           <li><a  th:href="@{/dashboard/admin/users}" sec:authorize="hasRole('ADMIN')">
-                                               <i class="bi bi-people-fill"></i>
-                                               All users
-                                           </a></li>
-                                           <li><a  href="#" data-toggle="modal" data-target="#logoutModal">
-                                               <i class="bi bi-box-arrow-right"></i>
-                                               Logout
-                                           </a></li>
-                                       </ul>
-                                   </li>
-                               </ul>
-                           </nav>
+                           <div class="dropdown" style="margin-top: 2px">
+                               <button style="background-color: #f4952f; border-color: #f4952f"
+                                       class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   <th:block th:text="${#authentication.getPrincipal().getName()}">name</th:block>
+                               </button>
+                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                   <a class="dropdown-item" th:href="@{/dashboard/user/profile}" sec:authorize="hasRole('MEMBER')">
+                                       <i class="bi bi-person-circle"></i>
+                                       Profile
+                                   </a>
+                                   <a class="dropdown-item" th:href="@{/dashboard/my-blogs}" sec:authorize="hasAnyRole('EDITOR', 'ADMIN')">
+                                       <i class="bi bi-book-fill"></i>
+                                       My blogs
+                                   </a>
+                                   <a class="dropdown-item" th:href="@{/dashboard/blogs}" sec:authorize="hasRole('ADMIN')">
+                                       <i class="bi bi-list-task"></i>
+                                       All blogs
+                                   </a>
+                                   <a class="dropdown-item" th:href="@{/dashboard/admin/users}" sec:authorize="hasRole('ADMIN')">
+                                       <i class="bi bi-people-fill"></i>
+                                       All users
+                                   </a>
+                                   <div class="dropdown-divider"></div>
+                                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                       <i class="bi bi-box-arrow-right"></i>
+                                       Logout
+                                   </a>
+                               </div>
+                           </div>
+<!--                           <nav class="header__menu">-->
+<!--                               <ul>-->
+<!--                                   <li class="dropdown"><a><th:block th:text="${#authentication.getPrincipal().getName()}">name</th:block></a>-->
+<!--                                       <ul class="dropdown__menu">-->
+<!--                                           <li><a th:href="@{/dashboard/user/profile}" sec:authorize="hasRole('MEMBER')">-->
+<!--                                               <i class="bi bi-person-circle"></i>-->
+<!--                                               Profile-->
+<!--                                           </a></li>-->
+<!--                                           <li><a  th:href="@{/dashboard/my-blogs}" sec:authorize="hasAnyRole('EDITOR', 'ADMIN')">-->
+<!--                                               <i class="bi bi-book-fill"></i>-->
+<!--                                               My blogs-->
+<!--                                           </a></li>-->
+<!--                                           <li><a  th:href="@{/dashboard/blogs}" sec:authorize="hasRole('ADMIN')">-->
+<!--                                               <i class="bi bi-list-task"></i>-->
+<!--                                               All blogs-->
+<!--                                           </a></li>-->
+<!--                                           <li><a  th:href="@{/dashboard/admin/users}" sec:authorize="hasRole('ADMIN')">-->
+<!--                                               <i class="bi bi-people-fill"></i>-->
+<!--                                               All users-->
+<!--                                           </a></li>-->
+<!--                                           <li><a  href="#" data-toggle="modal" data-target="#logoutModal">-->
+<!--                                               <i class="bi bi-box-arrow-right"></i>-->
+<!--                                               Logout-->
+<!--                                           </a></li>-->
+<!--                                       </ul>-->
+<!--                                   </li>-->
+<!--                               </ul>-->
+<!--                           </nav>-->
                        </th:block>
                     </div>
                 </div>

@@ -6,15 +6,12 @@ import com.foodei.project.service.BlogService;
 import com.foodei.project.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -95,6 +92,9 @@ public class WebController {
                                    @RequestParam(required = false, defaultValue = "") String keyword,
                                    @RequestParam(required = false,defaultValue = "1") Integer page,
                                    @PathVariable("name") String name){
+        if (page < 1){
+            return "web/404";
+        }
         Page<Blog> blogPage = blogService.getAllBlogsByCategoryAndTitle(page - 1, 7 , keyword, name);
 
         List<Blog> blogListPage = blogPage.getContent();
