@@ -85,18 +85,27 @@ public class ImageService {
         validate(file);
 
         String userId = user.getId();
-//        String uploadDir = rootPath.toString() + "/" + userId;
         Path uploadDir = Paths.get(rootPath.toString(),userId);
         String extension = Utils.getExtensionFile(file.getOriginalFilename());
         String fileName = userId + String.valueOf(Instant.now().getEpochSecond()) + "." + extension;
         int lastIndexOf = uploadDir.toString().lastIndexOf("ic");
         String urlName = uploadDir.toString().substring(lastIndexOf + 2);
         Path urlImage = Paths.get(urlName,fileName);
+        String uploadDirStr = uploadDir.toString();
+        String urlImageStr = urlImage.toString();
 
-        FileUploadUtil.saveFile(uploadDir.toString(), fileName, file);
+        if (uploadDirStr.contains("\\")){
+            uploadDirStr = uploadDirStr.replace("\\", "/");
+        }
+
+        if(urlImageStr.contains("\\")){
+            urlImageStr = urlImageStr.replace("\\", "/");
+        }
+
+        FileUploadUtil.saveFile(uploadDirStr, fileName, file);
 
         Image image = Image.builder()
-                .url(urlImage.toString())
+                .url(urlImageStr)
                 .user(user)
                 .build();
         imageRepository.save(image);
