@@ -72,7 +72,7 @@
                                 <tr th:each="user,iStat : ${userList}">
                                     <td th:text="${iStat.index + 1}"></td>
                                     <td th:text="${user.id}"></td>
-                                    <td><a th:href="@{/dashboard/user/detail/{id} (id = ${user.id})}" th:text="${user.name}"></a> </td>
+                                    <td th:text="${user.name}"></td>
                                     <td th:text="${user.email}"></td>
                                     <td th:text="${user.phone}"></td>
                                     <td th:text="${userService.showRoles(user)}">
@@ -82,11 +82,17 @@
                                         <span th:case="false">Disabled</span>
                                     </td>
                                     <td>
-                                        <a th:href="@{/dashboard/admin/user-active/{id} (id = ${user.id})}" class="btn btn-success btn-circle">
+                                        <a th:href="@{/dashboard/admin/user-active/{id} (id = ${user.id})}"
+                                           th:classappend="${user.enabled == true} ? 'disabled' : ''"
+                                           onclick="return confirm('Are you sure to active this user?')"
+                                           class="btn btn-success btn-circle">
                                             <i class="fas fa-check"></i>
                                         </a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a th:href="@{/dashboard/admin/user-disable/{id} (id = ${user.id})}" class="btn btn-warning btn-circle">
+                                        <a th:href="@{/dashboard/admin/user-disable/{id} (id = ${user.id})}"
+                                           onclick="return confirm('Are you sure to disable this user?')"
+                                           th:classappend="${user.enabled == false} ? 'disabled' : ''"
+                                           class="btn btn-warning btn-circle">
                                             <i class="fas fa-exclamation-triangle"></i>
                                         </a>
                                     </td>

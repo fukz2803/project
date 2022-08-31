@@ -2,6 +2,7 @@ package com.foodei.project.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -15,9 +16,10 @@ import java.util.Objects;
 @Table(name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "custom_generate")
+    @GenericGenerator(name = "custom_generate", strategy = "com.foodei.project.generator.CustomIdGenerator")
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private String id;
 
     @Column(name = "name")
     private String name;

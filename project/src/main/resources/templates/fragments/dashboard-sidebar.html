@@ -78,7 +78,7 @@
             <i class="bi bi-table"></i>
             <span>Category manager</span>
         </a>
-        <div id="collapseTwo" th:classappend="${#httpServletRequest.requestURI == '/dashboard/categories' or #httpServletRequest.requestURI == '/dashboard/create-category'} ? 'show' : ''"
+        <div id="collapseTwo" th:classappend="${#httpServletRequest.requestURI == '/dashboard/categories' or #httpServletRequest.requestURI == '/dashboard/admin/category/create'} ? 'show' : ''"
              class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item"
@@ -88,8 +88,8 @@
                 </a>
                 <a class="collapse-item"
                    sec:authorize="hasRole('ADMIN')"
-                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/create-category'} ? 'active' : ''"
-                   th:href="@{/dashboard/create-category}"><span><i class="bi bi-bookmark-plus-fill"></i></span>&nbsp;&nbsp;Create category
+                   th:classappend="${#httpServletRequest.requestURI == '/dashboard/admin/category/create'} ? 'active' : ''"
+                   th:href="@{/dashboard/admin/category/create}"><span><i class="bi bi-bookmark-plus-fill"></i></span>&nbsp;&nbsp;Create category
                 </a>
             </div>
         </div>

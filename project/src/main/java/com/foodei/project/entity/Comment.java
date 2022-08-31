@@ -1,6 +1,7 @@
 package com.foodei.project.entity;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,9 +15,10 @@ import java.time.LocalDateTime;
 @Table(name = "comment")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "custom_generate")
+    @GenericGenerator(name = "custom_generate", strategy = "com.foodei.project.generator.CustomIdGenerator")
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private String id;
 
     @Column(name = "content")
     private String content;

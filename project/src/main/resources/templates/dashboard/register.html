@@ -34,43 +34,55 @@
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
                     <div class="col-lg-7">
-                        <div class="p-5">
-                            <div class="text-center" >
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        <div th:if="${success}">
+                            <div class="p-5">
+                                <div class="text-center" >
+                                    <h1 class="h4 text-gray-900 mb-4">Sign Up Success!</h1>
+                                    <div class="text-center">
+                                        <h2 class="h4  mb-4" style="color: green">Verification email has been sent to your email. Please check and click the verification link.</h2>
+                                    </div>
+                                </div>
                             </div>
-                            <form class="user" th:object="${userRequest}" method="post" th:action="@{/register}" enctype="utf8">
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="name" th:field="*{name}"
-                                           placeholder="Full Name">
-                                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Email Error</p>
+                        </div>
+                        <div class="p-5">
+                            <div th:unless="${success}">
+                                <div class="text-center" >
+                                    <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="email" th:field="*{email}"
-                                        placeholder="Email Address">
-                                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
-                                </div>
-                                <div class="form-group">
-                                    <input type="number" class="form-control form-control-user" id="phone" th:field="*{phone}"
-                                           placeholder="Phone number">
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user" th:field="*{password}"
-                                            id="password" placeholder="Password">
-                                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+                                <form class="user" th:object="${userRequest}" method="post" th:action="@{/register}" enctype="utf8">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="name" th:field="*{name}"
+                                               placeholder="Full Name">
+                                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Email Error</p>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user" th:field="*{confirmPassword}"
-                                            id="confirm_password" placeholder="Confirm Password">
-                                        <span id="message"></span>
-                                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{confirmPassword}">Password Error</p>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control form-control-user" id="email" th:field="*{email}"
+                                               placeholder="Email Address">
+                                        <p th:text="${emailExisted}" style="color: red"></p>
                                     </div>
-                                </div>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control form-control-user" id="phone" th:field="*{phone}"
+                                               placeholder="Phone number">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="password" class="form-control form-control-user" th:field="*{password}"
+                                                   id="password" placeholder="Password">
+                                            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="password" class="form-control form-control-user" th:field="*{confirmPassword}"
+                                                   id="confirm_password" placeholder="Confirm Password">
+                                            <span id="message"></span>
+                                            <p th:text="${message}" style="color: red"></p>
+                                        </div>
+                                    </div>
 
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </button>
-                            </form>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        Register Account
+                                    </button>
+                                </form>
+                            </div>
                             <hr>
                             <div class="text-center">
                                 <a class="small" th:href="@{/forgot-password}">Forgot Password?</a>

@@ -103,15 +103,15 @@ public class BlogController {
         }
         // Lấy ra thông tin user đang đăng nhập
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String currentUserId = currentUser.getId();
 
         Image image = new Image();
         if (imageUpload != null && !imageUpload.isEmpty()){
             image = imageService.uploadImage(imageUpload, currentUser);
             blogRequest.setThumbnail(image.getUrl());
         }
-
-
+        Blog blog = blogService.fromRequestToBlog(blogRequest);
+        blog.setUser(currentUser);
+        blogService.createAndEdit(blog);
 
         return "redirect:/dashboard/my-blogs";
     }

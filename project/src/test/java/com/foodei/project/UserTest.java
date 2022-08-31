@@ -59,9 +59,21 @@ public class UserTest {
     }
 
     @Test
+    void save_admin() {
+        User user1 = User.builder()
+                .name("Nguyễn Văn A")
+                .email("a@gmail.com")
+                .password(passwordEncoder.encode("123123"))
+                .role(List.of("MEMBER", "EDITOR", "ADMIN"))
+                .enabled(true)
+                .build();
+        userRepository.save(user1);
+    }
+
+    @Test
     void createUser() {
         String pass = passwordEncoder.encode("123123");
-        UserRequest userRequest = new UserRequest("a1","fukz2803@gmail.com",pass,pass,"0123456798");
+        UserRequest userRequest = new UserRequest("","a1","fukz2803@gmail.com",pass,pass,"0123456798");
         authService.registerNewUserAccount(userRequest);
     }
 

@@ -18,4 +18,8 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     @Modifying
     @Query("UPDATE Token c SET c.confirmedAt = ?2 WHERE c.token = ?1")
     void updateConfirmedAt(String token, LocalDateTime confirmedAt);
+
+
+
+
 }

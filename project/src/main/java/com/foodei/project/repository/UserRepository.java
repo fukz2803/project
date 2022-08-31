@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("""
@@ -34,5 +33,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query("UPDATE User u SET u.enabled = FALSE WHERE u.email = ?1")
     void disableUser(String email);
+
+
 
 }

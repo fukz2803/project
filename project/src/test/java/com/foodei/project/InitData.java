@@ -64,6 +64,7 @@ public class InitData {
                     .email(faker.internet().emailAddress())
                     .password(passwordEncoder.encode(faker.number().digits(6)))
                     .role(rolesRd)
+                    .enabled(rd.nextBoolean())
                     .phone(faker.phoneNumber().phoneNumber())
                     .build();
 

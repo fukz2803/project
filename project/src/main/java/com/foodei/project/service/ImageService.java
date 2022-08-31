@@ -29,7 +29,7 @@ public class ImageService {
 
 
     // Folder path để upload file
-    private final Path rootPath = Paths.get("src/main/resources/static/uploads");
+    private final Path rootPath = Paths.get("target/classes/static/uploads");
 
 
     public ImageService() {
@@ -45,45 +45,13 @@ public class ImageService {
         }
     }
 
-    // Upload file
-//    public Image uploadImage(MultipartFile file, User user) {
-//        // Tạo folder tương ứng với id user
-//        Path userDir = rootPath.resolve(String.valueOf(user.getId()));
-////        createFolder(userDir);
-//        try {
-//            Files.createDirectories(userDir);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        // Validate file
-//        validate(file);
-//
-//        // Tạo path tương ứng với fileUpload
-//        String generateFileId = String.valueOf(Instant.now().getEpochSecond());
-//        File fileServer = new File(userDir + "/" + generateFileId);
-//
-//        // Create image instance
-//        Image image = new Image();
-//
-//        try {
-//            // Use Buffer to store data
-//            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(fileServer));
-//            stream.write(file.getBytes());
-//            stream.close();
-//        } catch (Exception e) {
-//            throw new StorageException("Errors occur while uploading file");
-//        }
-//        image.setUrl(fileServer.getPath());
-//        image.setUser(user);
-//        imageRepository.save(image);
-//        return image;
-//    }
+
 
     public Image uploadImage(MultipartFile file, User user) throws IOException{
-        // 1: validate file
+        // Xác thực file
         validate(file);
 
+        // Tạo đường dẫn và tên file
         String userId = user.getId();
         Path uploadDir = Paths.get(rootPath.toString(),userId);
         String extension = Utils.getExtensionFile(file.getOriginalFilename());
@@ -94,13 +62,13 @@ public class ImageService {
         String uploadDirStr = uploadDir.toString();
         String urlImageStr = urlImage.toString();
 
-        if (uploadDirStr.contains("\\")){
-            uploadDirStr = uploadDirStr.replace("\\", "/");
-        }
-
-        if(urlImageStr.contains("\\")){
-            urlImageStr = urlImageStr.replace("\\", "/");
-        }
+//        if (uploadDirStr.contains("\\")){
+//            uploadDirStr = uploadDirStr.replace("\\", "/");
+//        }
+//
+//        if(urlImageStr.contains("\\")){
+//            urlImageStr = urlImageStr.replace("\\", "/");
+//        }
 
         FileUploadUtil.saveFile(uploadDirStr, fileName, file);
 

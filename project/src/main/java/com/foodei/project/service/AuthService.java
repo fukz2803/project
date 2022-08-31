@@ -142,9 +142,15 @@ public class AuthService {
         boolean existed = userService.emailExists(email);
 
         if (existed){
+            // nếu nhập đúng email thì gửi password mới
             User user = userService.getUserByEmail(email).get();
             sendMailResetPassword(user);
         }
+    }
+
+    // Kiểm tra mật khẩu xác nhận có đúng không
+    public boolean checkConfirmPassword(String password, String confirm){
+        return password.equals(confirm);
     }
 
     //Sinh token - gửi email
@@ -157,7 +163,6 @@ public class AuthService {
         userService.resetPassword(user.getEmail(), newPasswordEncode);
 
         //Gửi email
-        String domain = "localhost:8080";
         String content = "Your new password is: " + newPassword;
         mailService.sendEmail(user.getEmail(),"Verify your account", content);
 

@@ -104,9 +104,7 @@ public class BlogService {
     //Dashboard - delete blog
     public void deleteBlog(String id){
         Optional<Blog> blog = blogRepository.findById(id);
-        if (blog.isPresent()){
-            blogRepository.delete(blog.get());
-        }
+        blog.ifPresent(value -> blogRepository.delete(value));
     }
 
     //Dashboard - list blog of user
@@ -136,8 +134,9 @@ public class BlogService {
 
     public Blog fromRequestToBlog(BlogRequest blogRequest){
         String thumbnail = blogRequest.getThumbnail();
-
-        if (thumbnail == null){
+        // Kiểm tra có thay đổi avatar không
+        if (thumbnail == null && blogRequest.getId() != null){
+            //Nếu avatar không thay đổi thì lấy avatar đang có
             thumbnail = getBlogById(blogRequest.getId()).getThumbnail();
         }
 

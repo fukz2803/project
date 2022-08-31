@@ -2,11 +2,12 @@ package com.foodei.project.service;
 
 import com.foodei.project.entity.User;
 import com.foodei.project.repository.UserRepository;
+import com.foodei.project.request.LoginRequest;
+import com.foodei.project.request.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -63,8 +64,8 @@ public class UserService {
 
 
     // Save user
-    public void saveUser(User user){
-        userRepository.save(user);
+    public User saveUser(User user){
+       return userRepository.save(user);
     }
 
     //Reset Password
@@ -73,8 +74,57 @@ public class UserService {
         user.setPassword(password);
     }
 
-    public Object getCurrentUser(){
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public UpdateUserRequest toUpdateRequest(User user){
+        return UpdateUserRequest.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .phone(user.getPhone())
+                .password(user.getPassword())
+                .avatar(user.getAvatar())
+                .enabled(user.getEnabled())
+                .build();
+    }
+
+    public User fromRequestToUser(UpdateUserRequest updateUserRequest){
+        User user = new User();
+        String id = updateUserRequest.getId();
+        // Kiểm tra có thay đổi avatar không
+        String avatar = updateUserRequest.getAvatar();
+        if (avatar == null && id != null && !id.equals("")){
+            //Nếu avatar không thay đổi thì lấy avatar đang có
+            avatar = getUserById(updateUserRequest.getId()).getAvatar();
+        }
+
+        // Kiểm tra password có thay đổi không
+        String password = updateUserRequest.getPassword();
+        if (password == null || password.equals("")
+                && id != null && !id.equals("")){
+            // Nếu password không thay đổi thì lấy password cũ
+            password = getUserById(updateUserRequest.getId()).getPassword();
+            user.setPassword(password);
+        } else {
+            String passwordEncode = passwordEncoder.encode(password);
+            user.setPassword(passwordEncode);
+
+        }
+        user.setId(updateUserRequest.getId());
+        user.setName(updateUserRequest.getName());
+        user.setEmail(updateUserRequest.getEmail());
+        user.setRole(updateUserRequest.getRole());
+        user.setPhone(updateUserRequest.getPhone());
+        user.setAvatar(avatar);
+        user.setEnabled(updateUserRequest.getEnabled());
+        return user;
+
+    }
+
+    public LoginRequest toLoginRequest(User user){
+        return LoginRequest.builder()
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .build();
     }
 
 }

@@ -20,7 +20,7 @@
 
             <section class="content" id="main">
                 <div class="container-fluid">
-                    <form th:action="@{/dashboard/blogs/edit/{id} (id = ${blogRequest.id})}" th:object="${blogRequest}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/dashboard/blogs/edit/{id} (id = ${blog.id})}" th:object="${blogRequest}" method="post" enctype="multipart/form-data">
                         <div class="row py-2">
                             <div class="col-6">
                                 <a th:href="@{/dashboard/my-blogs}" class="btn btn-default">
@@ -32,7 +32,9 @@
                             </div>
 
                             <div class="col-6 d-flex justify-content-end">
-                                <a th:href="@{/dashboard/blogs/delete/{id} (id=${blog.id})}" type="button" class="btn btn-danger px-4" id="btn-delete">
+                                <a th:href="@{/dashboard/blogs/delete/{id} (id=${blog.id})}"
+                                   onclick="return confirm('Are you sure to delete?')"
+                                   type="button" class="btn btn-danger px-4" id="btn-delete">
                                     Delete
                                 </a>
                             </div>
@@ -98,7 +100,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="thumbnail-preview-container mb-3">
-                                                        <img th:src="@{${thumbnail}}" th:alt="${blog.slug}" id="thumbnail" />
+                                                        <img th:src="${blog.thumbnail}" th:alt="${blog.slug}" id="thumbnail" />
                                                     </div>
                                                     <label for="blog-logo-input" class="btn btn-warning">Choose image</label>
                                                     <input accept="image/jpeg, image/png" th:field="*{image}" type="file" id="blog-logo-input" class="d-none" name="image">

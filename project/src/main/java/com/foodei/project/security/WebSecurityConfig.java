@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/dashboard/user/profile").hasRole("MEMBER")
                     .antMatchers("/dashboard/blogs",
                             "/dashboard",
-                            "//dashboard/user/detail/**",
+                            "/dashboard/user/detail/**",
                             "/dashboard/admin/users",
                             "/dashboard/categories",
                             "/dashboard/categories/delete/**").hasRole("ADMIN")

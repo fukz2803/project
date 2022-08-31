@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{})}">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layouts/dashboard-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{:: #js})}">
 
 <head>
     <title>FoodeiBlog Admin | Profile</title>
     <th:block id="css">
-        <link
-                href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-                rel="stylesheet"
-                id="bootstrap-css"
-        />
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" th:href="@{/admin/css/profile.css}">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     </th:block>
 </head>
 
@@ -22,16 +17,29 @@
                   <div class="container-fluid">
 
                       <!-- Page Heading -->
-                      <h1 class="h3 mb-4 text-gray-800">Tạo user</h1>
+                      <h1 class="h3 mb-4 text-gray-800">Profile</h1>
 
                       <div class="container emp-profile">
-                          <form method="post">
+                          <form method="post" th:object="${updateUserRequest}" th:action="@{/dashboard/user/update-user}" enctype="multipart/form-data">
                               <div class="row">
-                                  <div class="col-md-10">
+                                  <div class="col-md-4">
+                                      <div class="profile-img">
+                                          <img  id="avatar" alt=""
+                                                  th:src="${user.avatar}"
+                                                  th:alt="${user.name.replace(' ', '-')}"/>
+                                          <div class="file btn btn-lg btn-primary">
+                                              <label for="avatar">Change Photo</label>
+                                              <input accept="image/jpeg, image/png" th:field="*{image}" type="file" name="image">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
                                       <div class="profile-head">
-                                          <h5>Kshiti Ghelani</h5>
-                                          <h6>Web Developer and Designer</h6>
-                                          <p class="proile-rating">Bài viết : <span>8/10</span></p>
+                                          <h5 th:text="${user.name}"></h5>
+                                          <input type="hidden" th:field="*{id}">
+                                          <input th:field="*{enabled}" type="hidden">
+<!--                                          <h6>Web Developer and Designer</h6>-->
+                                          <p class="profile-rating">Blog : <span th:text="${blogs.size()}"></span> articles</p>
                                           <ul class="nav nav-tabs" id="myTab" role="tablist">
                                               <li class="nav-item">
                                                   <a
@@ -61,12 +69,9 @@
                                       </div>
                                   </div>
                                   <div class="col-md-2">
-                                      <input
-                                              type="submit"
+                                      <button type="submit"
                                               class="profile-edit-btn"
-                                              name="btnAddMore"
-                                              value="Tạo user"
-                                      />
+                                              id ="save">Save</button>
                                   </div>
                               </div>
                               <div class="row">
@@ -94,42 +99,57 @@
                                           >
                                               <div class="row">
                                                   <div class="col-md-3">
-                                                      <label>User Id</label>
+                                                      <label for="name">Name</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <input class="form-control" type="text" name="" id="" value="Kshiti123">
+                                                      <input id="name" class="form-control" type="text" th:field="*{name}" th:value="${user.name}">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-3">
-                                                      <label>Name</label>
+                                                      <label for="email">Email</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <input class="form-control" type="text" name="" id="" value="Kshiti Ghelani">
+                                                      <input class="form-control" id="email" type="text" readonly name="email" th:field="*{email}" th:value="${user.email}">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-3">
-                                                      <label>Email</label>
+                                                      <label for="phone">Phone</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <input class="form-control" type="text" name="" id="" value="kshitighelani@gmail.com">
+                                                      <input class="form-control" id="phone" type="number" name="phone" th:field="*{phone}" th:value="${user.phone}">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-3">
-                                                      <label>Phone</label>
+                                                      <label for="user-role">Role</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <input class="form-control" type="text" name="" id="" value="123 456 7890">
+                                                      <select sec:authorize="hasRole('ADMIN')" th:field="*{role}"
+                                                              class="form-control select2" multiple="multiple" id="user-role">
+                                                          <option th:each="role : ${user.role}"
+                                                                  th:value="${role}"
+                                                                  th:text="${role}"></option>
+                                                      </select>
+                                                      <input sec:authorize="!hasRole('ADMIN')" class="form-control" type="text" readonly name="" th:value="${showRole}">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-3">
-                                                      <label>Profession</label>
+                                                      <label for="password">New Password</label>
                                                   </div>
                                                   <div class="col-md-6">
-                                                      <input class="form-control" type="text" name="" id="" value="Web Developer and Designer">
+                                                      <input class="form-control" type="password" name="password" id="password" th:field="*{password}">
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-3">
+                                                      <label for="confirm_password">Confirm Password</label>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <input class="form-control" type="password" id="confirm_password">
+                                                      <div><span id="message"></span></div>
                                                   </div>
                                               </div>
                                           </div>
@@ -195,6 +215,39 @@
                   </div>
                   <!-- /.container-fluid -->
 
+              </th:block>
+
+              <th:block id="js">
+
+                  <!--        select 2-->
+                  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+                  <script th:inline="javascript">
+
+                      const role = $("#user-role");
+                      role.select2();
+
+                      console.log("hello");
+
+                      var reader = new FileReader();
+                      reader.onload = function(r_event) {
+                          document.getElementById('avatar').setAttribute('src', r_event.target.result);
+                      };
+
+                      document.getElementsByName('image')[0].addEventListener('change', function(event) {
+                          reader.readAsDataURL(this.files[0]);
+                      });
+
+                      $('#password, #confirm_password').on('keyup', function () {
+                          if ($('#password').val() === $('#confirm_password').val()) {
+                              $('#message').html('Matching').css('color', 'green');
+                          } else
+                              $('#message').html('Not Matching').css('color', 'red');
+                      });
+
+
+                  </script>
               </th:block>
 
 </body>

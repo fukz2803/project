@@ -13,6 +13,7 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @Builder
 public class UserRequest{
+    private String id;
     @NotNull
     @NotEmpty
     @NotBlank(message = "Full name cannot blank")
