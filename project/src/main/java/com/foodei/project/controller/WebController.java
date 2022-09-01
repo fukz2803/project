@@ -2,8 +2,11 @@ package com.foodei.project.controller;
 
 import com.foodei.project.entity.Blog;
 import com.foodei.project.entity.Category;
+import com.foodei.project.entity.Comment;
+import com.foodei.project.request.CommentRequest;
 import com.foodei.project.service.BlogService;
 import com.foodei.project.service.CategoryService;
+import com.foodei.project.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,9 @@ public class WebController {
     private BlogService blogService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CommentService commentService;
+
 
 
     @GetMapping("/")
@@ -134,6 +140,14 @@ public class WebController {
     @GetMapping("/detail/{id}/{slug}")
     public String getDetailPage(Model model,
                                 @PathVariable("id") String id){
+        List<Blog> blogsHeader = blogService.getBlogsHeader();
+        model.addAttribute("blogsHeader",blogsHeader);
+
+        List<Comment> comments = commentService.findCommentsByBlog(id);
+        model.addAttribute("comments", comments);
+
+        model.addAttribute("commentRequest", new CommentRequest());
+
         Blog blog = blogService.getBlogById(id);
         model.addAttribute("blog", blog);
         return "web/single-post";

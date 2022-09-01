@@ -19,23 +19,6 @@ public class CategoryService {
     @Autowired
     private BlogService blogService;
 
-    public List<Category> findAll(){
-        return categoryRepository.findAll();
-    }
-
-//    public List<Category> sortCategoryHighestBlogs() {
-//        List<Category> categories = findAll();
-//        int max = 0;
-//        for (int i = 0; i < categories.size(); i++) {
-//            List<Blog> blogs = blogService.getBlogsByCategoryName(categories.get(i).getName());
-//            int size = blogs.size();
-//            max = Math.max(size, max);
-//
-//        }
-//
-//        return categories;
-//    }
-
     public List<Category> findAllCategoryIndex(){
         return categoryRepository.findAll();
     }
@@ -44,6 +27,7 @@ public class CategoryService {
         Pageable pageable = PageRequest.of(page, pageSize);
         return categoryRepository.findByNameContainsIgnoreCase(name, pageable);
     }
+
 
     public Optional<Category> findById(String id){
         return categoryRepository.findById(id);

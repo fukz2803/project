@@ -13,6 +13,8 @@ public class UploadTest {
     private final Path rootPath = Paths.get("src/main/resources/static/uploads/cmIAk21");
     private final Path rootPath1 = Paths.get("uploads");
 
+
+
     @Test
     void makeFolder() {
         try {
@@ -37,4 +39,6 @@ public class UploadTest {
         int lastIndexOf = rootPath.toString().lastIndexOf("ic");
         String s = rootPath.toString().substring(lastIndexOf + 2);
     }
+
+
 }

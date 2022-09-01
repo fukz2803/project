@@ -39,13 +39,11 @@ public class Comment {
 
     @PrePersist
     public void prePersist() {
-        createAt = LocalDateTime.now().minusMonths(1);
+        createAt = LocalDateTime.now();
     }
-
 
     @PreUpdate
     public void preUpdate() {
         updated_at = LocalDateTime.now();
-
     }
 }
