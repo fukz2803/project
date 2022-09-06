@@ -20,7 +20,7 @@ public class Comment {
     @Column(name = "id", nullable = false)
     private String id;
 
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "create_at", columnDefinition = "TIMESTAMP")
@@ -40,6 +40,7 @@ public class Comment {
     @PrePersist
     public void prePersist() {
         createAt = LocalDateTime.now();
+        updated_at = createAt;
     }
 
     @PreUpdate

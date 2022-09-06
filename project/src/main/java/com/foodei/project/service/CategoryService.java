@@ -33,11 +33,9 @@ public class CategoryService {
         return categoryRepository.findAll(pageable);
     }
 
-//    public List<Category> getCategoryMostBlog(){
-//        List<Category> categories = findAllCategoryIndex();
-//
-//        return categories;
-//    }
+    public List<Category> getCategoryMostBlog(){
+        return categoryRepository.getCategoriesHighestBlogs();
+    }
 
     public Optional<Category> findById(String id){
         return categoryRepository.findById(id);

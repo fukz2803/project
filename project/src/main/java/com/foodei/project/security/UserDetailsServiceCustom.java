@@ -1,6 +1,5 @@
 package com.foodei.project.security;
 
-import com.foodei.project.entity.User;
 import com.foodei.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,12 +16,9 @@ public class UserDetailsServiceCustom implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-            User user = userRepository.findByEmail(email).get();
-            if (user != null && user.isEnabled()){
-                return user;
-            } else {
+            return userRepository.findByEmail(email).orElseThrow(() ->{
                 throw new UsernameNotFoundException("Not found user with email " + email);
-            }
+            });
 
     }
 

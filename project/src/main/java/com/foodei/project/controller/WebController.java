@@ -44,9 +44,7 @@ public class WebController {
         List<Blog> blogListHighestComment = blogService.getBlogsByHighComment();
         model.addAttribute("blogListHighestComment", blogListHighestComment);
 
-//        List<Category> categoryList = categoryService.findAllCategoryIndex();
-        Page<Category> categoryPage = categoryService.findAllPageCategory(0,4);
-        List<Category> categoryList = categoryPage.getContent();
+        List<Category> categoryList = categoryService.getCategoryMostBlog();
         model.addAttribute("categoryList",categoryList);
 
         Blog blogHighestComment = blogService.getBlogHighestComment();
@@ -148,6 +146,7 @@ public class WebController {
         List<Comment> comments = commentService.findCommentsByBlog(id);
         model.addAttribute("comments", comments);
 
+//        CommentRequest commentRequest = commentService.toCommentRequest();
         model.addAttribute("newCommentRequest", new CommentRequest());
 
         Blog blog = blogService.getBlogById(id);

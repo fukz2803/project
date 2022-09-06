@@ -3,6 +3,7 @@ package com.foodei.project.controller;
 import com.foodei.project.request.ForgotPassword;
 import com.foodei.project.request.LoginRequest;
 import com.foodei.project.request.UserRequest;
+import com.foodei.project.security.UserDetailsServiceCustom;
 import com.foodei.project.service.AuthService;
 import com.foodei.project.service.TokenService;
 import com.foodei.project.service.UserService;
@@ -30,6 +31,8 @@ public class LoginController {
     private TokenService tokenService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserDetailsServiceCustom userDetailsServiceCustom;
 
 
     @GetMapping("/login")
@@ -85,8 +88,24 @@ public class LoginController {
     }
 
     @GetMapping("/confirm")
-    public String confirmToken(@RequestParam("token") String token){
+    public String confirmToken(@RequestParam("token") String token, HttpSession session){
         authService.confirmToken(token);
+//        User currentUser = tokenService.getUserByToken(token);
+//
+//        // Lấy ra thông tin của user theo email
+//        UserDetails user = userDetailsServiceCustom.loadUserByUsername(currentUser.getEmail());
+//
+//        // Tạo đối tượng xác thực
+//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+//
+//        // Tiến hành xác thực
+//        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+//
+//        // Lưu thông tin đối tượng đã đăng nhập
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        // Lưu thông tin vào session
+//        session.setAttribute("MY_SESSION", authentication.getName());
         return "redirect:/";
     }
 
