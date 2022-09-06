@@ -138,7 +138,7 @@ public class AuthService {
 
     // Forgot password
     public void resetPassword(String email){
-        // Kiểm tra xem user đã tồn tại chưa
+        // Kiểm tra xem user có tồn tại không
         boolean existed = userService.emailExists(email);
 
         if (existed){
@@ -153,7 +153,7 @@ public class AuthService {
         return password.equals(confirm);
     }
 
-    //Sinh token - gửi email
+    // Gửi email reset password
     private void sendMailResetPassword(User user){
         //Sinh password
         String newPassword = UUID.randomUUID().toString();
@@ -164,7 +164,7 @@ public class AuthService {
 
         //Gửi email
         String content = "Your new password is: " + newPassword;
-        mailService.sendEmail(user.getEmail(),"Verify your account", content);
+        mailService.sendEmail(user.getEmail(),"Reset your password.", content);
 
     }
 

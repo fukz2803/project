@@ -39,8 +39,12 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginRequest request, HttpSession session){
-
+    public String login(Model model, @ModelAttribute LoginRequest request, HttpSession session){
+        boolean existed = userService.emailExists(request.getEmail());
+        if (!existed){
+            model.addAttribute("fail", "Your email or password is incorrect.");
+            return "dashboard/login";
+        }
         authService.login(request, session);
         return "redirect:/";
 

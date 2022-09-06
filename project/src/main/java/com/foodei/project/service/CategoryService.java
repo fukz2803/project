@@ -28,6 +28,16 @@ public class CategoryService {
         return categoryRepository.findByNameContainsIgnoreCase(name, pageable);
     }
 
+    public Page<Category> findAllPageCategory(int page, int pageSize){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return categoryRepository.findAll(pageable);
+    }
+
+//    public List<Category> getCategoryMostBlog(){
+//        List<Category> categories = findAllCategoryIndex();
+//
+//        return categories;
+//    }
 
     public Optional<Category> findById(String id){
         return categoryRepository.findById(id);

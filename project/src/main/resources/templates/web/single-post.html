@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="~{layouts/web-layout :: main-fragment(~{:: title}, ~{}, ~{:: #main}, ~{:: #js})}">
+      th:replace="~{layouts/web-layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: #main}, ~{:: #js})}">
 
 <head>
-    <title>Foodeiblog | Template</title>
+    <title>Foodeiblog | Article</title>
+    <th:block id="css">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    </th:block>
 </head>
 
 <body>
@@ -219,37 +222,9 @@
                                <div class="single-post__comment__item__text">
                                    <h5 th:text="${comment.user.name}">Brandon Kelley</h5>
                                    <span th:text="${#temporals.format(comment.createAt,'dd/MM/yyyy')}">15 Aug 2017</span>
-                                   <p th:text="${comment.content}">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                       adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore
-                                       magnam.</p>
-                                   <ul th:if="${#authentication.getPrincipal().getEmail().equals(comment.user.email)}">
-                                       <li><a href="#"><i class="fa fa-pencil"></i></a></li>
-                                       <li><a type="button" data-toggle="modal" data-target="#exampleModal">
-                                           <i class="fa fa-pencil"></i>
-                                       </a></li>
-                                       <!-- Modal Edit Comment-->
-                                       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                           <div class="modal-dialog" role="document">
-                                               <form method="post" th:action="@{/post-comment/{id} (id = ${blog.id})}" th:object="${commentRequest}">
-                                                   <div class="modal-content">
-                                                       <div class="modal-header">
-                                                           <h5 class="modal-title" id="exampleModalLabel">Edit your comment</h5>
-                                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                               <span aria-hidden="true">&times;</span>
-                                                           </button>
-                                                       </div>
-                                                       <div class="modal-body">
-                                                           <textarea th:text="${comment.content}" th:field="*{content}"></textarea>
-                                                           <input type="hidden" th:field="*{id}">
-                                                       </div>
-                                                       <div class="modal-footer">
-                                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                           <button type="submit" class="btn btn-primary">Save changes</button>
-                                                       </div>
-                                                   </div>
-                                               </form>
-                                           </div>
-                                       </div>
+                                   <p th:text="${comment.content}"></p>
+                                   <ul sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().getEmail().equals(comment.user.email)}">
+                                       <li><a href="#" ><i class="fa fa-pencil"></i></a></li>
                                        <li><a th:href="@{/comment/delete/{id} (id = ${comment.id})}"><i class="fa fa-trash"></i></a></li>
                                    </ul>
                                </div>
@@ -277,7 +252,7 @@
                            <div class="widget__title">
                                <h4>Leave a comment</h4>
                            </div>
-                           <form th:action="@{/post-comment/{id} (id = ${blog.id})}" th:object="${commentRequest}" method="post">
+                           <form th:action="@{/post-comment/{id} (id = ${blog.id})}" th:object="${newCommentRequest}" method="post">
                                <textarea th:field="*{content}" sec:authorize="isAuthenticated()" placeholder="Leave your comment here."></textarea>
                                <div sec:authorize="not isAuthenticated()"><p style="color: red">
                                    **Please <a th:href="@{/login}">login</a> to comment.
@@ -294,18 +269,7 @@
    </th:block>
 
     <th:block id="js">
-        <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-        <script th:inline="javascript">
-            // Initialize editor
-            const easyMDE = new EasyMDE({
-                element: document.getElementById("comment"),
-                spellChecker: false,
-                maxHeight: "200px",
-                renderingConfig: {
-                    codeSyntaxHighlighting: true,
-                },
-            });
-        </script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
     </th:block>
 </body>
 

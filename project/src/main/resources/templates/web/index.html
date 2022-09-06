@@ -206,16 +206,17 @@
         <!-- Categories Section Begin -->
         <section class="categories spad">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6" th:each="category : ${categoryList}">
-                        <div class="categories__item set-bg" th:styleappend="|background-image: url(${category.avatar})|">
-                            <div class="categories__hover__text">
-                                <h5><a th:text="${category.name}" th:href="@{/category/{name} (name=${category.name.toLowerCase()})}"></a></h5>
-                                <p><span th:text="${blogService.getBlogsByCategoryName(category.name).size()}"></span> articles</p>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-6" th:each="category : ${categoryList}">
+                                    <div class="categories__item set-bg" th:styleappend="|background-image: url(${category.avatar})|">
+                                        <div class="categories__hover__text">
+                                            <h5><a th:text="${category.name}" th:href="@{/category/{name} (name=${category.name.toLowerCase()})}"></a></h5>
+                                            <p><span th:text="${blogService.getBlogsByCategoryName(category.name).size()}"></span> articles</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div class="categories__post">
                 <div class="container">
