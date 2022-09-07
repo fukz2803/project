@@ -8,7 +8,6 @@ import com.foodei.project.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -59,15 +58,24 @@ public class UserTest {
     }
 
     @Test
-    void save_admin() {
-        User user1 = User.builder()
-                .name("Nguyễn Văn A")
-                .email("a@gmail.com")
-                .password(passwordEncoder.encode("123123"))
-                .role(List.of("MEMBER", "EDITOR", "ADMIN"))
-                .enabled(true)
-                .build();
-        userRepository.save(user1);
+    void setEditor() {
+        userService.setRole("0sELfR","EDITOR");
+
+    }
+
+    @Test
+    void setAdmin() {
+        userService.setRole("0sELfR","ADMIN");
+    }
+
+    @Test
+    void removeEditor() {
+        userService.removeRole("0sELfR","EDITOR");
+    }
+
+    @Test
+    void removeAdmin() {
+        userService.removeRole("0sELfR","ADMIN");
     }
 
     @Test
@@ -77,20 +85,11 @@ public class UserTest {
         authService.registerNewUserAccount(userRequest);
     }
 
-
-
     @Test
     void delete() {
         User user = userRepository.findById("BuqS9");
         userRepository.delete(user);
     }
 
-    @Test
-    void sendMail() {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setText("Bi bếu xinh đẹp lêu l");
-        message.setTo("dieuanh5195@gmail.com");
-        message.setSubject("lêu lêu");
-        javaMailSender.send(message);
-    }
+
 }

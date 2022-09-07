@@ -8,6 +8,14 @@
     <th:block id="css">
         <link rel="stylesheet" th:href="@{/admin/css/profile.css}">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <style th:inline="css">
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button
+            {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        </style>
     </th:block>
 </head>
 
@@ -21,11 +29,11 @@
 
                       <div class="container emp-profile">
                           <form method="post" th:object="${updateUserRequest}" th:action="@{/dashboard/user/update-user}" enctype="multipart/form-data">
-                              <div class="row">
+                              <div class="row" style="height: 350px">
                                   <div class="col-md-4" >
                                       <div class="profile-img" >
                                           <img id="avatar" alt=""
-                                               th:src="${user.avatar} ? user.avatar : '/admin/img/person-icon.png'"/>
+                                               th:src="${user.avatar} ? ${user.avatar} : '/admin/img/person-icon.png'"/>
 
                                           <div class="file btn btn-lg btn-primary">
                                               Change Photo
@@ -116,9 +124,9 @@
                                                           <div class="col-md-6">
                                                               <select sec:authorize="hasRole('ADMIN')" th:field="*{role}"
                                                                       class="form-control select2" multiple="multiple" id="user-role">
-                                                                  <option th:each="role : ${user.role}"
-                                                                          th:value="${role}"
-                                                                          th:text="${role}"></option>
+                                                                  <option value="MEMBER">MEMBER</option>
+                                                                  <option value="EDITOR">EDITOR</option>
+                                                                  <option value="ADMIN">ADMIN</option>
                                                               </select>
                                                               <input sec:authorize="!hasRole('ADMIN')" class="form-control" type="text" readonly name="" th:value="${showRole}">
                                                               <input type="hidden" th:field="*{role}">

@@ -31,3 +31,52 @@
     background-color: #fff;
     border-color: #fff;
 }
+
+#dataTable .btn-member{
+    background-color: #f4952f;
+    border-color: #f4952f;
+}
+
+#dataTable .btn-editor{
+    background-color: #94553D;
+    border-color: #94553D;
+}
+
+#dataTable .btn-remove-editor{
+    background-color: #bd8671;
+    border-color: #bd8671;
+}
+
+#dataTable .btn-admin{
+    background-color: #2653d4;
+    border-color: #2653d4;
+}
+
+#dataTable .btn-remove-admin{
+    background-color: #869fea;
+    border-color: #869fea;
+}
+
+#dataTable .btn-member:hover{
+    color: #f4952f;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+#dataTable .btn-editor:hover{
+    color: green;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+#dataTable .btn-admin:hover{
+    color: green;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+#dataTable .btn-remove-admin:hover, #dataTable .btn-remove-editor:hover {
+    color: red;
+    background-color: #fff;
+    border-color: #fff;
+}

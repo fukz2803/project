@@ -72,6 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/dashboard/blogs",
                             "/dashboard/admin/users",
                             "/dashboard/admin/create-user",
+                            "/dashboard/admin/set-role/**",
+                            "/dashboard/admin/remove-role/**",
                             "/dashboard/admin/user-active/**",
                             "/dashboard/admin/user-disable/**").hasRole("ADMIN")
                     .antMatchers("/dashboard/my-blogs/**",

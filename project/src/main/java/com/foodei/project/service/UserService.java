@@ -62,6 +62,28 @@ public class UserService {
         userRepository.disableUser(email);
     }
 
+    // Set role
+    public User setRole(String id, String role){
+        User user = getUserById(id);
+        if(!user.getRole().contains(role)){
+            user.getRole().add(role);
+            return userRepository.save(user);
+        } else {
+            return user;
+        }
+    }
+
+    // Remove role
+    public User removeRole(String id, String role){
+        User user = getUserById(id);
+        if(user.getRole().contains(role)){
+            user.getRole().remove(role);
+            return userRepository.save(user);
+        } else {
+            return user;
+        }
+    }
+
 
     // Save user
     public User saveUser(User user){
@@ -108,6 +130,7 @@ public class UserService {
             String passwordEncode = passwordEncoder.encode(password);
             user.setPassword(passwordEncode);
         }
+
         user.setId(updateUserRequest.getId());
         user.setName(updateUserRequest.getName());
         user.setEmail(updateUserRequest.getEmail());
