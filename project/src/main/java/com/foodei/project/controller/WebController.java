@@ -19,15 +19,12 @@ import java.util.List;
 
 @Controller
 public class WebController {
-
-
     @Autowired
     private BlogService blogService;
     @Autowired
     private CategoryService categoryService;
     @Autowired
     private CommentService commentService;
-
 
 
     @GetMapping("/")
@@ -146,9 +143,7 @@ public class WebController {
         List<Comment> comments = commentService.findCommentsByBlog(id);
         model.addAttribute("comments", comments);
 
-//        CommentRequest commentRequest = commentService.toCommentRequest();
         model.addAttribute("newCommentRequest", new CommentRequest());
-
 
         Blog blog = blogService.getBlogById(id);
         model.addAttribute("blog", blog);

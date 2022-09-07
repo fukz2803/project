@@ -3,12 +3,9 @@ package com.foodei.project.controller;
 import com.foodei.project.request.ForgotPassword;
 import com.foodei.project.request.LoginRequest;
 import com.foodei.project.request.UserRequest;
-import com.foodei.project.security.UserDetailsServiceCustom;
 import com.foodei.project.service.AuthService;
-import com.foodei.project.service.TokenService;
 import com.foodei.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +24,7 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private AuthService authService;
-    @Autowired
-    private TokenService tokenService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserDetailsServiceCustom userDetailsServiceCustom;
+
 
 
     @GetMapping("/login")

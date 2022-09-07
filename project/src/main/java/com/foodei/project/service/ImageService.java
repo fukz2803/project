@@ -8,14 +8,10 @@ import com.foodei.project.repository.ImageRepository;
 import com.foodei.project.utils.FileUploadUtil;
 import com.foodei.project.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,6 +43,7 @@ public class ImageService {
 
 
 
+    // Tải ảnh lên
     public Image uploadImage(MultipartFile file, User user) throws IOException{
         // Xác thực file
         validate(file);
@@ -80,6 +77,8 @@ public class ImageService {
         return image;
 
     }
+
+    // Xác thực file
     public void validate(MultipartFile file) {
         // Validate file name
         String fileName = file.getOriginalFilename();
@@ -99,32 +98,6 @@ public class ImageService {
         }
     }
 
-    // Read image
-    public byte[] readImage(String url) {
-        // Lấy đường dẫn file
-        Path path = Paths.get(url);
-
-        // Kiểm tra path có tồn tại hay không
-        if (!Files.exists(path)) {
-            throw new StorageException("Errors occur while reading file " + url);
-        }
-
-        try {
-            Resource resource = new UrlResource(path.toUri());
-
-            if (resource.exists() || resource.isReadable()) {
-                InputStream inputStream = resource.getInputStream();
-                byte[] byteArray = StreamUtils.copyToByteArray(inputStream);
-                inputStream.close(); // Remember to close InputStream
-                return byteArray;
-            } else {
-                throw new StorageException("Errors occur while reading file " + url);
-            }
-        } catch (Exception e) {
-            throw new StorageException("Errors occur while reading file " + url);
-        }
-    }
-
     // Delete image
     public void deleteImage(String url) {
         try {
@@ -137,11 +110,13 @@ public class ImageService {
         }
     }
 
+    // Tìm image bằng id
     public Image findById(UUID id) {
         return imageRepository.findById(id)
                 .orElseThrow(() -> new StorageException("Errors occur while reading file " + id));
     }
 
+    // Hiển thị url của image
     public String showUrl(String url) {
         if (url == null) {
             return "";

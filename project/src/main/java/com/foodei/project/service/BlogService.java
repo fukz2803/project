@@ -27,20 +27,23 @@ public class BlogService {
         return blogRepository.findAll();
     }
 
-    //Index Page
+    // Danh sách list blog sắp xếp theo ngày đăng mới nhất
     public List<Blog> findAllBlogsIndex(){
         return blogRepository.findBlogsByStatusEqualsOrderByPublishedAtDesc();
     }
 
+    // Danh sách blog phân trang, tìm blog theo title
     public Page<Blog> findAllBlogsPageContainTitle(int page, int pageSize, String title){
         Pageable pageable = PageRequest.of(page, pageSize);
         return blogRepository.getByTitleContainsIgnoreCaseAndStatusEqualsOrderByPublishedAtDesc(title, pageable);
     }
 
+    // Lấy ra list blog dựa theo category
     public List<Blog> getBlogsByCategoryName(String name){
         return blogRepository.getByCategories_NameContainsIgnoreCaseAllIgnoreCase(name);
     }
 
+    // Lấy ra list blog có lượng comment nhiều nhất
     public List<Blog> sortCommentBlog(){
         List<Blog> blogs = findAllBlogsIndex();
         Collections.sort(blogs, new Comparator<Blog>() {
@@ -52,6 +55,7 @@ public class BlogService {
         return blogs;
     }
 
+    //Lấy ra 4 bài blog có lượng comment nhiều nhất
     public List<Blog> getBlogsByHighComment(){
         List<Blog> blogs = sortCommentBlog();
         List<Blog> newblogs = new ArrayList<>();
@@ -61,11 +65,13 @@ public class BlogService {
         return newblogs;
     }
 
+    // Lấy ra bài viết có lượng comment cao nhất
     public Blog getBlogHighestComment(){
         List<Blog> blogs = sortCommentBlog();
         return blogs.get(0);
     }
 
+    // Lấy list 5 bài blog mới nhất
     public List<Blog> getBlogsHeader(){
         List<Blog> blogs = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
@@ -74,40 +80,42 @@ public class BlogService {
         return blogs;
     }
 
-    //Category Page
+    //Lấy ra page blog dựa trên title và category name
     public Page<Blog> getAllBlogsByCategoryAndTitle(int page, int pageSize, String title, String name){
         Pageable pageable = PageRequest.of(page, pageSize);
         return blogRepository.getByTitleContainsIgnoreCaseAndStatusEqualsAndCategories_NameOrderByPublishedAtDesc(title,name,pageable);
     }
 
-    //Detail Page
+    //Lấy thông tin của blog dựa trên id
     public Blog getBlogById(String id){
         return blogRepository.getBlogById(id);
     }
 
-    //Dashboard - blogs
+    //Hiển thị danh sách category của blog dưới dạng String "a, b, c,.."
     public String showCategoryBlog(Blog blog){
         return String.join(", ", blog.getCategories().stream().map(Category::getName).toList());
     }
 
+
+    //Lấy blog phân trang, tìm theo title hiển thị trong dashboard
     public Page<Blog> findAllBlogsPageByTitle(int page, int pageSize, String title){
         Pageable pageable = PageRequest.of(page, pageSize);
         return blogRepository.findByTitleContainsIgnoreCaseOrderByCreateAtDesc(title, pageable);
     }
 
-    //Dashboard - page blog by user
+    //Lấy blog phân trang, tìm kiếm theo title của một user
     public Page<Blog> findAllBlogByUserId(int page, int pageSize, String title, String id){
         Pageable pageable = PageRequest.of(page, pageSize);
         return blogRepository.findByTitleContainsIgnoreCaseAndUser_IdOrderByPublishedAtDesc(title, id, pageable);
     }
 
-    //Dashboard - delete blog
+    //Xóa blog bằng id
     public void deleteBlog(String id){
         Optional<Blog> blog = blogRepository.findById(id);
         blog.ifPresent(value -> blogRepository.delete(value));
     }
 
-    //Dashboard - list blog of user
+    //Lấy danh sách blog của user
     public List<Blog> getBlogsByUserId(String id){
         return blogRepository.findByUser_Id(id);
     }
@@ -118,6 +126,7 @@ public class BlogService {
         return blogRepository.save(blog);
     }
 
+    //Map từ blog sang blogRequest
     public BlogRequest toBlogRequest(Blog blog){
         return BlogRequest.builder()
                 .id(blog.getId())
@@ -132,6 +141,8 @@ public class BlogService {
                 .build();
     }
 
+
+    //Map từ blogRequest sang blog
     public Blog fromRequestToBlog(BlogRequest blogRequest){
         String thumbnail = blogRequest.getThumbnail();
         // Kiểm tra có thay đổi avatar không

@@ -2,7 +2,6 @@ package com.foodei.project.service;
 
 import com.foodei.project.entity.User;
 import com.foodei.project.repository.UserRepository;
-import com.foodei.project.request.LoginRequest;
 import com.foodei.project.request.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,11 +46,6 @@ public class UserService {
         return userRepository.findByEmail(email).isPresent();
     }
 
-    public boolean emailExistsAndNotEnable(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user.isPresent() && !user.get().getEnabled();
-    }
-
     // Active user
     public void enableUser(String email) {
         userRepository.enableUser(email);
@@ -84,7 +78,6 @@ public class UserService {
         }
     }
 
-
     // Save user
     public User saveUser(User user){
        return userRepository.save(user);
@@ -96,6 +89,7 @@ public class UserService {
         user.setPassword(password);
     }
 
+    // Map từ user sang request
     public UpdateUserRequest toUpdateRequest(User user){
         return UpdateUserRequest.builder()
                 .id(user.getId())
@@ -109,6 +103,7 @@ public class UserService {
                 .build();
     }
 
+    // Map từ request sang user
     public User fromRequestToUser(UpdateUserRequest updateUserRequest){
         User user = new User();
         String id = updateUserRequest.getId();
@@ -142,11 +137,5 @@ public class UserService {
 
     }
 
-    public LoginRequest toLoginRequest(User user){
-        return LoginRequest.builder()
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .build();
-    }
 
 }

@@ -31,24 +31,24 @@ public class UserTest {
     @Test
     void save_user() {
         User user1 = User.builder()
-                .name("Nguyễn Văn A")
-                .email("a@gmail.com")
+                .name("Admin")
+                .email("admin@mail.com")
                 .password(passwordEncoder.encode("123123"))
                 .role(List.of("MEMBER", "EDITOR", "ADMIN"))
                 .enabled(true)
                 .build();
 
         User user2 = User.builder()
-                .name("Trần Văn B")
-                .email("b@gmail.com")
+                .name("EDITOR")
+                .email("editor@mail.com")
                 .password(passwordEncoder.encode("123123"))
                 .role(List.of("MEMBER", "EDITOR"))
                 .enabled(true)
                 .build();
 
         User user3 = User.builder()
-                .name("Ngô Thị C")
-                .email("c@gmail.com")
+                .name("MEMBER")
+                .email("member@mail.com")
                 .password(passwordEncoder.encode("123123"))
                 .role(List.of("MEMBER"))
                 .enabled(true)

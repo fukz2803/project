@@ -16,36 +16,42 @@ import java.util.Optional;
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private BlogService blogService;
 
+    // Lấy danh sách category
     public List<Category> findAllCategoryIndex(){
         return categoryRepository.findAll();
     }
 
+    // Lấy page category phân trang, tìm theo tên
     public Page<Category> findAllCategory(int page, int pageSize, String name){
         Pageable pageable = PageRequest.of(page, pageSize);
         return categoryRepository.findByNameContainsIgnoreCase(name, pageable);
     }
 
+    // Lấy page category phân trang
     public Page<Category> findAllPageCategory(int page, int pageSize){
         Pageable pageable = PageRequest.of(page, pageSize);
         return categoryRepository.findAll(pageable);
     }
 
+    // Lấy danh sách category có nhiều bài viết nhất
     public List<Category> getCategoryMostBlog(){
         return categoryRepository.getCategoriesHighestBlogs();
     }
 
+    // Tìm category theo id
     public Optional<Category> findById(String id){
         return categoryRepository.findById(id);
     }
 
+    // Xóa category
     public void deleteCategory(String id){
         Optional<Category> category = findById(id);
         category.ifPresent(value -> categoryRepository.delete(value));
     }
 
+
+    //Map từ category sang request
     public CategoryRequest toCategoryRequest(Category category){
         return CategoryRequest.builder()
                 .id(category.getId())
@@ -54,6 +60,7 @@ public class CategoryService {
                 .build();
     }
 
+    // Map từ request sang category
     public Category fromRequestToCategory(CategoryRequest categoryRequest){
 
         // Kiểm tra có thay đổi avatar không
@@ -70,6 +77,7 @@ public class CategoryService {
                 .build();
     }
 
+    // Tạo và sửa category
     public Category createAndEdit(Category category){
         return categoryRepository.save(category);
     }

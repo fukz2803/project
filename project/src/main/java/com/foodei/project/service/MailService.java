@@ -10,6 +10,7 @@ public class MailService {
     @Autowired
     JavaMailSender javaMailSender;
 
+    // Gửi email
     public void sendEmail(String recipient, String subject, String content){
         //Tạo simple mail
         SimpleMailMessage message = new SimpleMailMessage();
