@@ -88,25 +88,9 @@ public class LoginController {
     }
 
     @GetMapping("/confirm")
-    public String confirmToken(@RequestParam("token") String token, HttpSession session){
+    public String confirmToken(@RequestParam("token") String token){
         authService.confirmToken(token);
-//        User currentUser = tokenService.getUserByToken(token);
-//
-//        // Lấy ra thông tin của user theo email
-//        UserDetails user = userDetailsServiceCustom.loadUserByUsername(currentUser.getEmail());
-//
-//        // Tạo đối tượng xác thực
-//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-//
-//        // Tiến hành xác thực
-//        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-//
-//        // Lưu thông tin đối tượng đã đăng nhập
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        // Lưu thông tin vào session
-//        session.setAttribute("MY_SESSION", authentication.getName());
-        return "redirect:/";
+        return "redirect:/login";
     }
 
 

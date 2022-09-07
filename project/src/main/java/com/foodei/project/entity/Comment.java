@@ -27,7 +27,7 @@ public class Comment {
     private LocalDateTime createAt;
 
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP")
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blog_id")
@@ -40,11 +40,11 @@ public class Comment {
     @PrePersist
     public void prePersist() {
         createAt = LocalDateTime.now();
-        updated_at = createAt;
+        updatedAt = createAt;
     }
 
     @PreUpdate
     public void preUpdate() {
-        updated_at = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 }

@@ -63,9 +63,9 @@ public class BlogController {
                                  @RequestParam(required = false,defaultValue = "1") Integer page){
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
-//        if (page < 1){
-//            return "error/404";
-//        }
+        if (page < 1){
+            return "error/404";
+        }
 
         // Lấy ra thông tin user đang đăng nhập
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

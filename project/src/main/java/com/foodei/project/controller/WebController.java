@@ -149,6 +149,7 @@ public class WebController {
 //        CommentRequest commentRequest = commentService.toCommentRequest();
         model.addAttribute("newCommentRequest", new CommentRequest());
 
+
         Blog blog = blogService.getBlogById(id);
         model.addAttribute("blog", blog);
         return "web/single-post";

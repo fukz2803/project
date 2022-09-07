@@ -86,9 +86,30 @@ public class UserController {
         return "redirect:/dashboard/admin/users";
     }
 
+    @GetMapping("/dashboard/user/detail/{id}")
+    public String getUserDetail(Model model,
+                                @PathVariable("id") String id){
+
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+
+        UpdateUserRequest updateUserRequest = userService.toUpdateRequest(user);
+        model.addAttribute("updateUserRequest", updateUserRequest);
+
+        String showRole = userService.showRoles(user);
+        model.addAttribute("showRole", showRole);
+
+        List<Blog> blogs = blogService.getBlogsByUserId(user.getId());
+        model.addAttribute("blogs", blogs);
+
+        model.addAttribute("userService", userService);
+
+        return "dashboard/user-detail";
+    }
+
 
     @GetMapping("/dashboard/user/profile")
-    public String getUserDetail(Model model){
+    public String getUserProfile(Model model){
         // Lấy ra thông tin user đang đăng nhập
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", user);

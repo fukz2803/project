@@ -34,34 +34,18 @@ public class CommentController {
         commentRequest.setBlog(blog);
 
         Comment comment = commentService.fromRequestToComment(commentRequest);
+
         commentService.saveComment(comment);
 
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
     }
 
-//    @PostMapping("/edit-comment/{id}")
-//    public String editComment(@ModelAttribute CommentRequest commentRequest,
-//                              @PathVariable("id") String id,
-//                              HttpServletRequest request){
-//        // Lấy ra thông tin user đang đăng nhập
-//        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        commentRequest.setUser(currentUser);
-//
-//        Blog blog = blogService.getBlogById(id);
-//        commentRequest.setBlog(blog);
-//
-//        Comment comment = commentService.fromRequestToComment(commentRequest);
-//        commentService.saveComment(comment);
-//
-//        String referer = request.getHeader("Referer");
-//        return "redirect:" + referer;
-//    }
 
     @PostMapping("/edit-comment/{id}")
-    public void editComment(@RequestBody CommentRequest commentRequest,
-                              @PathVariable("id") String id,
-                              HttpServletRequest request){
+    public String editComment(@RequestBody CommentRequest commentRequest,
+                                      @PathVariable("id") String id,
+                                      HttpServletRequest request){
 //         Lấy ra thông tin user đang đăng nhập
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         commentRequest.setUser(currentUser);
@@ -70,8 +54,11 @@ public class CommentController {
         commentRequest.setBlog(blog);
 
         Comment comment = commentService.fromRequestToComment(commentRequest);
-//        comment.setId(commentId);
+
         commentService.saveComment(comment);
+
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
 
     }
 

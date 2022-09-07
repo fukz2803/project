@@ -16,14 +16,16 @@ public class CommentService {
     private CommentRepository commentRepository;
 
     public List<Comment> findCommentsByBlog(String id){
-        return commentRepository.findByBlog_IdContainsIgnoreCaseOrderByCreateAtDesc(id);
+        return commentRepository.findByBlog_IdContainsIgnoreCaseOrderByUpdatedAtDesc(id);
     }
 
     public Comment saveComment(Comment comment){
         return commentRepository.save(comment);
     }
 
-    public CommentRequest toCommentRequest(Comment comment){
+    public CommentRequest toCommentRequest(String id){
+        Optional<Comment> commentOptional = findById(id);
+        Comment comment = commentOptional.get();
         return CommentRequest.builder()
                 .id(comment.getId())
                 .content(comment.getContent())

@@ -67,10 +67,10 @@
                             </tfoot>
                             <tbody>
                             <tr th:each="blogPage, i : ${blogListPage}">
+                                <td th:text="${i.index + 1}"></td>
                                 <td>
                                     <a th:href="@{/dashboard/blogs/detail/{id} (id = ${blogPage.id})}" th:text="${blogPage.title}"></a>
                                 </td>
-                                <td th:text="${i.index + 1}"></td>
                                 <td th:text="${blogPage.user.name}"></td>
                                 <td th:text="${blogService.showCategoryBlog(blogPage)}"></td>
                                 <td th:text="${blogPage.status == 1} ? 'Public' : 'Hide'"></td>

@@ -107,7 +107,6 @@ public class UserService {
         } else {
             String passwordEncode = passwordEncoder.encode(password);
             user.setPassword(passwordEncode);
-
         }
         user.setId(updateUserRequest.getId());
         user.setName(updateUserRequest.getName());

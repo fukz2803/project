@@ -58,39 +58,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/confirm",
                             "/error",
                             "/login").permitAll()
-                    .antMatchers("/dashboard/user/profile").hasRole("MEMBER")
-                    .antMatchers("/dashboard/blogs",
-                            "/dashboard",
-                            "/dashboard/user/detail/**",
-                            "/dashboard/admin/users",
+                    .antMatchers("/dashboard/user/profile",
+                            "/dashboard/user/update-user",
+                            "/post-comment/**",
+                            "/edit-comment/**",
+                            "/comment/delete/**").hasRole("MEMBER")
+                    .antMatchers("/dashboard",
                             "/dashboard/categories",
-                            "/dashboard/categories/delete/**").hasRole("ADMIN")
+                            "/dashboard/admin/category/edit/**",
+                            "/dashboard/admin/category/detail/**",
+                            "/dashboard/admin/category/create",
+                            "/dashboard/categories/delete/**",
+                            "/dashboard/blogs",
+                            "/dashboard/admin/users",
+                            "/dashboard/admin/create-user",
+                            "/dashboard/admin/user-active/**",
+                            "/dashboard/admin/user-disable/**").hasRole("ADMIN")
                     .antMatchers("/dashboard/my-blogs/**",
                             "/dashboard/blogs/create-blog",
                             "/dashboard/blogs/detail/**",
-                            "/dashboard/blogs/delete/",
+                            "/dashboard/blogs/delete/**",
                             "/dashboard/blogs/edit/**").hasAnyRole("EDITOR","ADMIN")
 //                    .anyRequest().authenticated()
-//                .and()
-//                .exceptionHandling()
-//                .authenticationEntryPoint(authenticationEntryPointCustom)
-//                    .formLogin()
-//                    .loginPage("/login")
-//                    .loginProcessingUrl("/login")
-//                    .usernameParameter("email")
-//                    .passwordParameter("password")
-//                    .defaultSuccessUrl("/")
-//                    .permitAll()
                 .and()
                     .logout()
                     .logoutSuccessUrl("/")
                     .invalidateHttpSession(true)
-//                    .deleteCookies("JSESSIONID")
                 .deleteCookies("MY_SESSION")
                     .permitAll()
                 .and()
                 .addFilterBefore(filterCustom, UsernamePasswordAuthenticationFilter.class);
-//                .httpBasic();
     }
 
     @Override

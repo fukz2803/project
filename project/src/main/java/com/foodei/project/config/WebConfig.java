@@ -5,8 +5,6 @@ import com.github.slugify.Slugify;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Random;
 
@@ -30,7 +28,6 @@ public class WebConfig {
     public ModelMapper modelMapper(){
         return new ModelMapper();
     }
-
 
 
 

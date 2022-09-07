@@ -157,20 +157,23 @@
                                </div>
                                <div class="single-post__comment__item__text">
                                    <h5 th:text="${comment.user.name}">Brandon Kelley</h5>
-                                   <span th:text="${#temporals.format(comment.createAt,'dd/MM/yyyy')}">15 Aug 2017</span>
+                                   <span th:text="${#temporals.format(comment.updatedAt,'dd/MM/yyyy')}">15 Aug 2017</span>
                                    <p id="comment-content" th:text="${comment.content}"></p>
-<!--                                   <form th:action="@{/edit-comment/{id} (id = ${blog.id})}" th:object="${newCommentRequest}" method="post">-->
-                                       <div th:id="${comment.id}" class="d-none">
-                                           <textarea th:text="${comment.content}" ></textarea>
-                                           <button  th:attr="onclick=|editComment('${comment.id}')|">Edit</button>
-                                           <button onclick="cancelEdit()" id="cancel">Cancel</button>
-                                       </div>
-<!--                                   </form>-->
-                                   <ul sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().getEmail().equals(comment.user.email)}">
-                                       <li><a href="javascript:void(0)" th:attr="onclick=|showComment('${comment.id}')|"><i class="fa fa-pencil"></i></a></li>
-                                       <li><a onclick="return confirm('Are you sure to delete?')"
-                                              th:href="@{/comment/delete/{id} (id = ${comment.id})}"><i class="fa fa-trash"></i></a></li>
-                                   </ul>
+                                   <div th:id="${comment.id}" class="d-none">
+                                           <textarea class="form-control mb-1"
+                                                     style="max-height: 300px; resize: none"
+                                                     th:text="${comment.content}"></textarea>
+                                           <button class="btn btn-info"
+                                                   style="background-color: #f4952f; border-color: #f4952f"
+                                                   th:attr="onclick=|editComment('${comment.id}')|">Edit</button>
+                                           <button class="btn btn-secondary" th:attr="onclick=|hideEditComment('${comment.id}')|">Cancel</button>
+                                   </div>
+                                       <ul sec:authorize="isAuthenticated()" th:if="${#authentication.getPrincipal().getEmail().equals(comment.user.email)}">
+                                           <li><a href="javascript:void(0)"
+                                                  th:attr="onclick=|showComment('${comment.id}')|"><i class="fa fa-pencil"></i></a></li>
+                                           <li><a onclick="return confirm('Are you sure to delete?')"
+                                                  th:href="@{/comment/delete/{id} (id = ${comment.id})}"><i class="fa fa-trash"></i></a></li>
+                                       </ul>
                                </div>
                            </div>
 
@@ -196,38 +199,37 @@
    </th:block>
 
     <th:block id="js">
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script th:inline="javascript">
 
-
-
-
-            // editBtn.addEventListener("click", async function(){
-            //     let res = await axios.post("/edit-comment/" + [[${blog.id}]],{
-            //         content : editEl.value
-            //         });
-            //     if (res.data){
-            //         window.location.reload();
-            //     }
-            // })
-
-            function showComment(id) {
-                const textArea = document.getElementById(id);
-                textArea.classList.remove("d-none");
-                textArea.previousElementSibling.classList.add("d-none");
-
+                function showComment(id) {
+                const commentForm = document.getElementById(id);
+                commentForm.classList.remove("d-none");
+                commentForm.previousElementSibling.classList.add("d-none");
             }
 
-            const editComment = async (id) => {
+            function hideEditComment(id){
+                const commentForm = document.getElementById(id);
+                commentForm.classList.add("d-none");
+                commentForm.previousElementSibling.classList.remove("d-none");
+            }
+
+           async function editComment(id){
                 const commentForm = document.getElementById(id);
                 const commentInput = commentForm.querySelector("textarea");
-                let res = await axios.post("/edit-comment/" + [[${blog.id}]], {
-                    id: id,
-                    content: commentInput.value
-                });
-                if(res.data){
-                    window.location.reload();
+                const commentContent = commentForm.previousElementSibling;
+                try {
+                    let res = await axios.post("http://localhost:8080/edit-comment/" + [[${blog.id}]], {
+                        id: id,
+                        content: commentInput.value
+                    });
+                    commentContent.innerHTML = commentInput.value;
+                    hideEditComment(id);
+
+                } catch (e){
+                    console.log(e);
                 }
+
             }
 
 

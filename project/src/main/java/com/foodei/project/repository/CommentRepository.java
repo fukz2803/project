@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, String> {
-    List<Comment> findByBlog_IdContainsIgnoreCaseOrderByCreateAtDesc(String id);
+    List<Comment> findByBlog_IdContainsIgnoreCaseOrderByUpdatedAtDesc(String id);
 
 
 
