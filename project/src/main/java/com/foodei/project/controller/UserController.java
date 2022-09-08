@@ -43,7 +43,7 @@ public class UserController {
             return "error/404";
         }
 
-        Page<User> userPage = userService.findAllUserByNameAndEmail(page - 1, 20, keyword, keyword);
+        Page<User> userPage = userService.findAllUserByNameAndEmail(page - 1, 10, keyword, keyword);
 
         List<User> userList = userPage.getContent();
         model.addAttribute("userList",userList);

@@ -44,7 +44,7 @@ public class BlogController {
             return "error/404";
         }
 
-        Page<Blog> blogPage = blogService.findAllBlogsPageByTitle(page - 1, 20, keyword);
+        Page<Blog> blogPage = blogService.findAllBlogsPageByTitle(page - 1, 10, keyword);
 
         List<Blog> blogListPage = blogPage.getContent();
         model.addAttribute("blogListPage",blogListPage);
