@@ -25,7 +25,7 @@ public class ImageService {
 
 
     // Folder path để upload file
-    private final Path rootPath = Paths.get("target/classes/static/uploads");
+    private final Path rootPath = Paths.get("/uploads");
 
 
     public ImageService() {
@@ -53,19 +53,19 @@ public class ImageService {
         Path uploadDir = Paths.get(rootPath.toString(),userId);
         String extension = Utils.getExtensionFile(file.getOriginalFilename());
         String fileName = userId + String.valueOf(Instant.now().getEpochSecond()) + "." + extension;
-        int lastIndexOf = uploadDir.toString().lastIndexOf("ic");
-        String urlName = uploadDir.toString().substring(lastIndexOf + 2);
-        Path urlImage = Paths.get(urlName,fileName);
+//        int lastIndexOf = uploadDir.toString().lastIndexOf("ic");
+//        String urlName = uploadDir.toString().substring(lastIndexOf + 2);
+        Path urlImage = Paths.get(uploadDir.toString(),fileName);
         String uploadDirStr = uploadDir.toString();
         String urlImageStr = urlImage.toString();
 
-//        if (uploadDirStr.contains("\\")){
-//            uploadDirStr = uploadDirStr.replace("\\", "/");
-//        }
-//
-//        if(urlImageStr.contains("\\")){
-//            urlImageStr = urlImageStr.replace("\\", "/");
-//        }
+        if (uploadDirStr.contains("\\")){
+            uploadDirStr = uploadDirStr.replace("\\", "/");
+        }
+
+        if(urlImageStr.contains("\\")){
+            urlImageStr = urlImageStr.replace("\\", "/");
+        }
 
         FileUploadUtil.saveFile(uploadDirStr, fileName, file);
 
