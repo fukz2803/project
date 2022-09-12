@@ -86,10 +86,7 @@
 
                                 <li th:classappend="${#httpServletRequest.requestURI == '/category/'+ name} ? 'active' : ''" class="dropdown"><a>Categories</a>
                                     <ul class="dropdown__menu">
-                                        <li><a th:href="@{/category/breakfast}">Breakfast/Brunch</a></li>
-                                        <li><a th:href="@{/category/lunch}">Lunch</a></li>
-                                        <li><a th:href="@{/category/dinner}">Dinner</a></li>
-                                        <li><a th:href="@{/category/desserts}">Desserts</a></li>
+                                        <li th:each="category: ${categoryList}"><a th:text="${category.name}" th:href="@{/category/{name} (name = ${category.name})}"></a></li>
                                     </ul>
                                 </li>
                                 <li th:classappend="${#httpServletRequest.requestURI == '/about'} ? 'active' : ''"><a th:href="@{/about}">About</a></li>

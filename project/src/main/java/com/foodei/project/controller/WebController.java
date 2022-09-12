@@ -41,7 +41,10 @@ public class WebController {
         List<Blog> blogListHighestComment = blogService.getBlogsByHighComment();
         model.addAttribute("blogListHighestComment", blogListHighestComment);
 
-        List<Category> categoryList = categoryService.getCategoryMostBlog();
+        List<Category> categoryListMostBlog = categoryService.getCategoryMostBlog();
+        model.addAttribute("categoryListMostBlog",categoryListMostBlog);
+
+        List<Category> categoryList = categoryService.findAllCategoryIndex();
         model.addAttribute("categoryList",categoryList);
 
         Blog blogHighestComment = blogService.getBlogHighestComment();
@@ -143,6 +146,9 @@ public class WebController {
         List<Comment> comments = commentService.findCommentsByBlog(id);
         model.addAttribute("comments", comments);
 
+        List<Category> categoryList = categoryService.findAllCategoryIndex();
+        model.addAttribute("categoryList",categoryList);
+
         model.addAttribute("newCommentRequest", new CommentRequest());
 
         Blog blog = blogService.getBlogById(id);
@@ -154,6 +160,8 @@ public class WebController {
     public String getContactPage(Model model){
         List<Blog> blogsHeader = blogService.getBlogsHeader();
         model.addAttribute("blogsHeader",blogsHeader);
+        List<Category> categoryList = categoryService.findAllCategoryIndex();
+        model.addAttribute("categoryList",categoryList);
         return "web/contact";
     }
 
