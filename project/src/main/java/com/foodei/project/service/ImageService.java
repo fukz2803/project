@@ -26,10 +26,12 @@ public class ImageService {
 
     // Folder path để upload file
     private final Path rootPath = Paths.get("/uploads");
+    private final Path windowsRootPath = Paths.get("C:\\Users\\Kien\\Desktop\\Back End\\project\\project\\target\\classes\\static\\uploads");
 
 
     public ImageService() {
-        createFolder(rootPath);
+//        createFolder(rootPath);
+        createFolder(windowsRootPath);
     }
 
     // tạo folder nếu chưa tồn tại
@@ -50,12 +52,13 @@ public class ImageService {
 
         // Tạo đường dẫn và tên file
         String userId = user.getId();
-        Path uploadDir = Paths.get(rootPath.toString(),userId);
+//        Path uploadDir = Paths.get(rootPath.toString(),userId);
+        Path uploadDir = Paths.get(windowsRootPath.toString(),userId);
         String extension = Utils.getExtensionFile(file.getOriginalFilename());
         String fileName = userId + String.valueOf(Instant.now().getEpochSecond()) + "." + extension;
-//        int lastIndexOf = uploadDir.toString().lastIndexOf("ic");
-//        String urlName = uploadDir.toString().substring(lastIndexOf + 2);
-        Path urlImage = Paths.get(uploadDir.toString(),fileName);
+        int lastIndexOf = uploadDir.toString().lastIndexOf("ic");
+        String urlName = uploadDir.toString().substring(lastIndexOf + 2);
+        Path urlImage = Paths.get(urlName,fileName);
         String uploadDirStr = uploadDir.toString();
         String urlImageStr = urlImage.toString();
 
